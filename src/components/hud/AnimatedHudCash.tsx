@@ -23,7 +23,9 @@ export function AnimatedHudCash({
   const shownRef = useRef(shown);
   const rafRef = useRef<number | null>(null);
 
-  shownRef.current = shown;
+  useEffect(() => {
+    shownRef.current = shown;
+  }, [shown]);
 
   useEffect(() => {
     const from = shownRef.current;

@@ -32,7 +32,7 @@ const FX_SPEED_SCALE: Record<FxSpeed, number> = {
 let liveScale = 1;
 
 /** Single fixed pace — settings no longer expose speed / reduce-motion. */
-export function prefsFxScale(_prefs?: GamePrefs): number {
+export function prefsFxScale(): number {
   return FX_SPEED_SCALE.normal;
 }
 
@@ -114,7 +114,7 @@ export function loadGamePrefs(): GamePrefs {
 export function saveGamePrefs(prefs: GamePrefs) {
   if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
-  setLiveFxScale(prefsFxScale(prefs));
+  setLiveFxScale(prefsFxScale());
   // Keep legacy keys in sync for any leftover readers.
   try {
     localStorage.setItem(LEGACY_MUTE_KEY, prefs.sfxMuted ? "1" : "0");

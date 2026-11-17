@@ -43,13 +43,17 @@ export function DeckDrawPortal({
   const [mounted, setMounted] = useState(false);
   const t = useT();
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    queueMicrotask(() => setMounted(true));
+  }, []);
 
   useEffect(() => {
     if (!active) {
-      setPhase("idle");
-      setFrom(null);
-      setTo(null);
+      queueMicrotask(() => {
+        setPhase("idle");
+        setFrom(null);
+        setTo(null);
+      });
       return;
     }
 
@@ -67,14 +71,16 @@ export function DeckDrawPortal({
       h: pile.height,
     };
 
-    if (direction === "draw") {
-      setFrom(pileBox);
-      setTo(mid);
-    } else {
-      setFrom(mid);
-      setTo(pileBox);
-    }
-    setPhase("animating");
+    queueMicrotask(() => {
+      if (direction === "draw") {
+        setFrom(pileBox);
+        setTo(mid);
+      } else {
+        setFrom(mid);
+        setTo(pileBox);
+      }
+      setPhase("animating");
+    });
 
     const ms =
       direction === "draw" ? FX_TIMING.deckFlyMs : FX_TIMING.deckReturnMs;

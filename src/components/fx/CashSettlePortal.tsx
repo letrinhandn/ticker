@@ -349,9 +349,11 @@ export function CashSettlePortal({
   const flySeq = useRef(0);
   const cashLanded = useRef(false);
 
-  onDoneRef.current = onDone;
-  holdRef.current = hold;
-  absorbRef.current = fx?.absorbHeldCash;
+  useEffect(() => {
+    onDoneRef.current = onDone;
+    holdRef.current = hold;
+    absorbRef.current = fx?.absorbHeldCash;
+  }, [onDone, hold, fx?.absorbHeldCash]);
 
   const tickets: CashSettleTicket[] = useMemo(
     () =>
@@ -445,20 +447,26 @@ export function CashSettlePortal({
     }, fxMs(FX_TIMING.settleAfterFlyMs));
   };
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    queueMicrotask(() => setMounted(true));
+  }, []);
 
   useEffect(() => {
     if (!active) {
-      setPhase("windup");
-      setFlyBatch([]);
+      queueMicrotask(() => {
+        setPhase("windup");
+        setFlyBatch([]);
+      });
       cashLanded.current = false;
       return;
     }
 
     const id = ++runId.current;
     cashLanded.current = false;
-    setPhase("windup");
-    setFlyBatch([]);
+    queueMicrotask(() => {
+      setPhase("windup");
+      setFlyBatch([]);
+    });
     const timers: number[] = [];
     const later = (fn: () => void, ms: number) => {
       timers.push(window.setTimeout(fn, ms));
@@ -519,8 +527,10 @@ export function CashSettlePortal({
 
   useEffect(() => {
     if (hold || phase !== "parked") return;
-    setPhase("done");
-    onDoneRef.current();
+    queueMicrotask(() => {
+      setPhase("done");
+      onDoneRef.current();
+    });
   }, [hold, phase]);
 
   if (!mounted || !active || phase === "done") return null;

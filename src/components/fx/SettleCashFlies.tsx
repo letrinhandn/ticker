@@ -2,13 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { money } from "@/lib/money";
+import {
+  cashFlySeatPoint,
+  createCashFlyElement,
+} from "@/lib/fx/cashFlyDom";
 import { fxMs } from "@/lib/prefs/gamePrefs";
 import { FX_TIMING } from "@/lib/fx/types";
 import { playCashDelta } from "@/lib/sfx/sounds";
-
-const SEAT_CORNERS = ["bl", "tr", "tl", "br"] as const;
-export type SeatCorner = (typeof SEAT_CORNERS)[number];
 
 export type SettleCashFly = {
   id: string;
@@ -18,37 +18,6 @@ export type SettleCashFly = {
   /** Fallback seat index 0..3, or -1 for fund. */
   seatIndex: number;
 };
-
-/** Fallback anchors when the HUD node is not mounted yet. */
-function fallbackPoint(seatIndex: number): { x: number; y: number } {
-  const w = window.innerWidth;
-  const h = window.innerHeight;
-  const corner: SeatCorner | "fund" =
-    seatIndex < 0 ? "fund" : (SEAT_CORNERS[seatIndex] ?? "br");
-  switch (corner) {
-    case "bl":
-      return { x: 24, y: h - 88 };
-    case "br":
-      return { x: w - 24, y: h - 88 };
-    case "tl":
-      return { x: 24, y: 72 };
-    case "tr":
-      return { x: w - 24, y: 72 };
-    default:
-      return { x: w * 0.5, y: h * 0.14 };
-  }
-}
-
-function cashNodePoint(playerId: string | undefined): { x: number; y: number } | null {
-  if (!playerId || typeof document === "undefined") return null;
-  const node = document.querySelector(
-    `[data-hud-cash="${CSS.escape(playerId)}"]`,
-  );
-  if (!node) return null;
-  const r = node.getBoundingClientRect();
-  if (r.width <= 0 || r.height <= 0) return null;
-  return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
-}
 
 /**
  * Full-viewport cash chips: start at settle card center, land on the
@@ -69,9 +38,14 @@ export function SettleCashFlies({
   const layerRef = useRef<HTMLDivElement>(null);
   const landedRef = useRef(onLanded);
   const [mounted, setMounted] = useState(false);
-  landedRef.current = onLanded;
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    landedRef.current = onLanded;
+  }, [onLanded]);
+
+  useEffect(() => {
+    queueMicrotask(() => setMounted(true));
+  }, []);
 
   useEffect(() => {
     if (!mounted || !active || flies.length === 0) return;
@@ -87,30 +61,22 @@ export function SettleCashFlies({
     };
 
     const duration = fxMs(FX_TIMING.settleCashFlyMs);
-    const startX = window.innerWidth * 0.5;
-    const startY = window.innerHeight * 0.46;
+    const start = {
+      x: window.innerWidth * 0.5,
+      y: window.innerHeight * 0.46,
+    };
     const anims: Animation[] = [];
-
     const sfxTimers: number[] = [];
 
     flies.forEach((fly, i) => {
-      const el = document.createElement("span");
-      el.className = `settle-cash-fly${fly.signed >= 0 ? " is-up" : " is-down"}`;
-      el.textContent = `${fly.signed >= 0 ? "+" : "−"}${money(Math.abs(fly.signed))}`;
-      el.style.cssText = [
-        `left:${startX}px`,
-        `top:${startY}px`,
-        "background:transparent",
-        "box-shadow:none",
-        "text-shadow:none",
-        "border:none",
-        "padding:0",
-        "margin:0",
-      ].join(";");
+      const el = createCashFlyElement({
+        signed: fly.signed,
+        start,
+        clearChrome: true,
+      });
       layer.appendChild(el);
 
       const delay = i * 70;
-      // Buy/sell keeps counter SFX; tax/START/fee rely on the stamp only.
       if (cashSfx) {
         sfxTimers.push(
           window.setTimeout(() => {
@@ -120,8 +86,7 @@ export function SettleCashFlies({
         );
       }
 
-      const end =
-        cashNodePoint(fly.playerId) ?? fallbackPoint(fly.seatIndex);
+      const end = cashFlySeatPoint(fly.playerId, fly.seatIndex);
       const anim = el.animate(
         [
           {

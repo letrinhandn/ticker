@@ -54,11 +54,12 @@ function DieFace({
 
   useEffect(() => {
     if (!rolling) {
-      setDisplay(value ?? idleFace);
+      const face = value ?? idleFace;
+      queueMicrotask(() => setDisplay(face));
       return;
     }
     let alive = true;
-    setDisplay(1 + Math.floor(Math.random() * 6));
+    queueMicrotask(() => setDisplay(1 + Math.floor(Math.random() * 6)));
     const id = window.setInterval(() => {
       if (!alive) return;
       setDisplay(1 + Math.floor(Math.random() * 6));

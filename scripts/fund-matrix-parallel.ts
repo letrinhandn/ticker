@@ -120,7 +120,8 @@ async function main() {
   }
 
   const gamesPerPair = Number(argValue("--games") ?? 2000);
-  const maxTurns = Number(argValue("--maxTurns") ?? 40);
+  // Forever play (engine ignores turn-cap); 0 = insolvency-only ends.
+  const maxTurns = Number(argValue("--maxTurns") ?? 0);
   const baseSeed = Number(argValue("--seed") ?? 1000);
   const out = argValue("--out") ?? "fund-matrix-mega.json";
   const workers = Math.max(

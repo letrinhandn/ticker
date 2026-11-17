@@ -7,7 +7,7 @@ import { HALT_FINE } from "@/shared/types";
 
 type Variant = "halt" | "goto_halt" | "free" | "go";
 
-export function MonopolyCornerCard({
+export function CornerDeedCard({
   variant,
   footer,
   compact = false,
@@ -24,7 +24,7 @@ export function MonopolyCornerCard({
           bottom: t("corner.goBottom"),
           art: "/tiles/start.svg",
           note: t("corner.goNote"),
-          faceClass: "mono-corner-go",
+          faceClass: "corner-deed-go",
         }
       : variant === "free"
         ? {
@@ -52,29 +52,29 @@ export function MonopolyCornerCard({
 
   return (
     <article
-      className={`mono-corner-card mono-corner-${variant}${c.faceClass ? ` ${c.faceClass}` : ""}${compact ? " is-compact" : ""}`}
+      className={`corner-deed-card corner-deed-${variant}${c.faceClass ? ` ${c.faceClass}` : ""}${compact ? " is-compact" : ""}`}
     >
-      <div className="mono-corner-shell">
-        <div className="mono-corner-face">
-          <p className="mono-corner-top">{c.top}</p>
-          <div className="mono-corner-art-wrap">
+      <div className="corner-deed-shell">
+        <div className="corner-deed-face">
+          <p className="corner-deed-top">{c.top}</p>
+          <div className="corner-deed-art-wrap">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              className="mono-corner-art"
+              className="corner-deed-art"
               src={c.art}
               alt=""
               draggable={false}
             />
           </div>
-          <p className="mono-corner-bottom">{c.bottom}</p>
+          <p className="corner-deed-bottom">{c.bottom}</p>
           {variant === "go" ? (
-            <ul className="mono-corner-bullets">
+            <ul className="corner-deed-bullets">
               <li>{t("corner.goBulletTax")}</li>
               <li>{t("corner.goBulletOps")}</li>
               <li>{t("corner.goBulletTrade")}</li>
             </ul>
           ) : (
-            <p className="mono-corner-note">{c.note}</p>
+            <p className="corner-deed-note">{c.note}</p>
           )}
         </div>
       </div>

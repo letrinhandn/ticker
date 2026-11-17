@@ -71,16 +71,23 @@ export function NewsRevealPortal({
   const runId = useRef(0);
   const finishedRef = useRef(false);
 
-  onDoneRef.current = onDone;
+  useEffect(() => {
+    onDoneRef.current = onDone;
+  }, [onDone]);
+
   const showBack = step === "deal";
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    queueMicrotask(() => setMounted(true));
+  }, []);
 
   useEffect(() => {
     if (!active) {
-      setStep("deal");
-      setPile(null);
-      setTweenMs(0);
+      queueMicrotask(() => {
+        setStep("deal");
+        setPile(null);
+        setTweenMs(0);
+      });
       finishedRef.current = false;
       return;
     }
@@ -89,10 +96,12 @@ export function NewsRevealPortal({
     finishedRef.current = false;
     const p = newsPileBox();
     const n = centerBox();
-    setPile(p);
-    setNatural(n);
-    setTweenMs(0);
-    setStep("deal");
+    queueMicrotask(() => {
+      setPile(p);
+      setNatural(n);
+      setTweenMs(0);
+      setStep("deal");
+    });
 
     const timers: number[] = [];
     const later = (fn: () => void, ms: number) => {

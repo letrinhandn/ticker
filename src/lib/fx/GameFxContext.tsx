@@ -29,6 +29,8 @@ import { playCashDelta, playSfx, unlockSfx } from "@/lib/sfx/sounds";
 
 type SectorBump = SectorBumpEvent;
 
+type HoldingsSnap = GameState["holdings"];
+
 type GameFxValue = {
   fxBusy: boolean;
   displayCash: Record<string, number>;
@@ -42,6 +44,12 @@ type GameFxValue = {
    * so the fly delivers the change instead of the seat tweening alone.
    */
   seatSectorVisual: Record<SectorId, number>;
+  /**
+   * Pre-trade holdings while cash is still frozen. Stops seat total from
+   * counting newly bought shares before the purchase cash lands (and the
+   * reverse on sells).
+   */
+  holdingsVisual: HoldingsSnap | null;
   sectorBumpId: SectorId | null;
   sectorBumpDir: 1 | -1 | 0;
   focusTile: number | null;
@@ -59,6 +67,10 @@ type GameFxValue = {
    */
   absorbHeldCash: () => void;
 };
+
+function cloneHoldings(holdings: HoldingsSnap): HoldingsSnap {
+  return holdings.map((h) => ({ ...h }));
+}
 
 const GameFxContext = createContext<GameFxValue | null>(null);
 
@@ -176,6 +188,9 @@ export function GameFxProvider({ children }: { children: ReactNode }) {
     useState<Record<SectorId, number>>(zeroSectors);
   const [seatSectorVisual, setSeatSectorVisual] =
     useState<Record<SectorId, number>>(zeroSectors);
+  const [holdingsVisual, setHoldingsVisual] = useState<HoldingsSnap | null>(
+    null,
+  );
   const [sectorBumpId, setSectorBumpId] = useState<SectorId | null>(null);
   const [sectorBumpDir, setSectorBumpDir] = useState<1 | -1 | 0>(0);
   const [bankruptPlayerId, setBankruptPlayerId] = useState<string | null>(null);
@@ -200,13 +215,17 @@ export function GameFxProvider({ children }: { children: ReactNode }) {
   const fxBusyRef = useRef(false);
   const displayCashRef = useRef(displayCash);
   const sectorVisualRef = useRef(sectorVisual);
+  const seatSectorVisualRef = useRef(seatSectorVisual);
   /** Avoid re-syncing idle visuals every wake. */
   const idleSyncedRef = useRef(true);
 
-  movementHoldRef.current = movementHold;
-  gameRef.current = game;
-  displayCashRef.current = displayCash;
-  sectorVisualRef.current = sectorVisual;
+  useEffect(() => {
+    movementHoldRef.current = movementHold;
+    gameRef.current = game;
+    displayCashRef.current = displayCash;
+    sectorVisualRef.current = sectorVisual;
+    seatSectorVisualRef.current = seatSectorVisual;
+  }, [movementHold, game, displayCash, sectorVisual, seatSectorVisual]);
 
   const clearSleepTimers = () => {
     for (const t of sleepTimers.current) window.clearTimeout(t);
@@ -308,6 +327,7 @@ export function GameFxProvider({ children }: { children: ReactNode }) {
       setSectorVisual(nextSectors);
       setSeatSectorVisual(nextSectors);
     }
+    setHoldingsVisual(null);
     setSectorBumpId(null);
     setSectorBumpDir(0);
     setBusy(false);
@@ -367,6 +387,13 @@ export function GameFxProvider({ children }: { children: ReactNode }) {
       return next;
     });
 
+    // Unlock live holdings + price seats at post-card levels together so a
+    // buy is NW-neutral aside from the flat order fee (and true book MTM).
+    setHoldingsVisual(null);
+    const finalLevels = cloneSectorIndex(g);
+    setSeatSectorVisual(finalLevels);
+    seatSectorVisualRef.current = finalLevels;
+
     if (parked.length) {
       const flash: Record<string, "up" | "down" | null> = {};
       for (const ev of parked) {
@@ -422,26 +449,33 @@ export function GameFxProvider({ children }: { children: ReactNode }) {
       presentationHoldRef.current = false;
       sectorsReleasedRef.current = false;
       idleSyncedRef.current = true;
-      setPresentationHoldState(false);
-      setDisplayCash({});
-      setCashFlash({});
-      setCashFlies([]);
-      setBusy(false);
+      queueMicrotask(() => {
+        setPresentationHoldState(false);
+        setDisplayCash({});
+        setCashFlash({});
+        setCashFlies([]);
+        setHoldingsVisual(null);
+        setBusy(false);
+      });
       return;
     }
 
     const prev = prevGame.current;
     if (!prev) {
-      setDisplayCash(emptyCash(game));
       const opening = cloneSectorIndex(game);
-      setSectorVisual(opening);
-      setSeatSectorVisual(opening);
+      const cardPending = isCardPending(game);
       prevGame.current = game;
-      if (isCardPending(game)) {
+      if (cardPending) {
         presentationHoldRef.current = true;
         sectorsReleasedRef.current = false;
-        setPresentationHoldState(true);
       }
+      queueMicrotask(() => {
+        setDisplayCash(emptyCash(game));
+        setSectorVisual(opening);
+        setSeatSectorVisual(opening);
+        setHoldingsVisual(null);
+        if (cardPending) setPresentationHoldState(true);
+      });
       enqueue(diffGameFx(null, game));
       return;
     }
@@ -459,24 +493,28 @@ export function GameFxProvider({ children }: { children: ReactNode }) {
       presentationHoldRef.current = false;
       sectorsReleasedRef.current = false;
       idleSyncedRef.current = true;
-      setPresentationHoldState(false);
-      setCashFlies([]);
-      setCashFlash({});
-      setLandPulseTile(null);
-      setBankruptPlayerId(null);
-      setSectorBumpId(null);
-      setSectorBumpDir(0);
-      setDisplayCash(emptyCash(game));
       const fresh = cloneSectorIndex(game);
-      setSectorVisual(fresh);
-      setSeatSectorVisual(fresh);
-      setBusy(false);
+      const cardPending = isCardPending(game);
       prevGame.current = game;
-      if (isCardPending(game)) {
+      if (cardPending) {
         presentationHoldRef.current = true;
         sectorsReleasedRef.current = false;
-        setPresentationHoldState(true);
       }
+      queueMicrotask(() => {
+        setPresentationHoldState(false);
+        setCashFlies([]);
+        setCashFlash({});
+        setLandPulseTile(null);
+        setBankruptPlayerId(null);
+        setSectorBumpId(null);
+        setSectorBumpDir(0);
+        setDisplayCash(emptyCash(game));
+        setSectorVisual(fresh);
+        setSeatSectorVisual(fresh);
+        setHoldingsVisual(null);
+        setBusy(false);
+        if (cardPending) setPresentationHoldState(true);
+      });
       enqueue(diffGameFx(null, game));
       wakePump();
       return;
@@ -489,7 +527,7 @@ export function GameFxProvider({ children }: { children: ReactNode }) {
     if (becameCard) {
       presentationHoldRef.current = true;
       sectorsReleasedRef.current = false;
-      setPresentationHoldState(true);
+      queueMicrotask(() => setPresentationHoldState(true));
       const parkedCash = queue.current.filter(isCashDelta);
       if (parkedCash.length) {
         queue.current = queue.current.filter((e) => !isCashDelta(e));
@@ -501,15 +539,24 @@ export function GameFxProvider({ children }: { children: ReactNode }) {
     // HUD owns release after shuffle so cash/pegs never play under the card.
 
     const events = diffGameFx(prev, game);
-    if (events.some((e) => e.type === "cashDelta")) {
-      setDisplayCash(emptyCash(prev));
-    }
-    if (events.some(isSectorBump)) {
-      // Freeze pegs + seat pricing at pre-card levels until hold releases.
-      const frozen = cloneSectorIndex(prev);
-      setSectorVisual(frozen);
-      setSeatSectorVisual(frozen);
-      idleSyncedRef.current = false;
+    const freezesCash = events.some((e) => e.type === "cashDelta");
+    const freezesSectors = events.some(isSectorBump);
+    if (freezesCash || freezesSectors) {
+      const frozen = freezesSectors ? cloneSectorIndex(prev) : null;
+      queueMicrotask(() => {
+        if (freezesCash) setDisplayCash(emptyCash(prev));
+        if (frozen) {
+          setSectorVisual(frozen);
+          setSeatSectorVisual(frozen);
+        }
+        if (freezesCash || freezesSectors) {
+          setHoldingsVisual(cloneHoldings(prev.holdings));
+        }
+      });
+      if (frozen) {
+        seatSectorVisualRef.current = frozen;
+        idleSyncedRef.current = false;
+      }
     }
     prevGame.current = game;
     enqueue(events);
@@ -546,7 +593,16 @@ export function GameFxProvider({ children }: { children: ReactNode }) {
         // Continue from the peg's current visual — never rewind (that looked
         // like a jerk back then forward when visual was already at `to`).
         let cur = sectorVisualRef.current[ev.sector] ?? ev.from;
-        if (cur === ev.to) break;
+        if (cur === ev.to) {
+          // Seat may already be snapped to final on cash absorb — keep it there.
+          setSeatSectorVisual((v) => {
+            if ((v[ev.sector] ?? 0) === ev.to) return v;
+            const next = { ...v, [ev.sector]: ev.to };
+            seatSectorVisualRef.current = next;
+            return next;
+          });
+          break;
+        }
 
         const dir = Math.sign(ev.to - cur) as 1 | -1 | 0;
         if (dir === 0) break;
@@ -556,6 +612,10 @@ export function GameFxProvider({ children }: { children: ReactNode }) {
           ...sectorVisualRef.current,
           [ev.sector]: cur,
         };
+        // If seats already price this sector at `to` (cash absorb snapped
+        // them), board pegs still animate but seat totals stay put.
+        const seatAlreadyPriced =
+          (seatSectorVisualRef.current[ev.sector] ?? 0) === ev.to;
 
         setSectorBumpId(ev.sector);
         setSectorBumpDir(dir);
@@ -566,42 +626,47 @@ export function GameFxProvider({ children }: { children: ReactNode }) {
           await sleep(fxMs(FX_TIMING.sectorStepMs));
         }
 
-        // Peg finished — fly portfolio delta from peg → seats, then unlock seat.
         const levelsEnd = { ...levelsStart, [ev.sector]: ev.to };
-        const g = gameRef.current;
-        const deltas: {
-          playerId: string;
-          delta: number;
-          seatIndex: number;
-        }[] = [];
-        if (g) {
-          g.players.forEach((p, seatIndex) => {
-            if (p.bankrupt) return;
-            const delta =
-              portfolioValue(g, p.id, levelsEnd) -
-              portfolioValue(g, p.id, levelsStart);
-            if (delta === 0) return;
-            deltas.push({ playerId: p.id, delta, seatIndex });
-          });
-        }
+        if (!seatAlreadyPriced) {
+          const g = gameRef.current;
+          const deltas: {
+            playerId: string;
+            delta: number;
+            seatIndex: number;
+          }[] = [];
+          if (g) {
+            g.players.forEach((p, seatIndex) => {
+              if (p.bankrupt) return;
+              const delta =
+                portfolioValue(g, p.id, levelsEnd) -
+                portfolioValue(g, p.id, levelsStart);
+              if (delta === 0) return;
+              deltas.push({ playerId: p.id, delta, seatIndex });
+            });
+          }
 
-        if (deltas.length) {
-          await sleep(fxMs(FX_TIMING.pegWorthPauseMs));
-          setCashFlash((f) => {
-            const nextFlash = { ...f };
-            for (const d of deltas) {
-              nextFlash[d.playerId] = d.delta >= 0 ? "up" : "down";
-            }
-            return nextFlash;
-          });
-          await playPegWorthFlies(ev.sector, deltas);
-          setCashFlash((f) => {
-            const nextFlash = { ...f };
-            for (const d of deltas) nextFlash[d.playerId] = null;
-            return nextFlash;
+          if (deltas.length) {
+            await sleep(fxMs(FX_TIMING.pegWorthPauseMs));
+            setCashFlash((f) => {
+              const nextFlash = { ...f };
+              for (const d of deltas) {
+                nextFlash[d.playerId] = d.delta >= 0 ? "up" : "down";
+              }
+              return nextFlash;
+            });
+            await playPegWorthFlies(ev.sector, deltas);
+            setCashFlash((f) => {
+              const nextFlash = { ...f };
+              for (const d of deltas) nextFlash[d.playerId] = null;
+              return nextFlash;
+            });
+          }
+          setSeatSectorVisual((v) => {
+            const next = { ...v, [ev.sector]: ev.to };
+            seatSectorVisualRef.current = next;
+            return next;
           });
         }
-        setSeatSectorVisual(levelsEnd);
 
         setSectorBumpId(null);
         setSectorBumpDir(0);
@@ -765,6 +830,7 @@ export function GameFxProvider({ children }: { children: ReactNode }) {
         const snap = cloneSectorIndex(g);
         setSectorVisual(snap);
         setSeatSectorVisual(snap);
+        setHoldingsVisual(null);
       }
       idleSyncedRef.current = true;
       wakePump();
@@ -784,6 +850,7 @@ export function GameFxProvider({ children }: { children: ReactNode }) {
       landPulseTile,
       sectorVisual,
       seatSectorVisual,
+      holdingsVisual,
       sectorBumpId,
       sectorBumpDir,
       focusTile,
@@ -801,6 +868,7 @@ export function GameFxProvider({ children }: { children: ReactNode }) {
       landPulseTile,
       sectorVisual,
       seatSectorVisual,
+      holdingsVisual,
       sectorBumpId,
       sectorBumpDir,
       focusTile,

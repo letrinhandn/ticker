@@ -1,5 +1,5 @@
 import { PLAYER_TOKENS, type SectorId } from "@/shared/types";
-import { BOARD, SECTOR_IDS } from "@/lib/game/board";
+import { BOARD, SECTOR_IDS, sectorForTile } from "@/lib/game/board";
 import { createGame } from "@/lib/game/engine";
 import { stepBot } from "@/lib/game/bots/botRunner";
 import { netWorth } from "@/lib/game/pricing";
@@ -94,6 +94,20 @@ export function runMatch(opts: RunMatchOpts): MatchResult {
     sectorMin[s] = v;
     sectorMax[s] = v;
   }
+  const companyTradesByLevel: Record<
+    string,
+    { buy: number; sell: number; skip: number }
+  > = {};
+  const bumpLevelTrade = (
+    level: number,
+    action: "buy" | "sell" | "skip",
+  ) => {
+    const key = String(level);
+    if (!companyTradesByLevel[key]) {
+      companyTradesByLevel[key] = { buy: 0, sell: 0, skip: 0 };
+    }
+    companyTradesByLevel[key]![action] += 1;
+  };
 
   const playerBuys = Object.fromEntries(seats.map((p) => [p.id, 0])) as Record<
     string,
@@ -109,7 +123,7 @@ export function runMatch(opts: RunMatchOpts): MatchResult {
     seats.map((p) => [p.id, null]),
   );
 
-  let coverage = {
+  const coverage = {
     companyLand: false,
     etfTrade: false,
     visitFee: false,
@@ -235,17 +249,26 @@ export function runMatch(opts: RunMatchOpts): MatchResult {
         tradesByTile[key] = { buy: 0, sell: 0, skip: 0 };
       }
       const row = tradesByTile[key]!;
+      const boardTile = tile != null ? BOARD[tile] : undefined;
+      const sector =
+        boardTile && boardTile.kind === "company"
+          ? sectorForTile(boardTile)
+          : null;
+      const levelAtTrade =
+        sector != null ? (before.sectorIndex[sector] ?? 0) : null;
       if (step.action.action === "buy") {
         row.buy += 1;
         playerBuys[current.id] = (playerBuys[current.id] ?? 0) + 1;
-        const t = tile != null ? BOARD[tile] : undefined;
-        if (t?.kind === "etf") coverage.etfTrade = true;
+        if (boardTile?.kind === "etf") coverage.etfTrade = true;
+        if (levelAtTrade != null) bumpLevelTrade(levelAtTrade, "buy");
       } else if (step.action.action === "sell") {
         row.sell += 1;
         playerSells[current.id] = (playerSells[current.id] ?? 0) + 1;
+        if (levelAtTrade != null) bumpLevelTrade(levelAtTrade, "sell");
       } else {
         row.skip += 1;
         playerSkips[current.id] = (playerSkips[current.id] ?? 0) + 1;
+        if (levelAtTrade != null) bumpLevelTrade(levelAtTrade, "skip");
       }
     }
 
@@ -262,8 +285,13 @@ export function runMatch(opts: RunMatchOpts): MatchResult {
     }
 
     if (state.phase === "finished") {
-      const log0 = state.log[0] ?? "";
-      endReason = log0.includes("Market closes") ? "maxTurns" : "bankruptcy";
+      // log[0] is the opening die line — check the close message at the end.
+      const closeLine = [...state.log].reverse().find(
+        (l) => l.includes("Market closes") || l.includes("wins the market"),
+      );
+      endReason = closeLine?.includes("Market closes")
+        ? "maxTurns"
+        : "bankruptcy";
       break;
     }
   }
@@ -322,6 +350,9 @@ export function runMatch(opts: RunMatchOpts): MatchResult {
     sectorFinal: { ...state.sectorIndex },
     sectorMin,
     sectorMax,
+    companyTradesByLevel,
+    sectorsHitFloor: SECTOR_IDS.filter((s) => sectorMin[s]! <= -5).length,
+    sectorsHitCeil: SECTOR_IDS.filter((s) => sectorMax[s]! >= 5).length,
     playerResults,
     coverage,
   };

@@ -34,18 +34,39 @@ export function useGameActions() {
   const me = game?.players.find((p) => p.id === playerId) ?? null;
   const current = game ? game.players[game.turnIndex] : null;
   const isAutoPlay = Boolean(snapshot?.autoPlay);
+  const myLobbySeat = snapshot?.seats.find((s) => s.playerId === playerId);
+  /** Left mid-match (or disconnected) while the seat stays in the game. */
+  const isAwaySeat = Boolean(
+    myLobbySeat && !myLobbySeat.isBot && !myLobbySeat.connected,
+  );
+  const seatedInGame = Boolean(
+    playerId && game?.players.some((p) => p.id === playerId),
+  );
+  /** Pure watcher, full auto-play room, or own seat is bot-driven after leave. */
+  const isSpectator = Boolean(
+    game && (!seatedInGame || isAutoPlay || isAwaySeat),
+  );
   const isMyTurn = Boolean(
-    current && playerId && current.id === playerId && !isAutoPlay,
+    current &&
+      playerId &&
+      current.id === playerId &&
+      !isAutoPlay &&
+      !isAwaySeat,
   );
   const pending = game?.pending ?? null;
   const isBotTurn = Boolean(
-    current && (isBotPlayerId(current.id) || isAutoPlay),
+    current &&
+      (isBotPlayerId(current.id) ||
+        isAutoPlay ||
+        (snapshot?.seats.some(
+          (s) =>
+            s.playerId === current.id &&
+            !s.isBot &&
+            !s.connected,
+        ) ??
+          false)),
   );
   const hasBotRival = Boolean(game?.players.some((p) => isBotPlayerId(p.id)));
-  const isSpectator = Boolean(
-    game &&
-      ((playerId && !game.players.some((p) => p.id === playerId)) || isAutoPlay),
-  );
 
   const blockingPending =
     pending?.type === "info" ||
@@ -142,6 +163,8 @@ export function useGameActions() {
     isMyTurn,
     isBotTurn,
     isSpectator,
+    isAutoPlay,
+    isAwaySeat,
     pending,
     canRoll,
     canEnd,

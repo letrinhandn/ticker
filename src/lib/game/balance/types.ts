@@ -268,6 +268,14 @@ export type MatchResult = {
   sectorFinal: Record<SectorId, number>;
   sectorMin: Record<SectorId, number>;
   sectorMax: Record<SectorId, number>;
+  /** Company desk actions keyed by sector level at decision (−5…+5). */
+  companyTradesByLevel: Record<
+    string,
+    { buy: number; sell: number; skip: number }
+  >;
+  /** How many sectors touched the −5 / +5 rail this match. */
+  sectorsHitFloor: number;
+  sectorsHitCeil: number;
   playerResults: MatchPlayerResult[];
   coverage: {
     companyLand: boolean;

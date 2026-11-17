@@ -24,10 +24,10 @@ import type {
  * Physical deck size — same for Price Reaction & Market News (PR matrix is the standard).
  * Portrait 3:4; content scrolls inside if needed.
  */
-export const PCARD_SIZE_STYLE: CSSProperties = {
-  width: "min(22.5rem, calc(100vw - 1.5rem), 68vh)",
+const PCARD_SIZE_STYLE: CSSProperties = {
+  width: "min(22.5rem, calc(100vw - 1.5rem), 68dvh)",
   aspectRatio: "3 / 4",
-  maxHeight: "min(85vh, 36rem)",
+  maxHeight: "min(85dvh, 36rem)",
 };
 
 /** Pixel box for the event/mill card — matches `.pcard.is-event` / PCARD_SIZE_STYLE. */
@@ -35,9 +35,11 @@ export function eventCardCenterRect(win = typeof window !== "undefined" ? window
   if (!win) return { x: 0, y: 0, w: 360, h: 480 };
   const rem =
     parseFloat(getComputedStyle(win.document.documentElement).fontSize) || 16;
-  let w = Math.min(22.5 * rem, win.innerWidth - 1.5 * rem, win.innerHeight * 0.68);
+  const vh =
+    win.visualViewport?.height ?? win.innerHeight;
+  let w = Math.min(22.5 * rem, win.innerWidth - 1.5 * rem, vh * 0.68);
   let h = w * (4 / 3);
-  const maxH = Math.min(win.innerHeight * 0.85, 36 * rem);
+  const maxH = Math.min(vh * 0.85, 36 * rem);
   if (h > maxH) {
     h = maxH;
     w = h * (3 / 4);
@@ -51,12 +53,12 @@ export function eventCardCenterRect(win = typeof window !== "undefined" ? window
 }
 
 /** Soft premium geometry for dark card backs — portrait 3:4 (same as physical card). */
-export function MonopolyDeckBack(_props?: { variant?: "pr" | "news" }) {
+function DeckBackArt({}: { variant?: "pr" | "news" } = {}) {
   const uid = useId().replace(/:/g, "");
   const latticeId = `deckLattice-${uid}`;
   return (
     <svg
-      className="deck-mono-blocks"
+      className="deck-lattice-blocks"
       viewBox="0 0 75 100"
       preserveAspectRatio="none"
       aria-hidden
@@ -148,7 +150,7 @@ export function DeckCardBackFace({
 }) {
   return (
     <div className="pcard-back-inner">
-      <MonopolyDeckBack variant={variant} />
+      <DeckBackArt variant={variant} />
       <div className={`pcard-back-mark${variant === "news" ? " is-news" : " is-pr"}`}>
         {variant === "pr" ? (
           <>
@@ -290,7 +292,7 @@ function DualMarks({ buy, sell }: { buy: number; sell: number }) {
   );
 }
 
-export function MiniPrMatrix({
+function MiniPrMatrix({
   card,
   primary = null,
   applied = [],
@@ -429,7 +431,7 @@ export function MiniPrMatrix({
   );
 }
 
-export function RegimeShocks({
+function RegimeShocks({
   shocks,
 }: {
   shocks: Partial<Record<SectorId, number>>;
@@ -647,18 +649,7 @@ export function MarketNewsDeckCard({
             </div>
           </header>
 
-          <div
-            className="pcard-body pcard-news-body"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: "0.65rem",
-              padding: "0.65rem 0.7rem 0.8rem",
-              textAlign: "center",
-            }}
-          >
+          <div className="pcard-body pcard-news-body">
             {body ? (
               <p
                 className="pcard-sub is-body"

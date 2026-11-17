@@ -50,7 +50,6 @@ import {
   clampSector,
   currentSharePrice,
   feePerShare,
-  netWorth,
   sharePrice,
 } from "./pricing";
 
@@ -110,43 +109,14 @@ function advancePending(state: GameState) {
 
 function checkWinner(state: GameState) {
   const alive = livingPlayers(state);
+  // Forever table: only last fund standing ends the match (no turn-cap close).
   if (alive.length === 1) {
     state.phase = "finished";
     state.winnerId = alive[0]!.id;
     state.pending = null;
     state.pendingQueue = [];
     pushLog(state, `${alive[0]!.name} wins the market!`);
-    return;
   }
-  // maxTurns <= 0 means unlimited; only bankruptcy ends the table.
-  if (state.maxTurns > 0 && alive.every((p) => p.turnsDone >= state.maxTurns)) {
-    finishByNetWorth(state);
-  }
-}
-
-function finishByNetWorth(state: GameState) {
-  const alive = livingPlayers(state);
-  if (alive.length === 0) return;
-  alive.sort((a, b) => {
-    const nw = netWorth(state, b.id) - netWorth(state, a.id);
-    if (nw !== 0) return nw;
-    if (b.cash !== a.cash) return b.cash - a.cash;
-    const sharesA = state.holdings
-      .filter((h) => h.ownerId === a.id)
-      .reduce((s, h) => s + h.shares, 0);
-    const sharesB = state.holdings
-      .filter((h) => h.ownerId === b.id)
-      .reduce((s, h) => s + h.shares, 0);
-    return sharesB - sharesA;
-  });
-  state.phase = "finished";
-  state.winnerId = alive[0]!.id;
-  state.pending = null;
-  state.pendingQueue = [];
-  pushLog(
-    state,
-    `Market closes. ${alive[0]!.name} wins with ${money(netWorth(state, alive[0]!.id))} net worth.`,
-  );
 }
 
 function sharesOwned(state: GameState, tileIndex: number, ownerId: string): number {

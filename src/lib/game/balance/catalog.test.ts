@@ -124,7 +124,7 @@ describe("getBalanceCatalog completeness", () => {
     expect(catalog.fingerprint).toMatch(/^[0-9a-f]{8}$/);
   });
 
-  it("no company share price equals its sector arithmetic mean at any level", () => {
+  it("sector mean stays visually clear of every company line at all levels", () => {
     const bySector = new Map<string, typeof catalog.companies>();
     for (const c of catalog.companies) {
       const list = bySector.get(c.sector) ?? [];
@@ -136,11 +136,19 @@ describe("getBalanceCatalog completeness", () => {
         const key = String(lv);
         const prices = list.map((co) => co.pricePerShareByLevelM[key]!);
         const mean = prices.reduce((a, b) => a + b, 0) / prices.length;
+        const range = Math.max(...prices) - Math.min(...prices) || 1;
+        // 3+ tickers: keep TB ngành off the mid line (≥12% of chart range).
+        // 2 tickers: mean is midway — require ≥35% of range.
+        const minGap =
+          list.length >= 3
+            ? Math.max(12, range * 0.12)
+            : Math.max(8, range * 0.35);
         for (const price of prices) {
+          const gap = Math.abs(price - mean);
           expect(
-            price,
-            `${sectorId} level ${lv}: company ${price} must not equal sector mean ${mean}`,
-          ).not.toBe(mean);
+            gap,
+            `${sectorId} level ${lv}: |${price} − mean ${mean.toFixed(1)}| = ${gap.toFixed(1)} must be ≥ ${minGap.toFixed(1)}`,
+          ).toBeGreaterThanOrEqual(minGap);
         }
       }
     }

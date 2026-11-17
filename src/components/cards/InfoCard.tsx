@@ -37,7 +37,10 @@ export function InfoCard({
   hold?: boolean;
 }) {
   const onDismissRef = useRef(onDismiss);
-  onDismissRef.current = onDismiss;
+
+  useEffect(() => {
+    onDismissRef.current = onDismiss;
+  }, [onDismiss]);
 
   useEffect(() => {
     if (!onDismissRef.current || hold) return;

@@ -76,19 +76,31 @@ function etfIfUseful(d: DeskView): BotTradeStance | null {
  */
 const indexStrategy: FundStrategy = {
   kind: "index",
-  raiseCashMult: 0.95,
-  buyBudgetFrac: 0.18,
+  raiseCashMult: 1.02,
+  buyBudgetFrac: 0.4,
+  cornerBudgetFrac: 0.64,
   chooseStance(d) {
-    if (d.cash < sellTrigger(d.cash, 0.95) && d.total > 0) return "raise_cash";
+    if (d.cash < sellTrigger(d.cash, 1.02) && d.total > 0) return "raise_cash";
     const etf = etfIfUseful(d);
     if (etf) return etf;
     if (d.owned >= 2 && d.level >= 2) return "take_profit";
-    if (d.owned >= 3 && d.level <= -4 && d.weight >= 0.35) return "cut_loss";
+    if (d.owned >= 3 && d.level <= -3 && d.weight >= 0.4) return "cut_loss";
+    if (
+      d.focusKind === "company" &&
+      d.market >= 2 &&
+      d.budget >= d.price * 2 &&
+      (d.level <= -2 || d.edge.buyDip) &&
+      d.weight < 0.4
+    ) {
+      return "corner_dip";
+    }
     if (
       d.focusKind === "company" &&
       d.level <= -1 &&
       d.market >= 1 &&
-      canAfford(d, 1)
+      canAfford(d, 1) &&
+      d.weight < 0.4 &&
+      (d.edge.buyDip || d.level <= -2 || d.total < 3)
     ) {
       return "accumulate";
     }
@@ -102,9 +114,9 @@ const indexStrategy: FundStrategy = {
  */
 const valueStrategy: FundStrategy = {
   kind: "value",
-  raiseCashMult: 0.9,
-  buyBudgetFrac: 0.38,
-  cornerBudgetFrac: 0.75,
+  raiseCashMult: 0.95,
+  buyBudgetFrac: 0.48,
+  cornerBudgetFrac: 0.82,
   chooseStance(d) {
     if (d.cash < sellTrigger(d.cash, 0.88) && d.total > 0) return "raise_cash";
     if (d.focusKind === "etf") {
@@ -146,12 +158,12 @@ const valueStrategy: FundStrategy = {
 /** Growth / VC public — add to winners, cut losers early. */
 const growthStrategy: FundStrategy = {
   kind: "growth",
-  raiseCashMult: 1.05,
-  buyBudgetFrac: 0.48,
+  raiseCashMult: 1.08,
+  buyBudgetFrac: 0.5,
   cornerBudgetFrac: 0.82,
   chooseStance(d) {
     const soft = d.fundName === "SoftBank";
-    if (d.cash < sellTrigger(d.cash, soft ? 0.88 : 1.08) && d.total > 0) {
+    if (d.cash < sellTrigger(d.cash, soft ? 0.9 : 1.08) && d.total > 0) {
       return "raise_cash";
     }
     if (d.focusKind === "etf") {
@@ -161,15 +173,19 @@ const growthStrategy: FundStrategy = {
       return "cash_hold";
     }
     if (d.owned >= 2 && (d.edge.broken || d.level <= -2)) return "cut_loss";
-    if (d.owned >= 2 && (d.edge.fadeRally || d.level >= 3)) return "take_profit";
-    // Momentum only — need followUp / dip, no flat freeroll.
+    if (d.owned >= 2 && (d.edge.fadeRally || d.level >= 2)) return "take_profit";
+    // Momentum + mild dips — still refuse chasing a fade.
     if (
       d.focusKind === "company" &&
       d.market >= 1 &&
       d.budget >= d.price &&
       !d.edge.fadeRally &&
       d.level <= 1 &&
-      (d.edge.followUp || d.edge.buyDip || (d.owned >= 1 && d.edge.tape.mom >= 0))
+      (d.edge.followUp ||
+        d.edge.buyDip ||
+        d.level <= -1 ||
+        (d.owned >= 1 && d.edge.tape.mom > 0) ||
+        (d.total === 0 && d.level <= 0))
     ) {
       if ((d.edge.buyDip || d.level <= -1) && d.market >= 2) return "corner_dip";
       return "accumulate";
@@ -177,19 +193,17 @@ const growthStrategy: FundStrategy = {
     return "cash_hold";
   },
   sizeBuy(d, stance, base) {
-    // SoftBank: oversized but not full-budget all-in.
     if (d.fundName === "SoftBank") {
       const room = MAX_SHARES_OWNED - d.owned;
-      const spend = Math.floor(d.budget * 0.78);
+      const spend = Math.floor(d.budget * 0.7);
       return Math.min(
         d.market,
         room,
         Math.floor(spend / Math.max(1, d.price)),
       );
     }
-    // Fresh flat entries stay small so growth doesn't freeroll the tape.
     if (stance === "accumulate" && d.owned === 0 && d.level >= 0) {
-      return Math.min(base, Math.max(1, Math.floor(base * 0.55)));
+      return Math.min(base, Math.max(1, Math.floor(base * 0.65)));
     }
     if (d.edge.followUp) return Math.max(base, Math.floor(base * 1.05));
     return base;
@@ -202,20 +216,30 @@ const growthStrategy: FundStrategy = {
  */
 const sovereignStrategy: FundStrategy = {
   kind: "sovereign",
-  raiseCashMult: 1.08,
-  buyBudgetFrac: 0.18,
+  raiseCashMult: 1.06,
+  buyBudgetFrac: 0.38,
+  cornerBudgetFrac: 0.68,
   chooseStance(d) {
-    if (d.cash < sellTrigger(d.cash, 1.08) && d.total > 0) return "raise_cash";
+    if (d.cash < sellTrigger(d.cash, 1.06) && d.total > 0) return "raise_cash";
     const etf = etfIfUseful(d);
     if (etf) return etf;
     if (d.owned >= 2 && d.level >= 2) return "take_profit";
-    if (d.owned >= 3 && d.level <= -3 && d.weight >= 0.35) return "cut_loss";
+    if (d.owned >= 2 && d.level <= -3 && d.weight >= 0.35) return "cut_loss";
+    if (
+      d.focusKind === "company" &&
+      d.market >= 2 &&
+      d.budget >= d.price * 2 &&
+      d.weight < 0.34 &&
+      (d.level <= -2 || d.edge.buyDip)
+    ) {
+      return "corner_dip";
+    }
     if (
       d.focusKind === "company" &&
       d.level <= -1 &&
       d.market >= 1 &&
       canAfford(d, 1) &&
-      d.weight < 0.22
+      d.weight < 0.33
     ) {
       return "accumulate";
     }
@@ -229,15 +253,15 @@ const sovereignStrategy: FundStrategy = {
  */
 const activistStrategy: FundStrategy = {
   kind: "activist",
-  raiseCashMult: 1.06,
-  buyBudgetFrac: 0.68,
-  cornerBudgetFrac: 1,
+  raiseCashMult: 1.08,
+  buyBudgetFrac: 0.54,
+  cornerBudgetFrac: 0.88,
   chooseStance(d) {
-    if (d.cash < sellTrigger(d.cash, 1.06) && d.total > 0) return "raise_cash";
+    if (d.cash < sellTrigger(d.cash, 1.08) && d.total > 0) return "raise_cash";
     // Campaign exit on stretched / contested books.
     if (
-      dumpBookRipe(d, 4) &&
-      (d.edge.fadeRally || (d.level >= 3 && d.rival >= 2))
+      dumpBookRipe(d, 3) &&
+      (d.edge.fadeRally || (d.level >= 2 && d.rival >= 2))
     ) {
       return "dump_pressure";
     }
@@ -257,8 +281,8 @@ const activistStrategy: FundStrategy = {
     if (
       d.focusKind === "company" &&
       d.market >= 2 &&
-      d.budget >= d.price * Math.min(d.market, 4) &&
-      (d.edge.buyDip || d.rival >= 2 || d.level <= 0)
+      d.budget >= d.price * Math.min(d.market, 3) &&
+      (d.edge.buyDip || d.level <= -1 || (d.rival >= 2 && d.level <= 0))
     ) {
       return "corner_dip";
     }
@@ -266,7 +290,10 @@ const activistStrategy: FundStrategy = {
       d.focusKind === "company" &&
       d.market >= 1 &&
       canAfford(d, 1) &&
-      (d.edge.buyDip || d.edge.followUp || d.rival >= 1 || d.level <= 1)
+      (d.edge.buyDip ||
+        d.edge.followUp ||
+        (d.level <= -1 && d.rival >= 1) ||
+        (d.rival >= 1 && d.level <= 1))
     ) {
       return "accumulate";
     }
@@ -277,22 +304,26 @@ const activistStrategy: FundStrategy = {
 /** Event-driven — buy post-shock, cut broken thesis, opportunistic dump. */
 const eventStrategy: FundStrategy = {
   kind: "event",
-  raiseCashMult: 1.0,
-  buyBudgetFrac: 0.5,
-  cornerBudgetFrac: 0.9,
+  raiseCashMult: 0.95,
+  buyBudgetFrac: 0.62,
+  cornerBudgetFrac: 0.98,
   chooseStance(d) {
-    if (d.cash < sellTrigger(d.cash, 1.02) && d.total > 0) return "raise_cash";
+    if (d.cash < sellTrigger(d.cash, 0.98) && d.total > 0) return "raise_cash";
     if (d.owned >= 2 && (d.edge.broken || d.level <= -3)) return "cut_loss";
     if (d.owned >= 2 && (d.edge.fadeRally || d.level >= 3)) return "take_profit";
-    if (dumpBookRipe(d, 4) && (d.edge.fadeRally || d.level >= 2)) {
+    if (dumpBookRipe(d, 3) && (d.edge.fadeRally || d.level >= 2)) {
       return "dump_pressure";
     }
     if (d.focusKind === "etf") return etfIfUseful(d) ?? "cash_hold";
-    // Only true dislocations — not every flat or mild dip.
+    // Dislocations + mild mean-rev dips — still refuse chasing rallies.
     const shocked =
       d.edge.buyDip ||
+      d.level <= -2 ||
       (d.level <= -1 &&
-        (Math.abs(d.edge.tape.mom) >= 1 || d.edge.tape.stretch <= -0.8));
+        (Math.abs(d.edge.tape.mom) >= 1 ||
+          d.edge.tape.stretch <= -0.5 ||
+          d.edge.meanRev > 0.1)) ||
+      (d.level <= 0 && d.edge.meanRev > 0.25 && d.edge.tape.stretch <= 0);
     if (
       d.focusKind === "company" &&
       shocked &&
@@ -305,7 +336,7 @@ const eventStrategy: FundStrategy = {
       d.focusKind === "company" &&
       d.market >= 1 &&
       canAfford(d, 1) &&
-      (shocked || (d.level <= -1 && d.edge.meanRev > 0.2))
+      (shocked || (d.level <= 0 && d.edge.meanRev > 0.1) || d.total === 0)
     ) {
       return "accumulate";
     }
@@ -319,11 +350,11 @@ const eventStrategy: FundStrategy = {
  */
 const multiStratStrategy: FundStrategy = {
   kind: "multi_strat",
-  raiseCashMult: 0.95,
-  buyBudgetFrac: 0.85,
-  cornerBudgetFrac: 1,
+  raiseCashMult: 1.02,
+  buyBudgetFrac: 0.5,
+  cornerBudgetFrac: 0.8,
   chooseStance(d) {
-    if (d.cash < sellTrigger(d.cash, 0.95) && d.total > 0) return "raise_cash";
+    if (d.cash < sellTrigger(d.cash, 1.02) && d.total > 0) return "raise_cash";
     if (
       dumpBookRipe(d, 4) &&
       (d.edge.fadeRally || (d.level >= 2 && d.edge.blend < -0.2))
@@ -348,8 +379,8 @@ const multiStratStrategy: FundStrategy = {
     if (
       d.focusKind === "company" &&
       d.market >= 2 &&
-      d.budget >= d.price * Math.min(d.market, 4) &&
-      (d.edge.buyDip || (d.level <= 0 && d.edge.meanRev >= 0.3))
+      d.budget >= d.price * Math.min(d.market, 3) &&
+      (d.edge.buyDip || (d.level <= -1 && d.edge.meanRev >= 0.4))
     ) {
       return "corner_dip";
     }
@@ -360,8 +391,8 @@ const multiStratStrategy: FundStrategy = {
       !(d.concentrated && d.level >= 2 && d.edge.blend < 0) &&
       (d.edge.followUp ||
         d.edge.buyDip ||
-        d.edge.blend >= 0.25 ||
-        (d.level <= 2 && d.edge.blend >= -0.15))
+        d.edge.blend >= 0.5 ||
+        (d.level <= 0 && d.edge.blend >= 0.25))
     ) {
       return "accumulate";
     }
@@ -370,12 +401,12 @@ const multiStratStrategy: FundStrategy = {
   sizeBuy(d, stance, base) {
     const boost =
       stance === "corner_dip"
-        ? 1.15
+        ? 1.02
         : d.edge.blend > 0.5
-          ? 1.1
+          ? 0.98
           : d.edge.blend < 0
-            ? 0.75
-            : 1;
+            ? 0.6
+            : 0.92;
     return Math.max(1, Math.floor(base * boost));
   },
 };
@@ -386,11 +417,11 @@ const multiStratStrategy: FundStrategy = {
  */
 const macroStrategy: FundStrategy = {
   kind: "macro",
-  raiseCashMult: 1.05,
-  buyBudgetFrac: 0.52,
-  cornerBudgetFrac: 0.85,
+  raiseCashMult: 1.02,
+  buyBudgetFrac: 0.55,
+  cornerBudgetFrac: 0.88,
   chooseStance(d) {
-    if (d.cash < sellTrigger(d.cash, 1.05) && d.total > 0) return "raise_cash";
+    if (d.cash < sellTrigger(d.cash, 1.02) && d.total > 0) return "raise_cash";
     if (d.focusKind === "etf") {
       if (
         d.market >= 1 &&
@@ -413,13 +444,17 @@ const macroStrategy: FundStrategy = {
     const clearTrend =
       Math.abs(d.edge.tape.mom) >= 1 ||
       Math.abs(d.edge.tape.streak) >= 2 ||
-      Math.abs(d.level) >= 2;
+      Math.abs(d.level) >= 2 ||
+      d.edge.followUp;
     if (
       d.focusKind === "company" &&
       d.market >= 1 &&
       canAfford(d, 1) &&
       clearTrend &&
-      (d.edge.followUp || d.edge.buyDip || Math.abs(d.level) >= 2)
+      (d.edge.followUp ||
+        d.edge.buyDip ||
+        Math.abs(d.level) >= 2 ||
+        (d.edge.tape.mom >= 1 && d.level <= 1))
     ) {
       if (d.edge.buyDip && d.market >= 2) return "corner_dip";
       return "accumulate";
@@ -435,11 +470,10 @@ const macroStrategy: FundStrategy = {
 const quantStrategy: FundStrategy = {
   kind: "quant",
   raiseCashMult: 0.95,
-  buyBudgetFrac: 0.92,
-  cornerBudgetFrac: 1,
+  buyBudgetFrac: 0.5,
+  cornerBudgetFrac: 0.8,
   chooseStance(d) {
-    if (d.cash < sellTrigger(d.cash, 1.0) && d.total > 0) return "raise_cash";
-    // Take profit earlier than multi when tape is rich/flat at ≥2 (test + mean-rev).
+    if (d.cash < sellTrigger(d.cash, 0.98) && d.total > 0) return "raise_cash";
     if (
       d.owned >= 2 &&
       (d.edge.fadeRally ||
@@ -451,13 +485,13 @@ const quantStrategy: FundStrategy = {
     if (
       d.owned >= 2 &&
       (d.edge.broken ||
-        (d.level <= -2 && d.weight >= 0.25 && d.edge.blend < 0))
+        (d.level <= -3 && d.weight >= 0.3 && d.edge.blend < 0))
     ) {
       return "cut_loss";
     }
     if (
       dumpBookRipe(d, 3) &&
-      (d.edge.fadeRally || (d.level >= 2 && d.rival >= 2))
+      (d.edge.fadeRally || (d.level >= 2 && d.rival >= 1))
     ) {
       return "dump_pressure";
     }
@@ -475,8 +509,11 @@ const quantStrategy: FundStrategy = {
     if (
       d.focusKind === "company" &&
       d.market >= 2 &&
-      d.budget >= d.price * Math.min(d.market, 4) &&
-      (d.edge.buyDip || d.edge.blend >= 0.45 || (d.level <= -1 && d.edge.meanRev >= 0.2))
+      d.budget >= d.price * Math.min(d.market, 3) &&
+      (d.edge.buyDip ||
+        (d.level <= -1 && d.edge.meanRev >= 0.25) ||
+        d.edge.blend >= 0.45 ||
+        d.level <= -2)
     ) {
       return "corner_dip";
     }
@@ -484,11 +521,13 @@ const quantStrategy: FundStrategy = {
       d.focusKind === "company" &&
       d.market >= 1 &&
       canAfford(d, 1) &&
-      !d.concentrated &&
+      !(d.concentrated && d.level >= 2) &&
       (d.edge.buyDip ||
         d.edge.followUp ||
-        d.edge.blend >= 0.2 ||
-        (d.level <= 1 && d.edge.blend >= -0.05))
+        d.edge.blend >= 0.25 ||
+        d.edge.meanRev >= 0.25 ||
+        d.level <= -2 ||
+        (d.level <= -1 && d.edge.blend >= 0.1))
     ) {
       return "accumulate";
     }
@@ -496,13 +535,13 @@ const quantStrategy: FundStrategy = {
   },
   sizeBuy(d, stance, base) {
     const edgeBoost =
-      d.edge.blend > 0.5 || d.edge.buyDip
-        ? 1.3
-        : d.edge.blend > 0.15
-          ? 1.12
+      d.edge.blend > 0.3 || d.edge.buyDip || d.edge.meanRev > 0.25
+        ? 1.06
+        : d.edge.blend > 0 || d.edge.meanRev > 0.1
+          ? 1.0
           : 0.88;
-    const volCut = d.edge.tape.vol > 2.2 ? 0.82 : 1;
-    const mult = stance === "corner_dip" ? edgeBoost * 1.15 : edgeBoost * volCut;
+    const volCut = d.edge.tape.vol > 2.5 ? 0.8 : 1;
+    const mult = stance === "corner_dip" ? edgeBoost * 1.05 : edgeBoost * volCut;
     return Math.max(1, Math.floor(base * mult));
   },
 };
@@ -513,25 +552,27 @@ const quantStrategy: FundStrategy = {
  */
 const marketMakeStrategy: FundStrategy = {
   kind: "market_make",
-  raiseCashMult: 0.78,
-  buyBudgetFrac: 1,
-  cornerBudgetFrac: 1,
+  raiseCashMult: 1.02,
+  buyBudgetFrac: 0.38,
+  cornerBudgetFrac: 0.64,
   chooseStance(d) {
-    if (d.cash < sellTrigger(d.cash, 0.78) && d.total > 0) return "raise_cash";
-    // Flatten into rich tape; warehouse longer on fair / mild strength.
+    if (d.cash < sellTrigger(d.cash, 1.02) && d.total > 0) return "raise_cash";
+    // Forever-matrix: inventory hard-cap 3 + soft-tape only. Flat seed and
+    // owned≥4 both blow the book past ~12–15pp; keep the soft-tape gate.
     if (
-      d.owned >= 4 &&
+      d.owned >= 2 &&
       (d.edge.fadeRally ||
-        d.level >= 5 ||
-        (d.owned >= 7 && d.level >= 3 && d.edge.tape.stretch >= 0.8))
+        d.level >= 2 ||
+        (d.owned >= 3 && d.level >= 1) ||
+        (d.owned >= 3 && d.edge.tape.stretch >= 0.35))
     ) {
       return "take_profit";
     }
-    if (d.owned >= 2 && (d.edge.broken || d.level <= -4)) return "cut_loss";
+    if (d.owned >= 2 && (d.edge.broken || d.level <= -2)) return "cut_loss";
     if (
       d.concentrated &&
-      d.owned >= 9 &&
-      (d.edge.fadeRally || d.level >= 3)
+      d.owned >= 4 &&
+      (d.edge.fadeRally || d.level >= 2)
     ) {
       return "dump_pressure";
     }
@@ -547,15 +588,15 @@ const marketMakeStrategy: FundStrategy = {
       return "cash_hold";
     }
     const fair =
-      Math.abs(d.edge.tape.stretch) <= 1.4 &&
+      Math.abs(d.edge.tape.stretch) <= 0.65 &&
       !d.edge.broken &&
-      d.level <= 3;
+      d.level <= -1;
     if (
       d.focusKind === "company" &&
       d.market >= 2 &&
       d.budget >= d.price * 2 &&
       (fair || d.edge.buyDip) &&
-      d.owned < 10
+      d.owned < 3
     ) {
       return "corner_dip";
     }
@@ -563,19 +604,19 @@ const marketMakeStrategy: FundStrategy = {
       d.focusKind === "company" &&
       d.market >= 1 &&
       canAfford(d, 1) &&
-      (fair || d.edge.buyDip || d.level <= 2) &&
-      d.owned < 10
+      (fair || d.edge.buyDip || d.level <= -1) &&
+      d.owned < 3
     ) {
       return "accumulate";
     }
     return "cash_hold";
   },
   sizeBuy(d, _stance, base) {
-    if (d.edge.buyDip) return Math.max(base, Math.floor(base * 1.15));
-    if (Math.abs(d.edge.tape.mom) >= 2) {
-      return Math.max(1, Math.floor(base * 0.75));
+    if (d.edge.buyDip) return Math.max(1, Math.floor(base * 0.95));
+    if (Math.abs(d.edge.tape.mom) >= 1) {
+      return Math.max(1, Math.floor(base * 0.55));
     }
-    return Math.max(base, Math.floor(base * 1.05));
+    return Math.max(1, Math.floor(base * 0.85));
   },
 };
 

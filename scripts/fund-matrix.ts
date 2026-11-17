@@ -60,7 +60,7 @@ function ensureReps(): void {
 function main() {
   ensureReps();
   const gamesPerPair = Number(argValue("--games") ?? 20);
-  const maxTurns = Number(argValue("--maxTurns") ?? 40);
+  const maxTurns = Number(argValue("--maxTurns") ?? 0);
   const baseSeed = Number(argValue("--seed") ?? 1000);
   const out = argValue("--out") ?? "fund-matrix.json";
 

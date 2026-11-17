@@ -106,20 +106,12 @@ const en = {
   "lobby.botSettings": "Fund bot settings",
   "lobby.botToOpen": "Clear to empty seat",
   "lobby.applyFund": "Apply fund",
-  "lobby.openSeatHint":
-    "Invite a friend to sit here, sit yourself, or add a fund bot. You can remove anyone later.",
   "lobby.claimSeat": "Sit here",
-  "lobby.waitingClaim": "You're in the room. Open an empty seat and choose Sit here.",
-  "lobby.waitingHostOpen": "Waiting for the host to open a seat.",
   "lobby.waitingList": "Waiting: {names}",
   "lobby.seats": "Seats {filled}/{max}",
   "lobby.seatN": "Seat {n}",
   "lobby.modePlay": "Play",
   "lobby.modeWatch": "Watch",
-  "lobby.watchHint":
-    "You spectate. Seat ready funds or players, then start watching auto-play.",
-  "lobby.watchLobbyHint":
-    "Watch mode. Seat at least two ready funds or players, then start watching.",
   "lobby.leaveToWatch": "Leave seat to watch",
   "lobby.fundA": "Fund A",
   "lobby.fundB": "Fund B",
@@ -146,8 +138,6 @@ const en = {
   "hud.seatMeta": "Cash {cash}, {status}",
   "lobby.start": "Start game",
   "lobby.watchAuto": "Start watching",
-  "lobby.hint":
-    "Add empty seats. Fill with a player or a fund. Remove anyone and reshuffle as needed.",
   "lobby.connecting": "Connecting",
   "lobby.startingBot": "Starting fund game",
   "lobby.waitingEllipsis": "Waiting",
@@ -156,11 +146,13 @@ const en = {
   "lobby.newTable": "New table",
   "lobby.joinOther": "Join another room",
   "lobby.joinGo": "Go",
-
+  "lobby.reopen": "Lobby",
 
   "board.sharesAvail": "{left}/{total} shares available",
 
   "hud.watchingAuto": "Watching auto-play",
+  "hud.spectating": "Spectating — seats play without you",
+  "hud.seatAway": "Your seat is on autoplay",
 
   "hud.out": "Out",
   "hud.sec": "SEC",
@@ -491,20 +483,12 @@ const vi: Record<MessageKey, string> = {
   "lobby.botSettings": "Cài đặt bot quỹ",
   "lobby.botToOpen": "Xóa thành ghế trống",
   "lobby.applyFund": "Áp dụng quỹ",
-  "lobby.openSeatHint":
-    "Mời bạn ngồi, tự ngồi, hoặc thêm bot quỹ. Sau này có thể xóa bất kỳ ai.",
   "lobby.claimSeat": "Ngồi đây",
-  "lobby.waitingClaim": "Bạn đã vào phòng. Mở ghế trống rồi chọn Ngồi đây.",
-  "lobby.waitingHostOpen": "Đợi chủ phòng mở ghế.",
   "lobby.waitingList": "Đang chờ: {names}",
   "lobby.seats": "Ghế {filled}/{max}",
   "lobby.seatN": "Ghế {n}",
   "lobby.modePlay": "Chơi",
   "lobby.modeWatch": "Xem",
-  "lobby.watchHint":
-    "Bạn chỉ xem. Xếp quỹ hoặc người chơi sẵn sàng rồi bắt đầu xem auto-play.",
-  "lobby.watchLobbyHint":
-    "Chế độ xem. Cần ít nhất hai ghế sẵn sàng (quỹ hoặc người chơi) rồi bắt đầu xem.",
   "lobby.leaveToWatch": "Rời ghế để xem",
   "lobby.fundA": "Quỹ A",
   "lobby.fundB": "Quỹ B",
@@ -531,8 +515,6 @@ const vi: Record<MessageKey, string> = {
   "hud.seatMeta": "Tiền {cash}, {status}",
   "lobby.start": "Bắt đầu",
   "lobby.watchAuto": "Bắt đầu xem",
-  "lobby.hint":
-    "Thêm ghế trống. Điền người hoặc quỹ. Xóa ai cũng được rồi xếp lại.",
   "lobby.connecting": "Đang kết nối",
   "lobby.startingBot": "Đang mở ván đấu quỹ",
   "lobby.waitingEllipsis": "Đang chờ",
@@ -541,11 +523,13 @@ const vi: Record<MessageKey, string> = {
   "lobby.newTable": "Bàn mới",
   "lobby.joinOther": "Vào phòng khác",
   "lobby.joinGo": "Vào",
-
+  "lobby.reopen": "Sảnh",
 
   "board.sharesAvail": "{left}/{total} cổ còn trên thị trường",
 
   "hud.watchingAuto": "Đang xem auto-play",
+  "hud.spectating": "Đang xem — các ghế chơi không cần bạn",
+  "hud.seatAway": "Ghế của bạn đang autoplay",
 
   "hud.out": "Loại",
   "hud.sec": "SEC",

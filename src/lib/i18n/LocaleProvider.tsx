@@ -45,14 +45,20 @@ function readStoredLocale(): Locale {
 }
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("en");
-  const [ready, setReady] = useState(false);
+  const [locale, setLocaleState] = useState<Locale>(() =>
+    typeof window === "undefined" ? "en" : readStoredLocale(),
+  );
+  const [ready, setReady] = useState(
+    () => typeof window !== "undefined",
+  );
 
   useEffect(() => {
     const next = readStoredLocale();
-    setLocaleState(next);
     document.documentElement.lang = next;
-    setReady(true);
+    queueMicrotask(() => {
+      setLocaleState(next);
+      setReady(true);
+    });
   }, []);
 
   const setLocale = useCallback((next: Locale) => {

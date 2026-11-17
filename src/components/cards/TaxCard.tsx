@@ -24,18 +24,18 @@ export function TaxCard({
 
   return (
     <article
-      className={`mono-corner-card mono-corner-tax is-${kind}${compact ? " is-compact" : ""}`}
+      className={`corner-deed-card corner-deed-tax is-${kind}${compact ? " is-compact" : ""}`}
     >
-      <div className="mono-corner-shell">
-        <div className="mono-corner-face">
-          <p className="mono-corner-top">{top}</p>
-          <div className="mono-corner-art-wrap">
+      <div className="corner-deed-shell">
+        <div className="corner-deed-face">
+          <p className="corner-deed-top">{top}</p>
+          <div className="corner-deed-art-wrap">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="mono-corner-art" src={art} alt="" draggable={false} />
+            <img className="corner-deed-art" src={art} alt="" draggable={false} />
           </div>
-          <p className="mono-corner-bottom">{t("tax.bottom")}</p>
-          <p className="mono-corner-amount">{money(amount)}</p>
-          <p className="mono-corner-note">
+          <p className="corner-deed-bottom">{t("tax.bottom")}</p>
+          <p className="corner-deed-amount">{money(amount)}</p>
+          <p className="corner-deed-note">
             {t("tax.note", { amount: money(amount) })}
           </p>
         </div>

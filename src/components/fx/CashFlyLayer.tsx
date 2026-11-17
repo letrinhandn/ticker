@@ -3,40 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { SectorId } from "@/shared/types";
-import { money } from "@/lib/money";
 import { useGameFxOptional } from "@/lib/fx/GameFxContext";
+import {
+  cashFlySeatPoint,
+  createCashFlyElement,
+} from "@/lib/fx/cashFlyDom";
 import { fxMs } from "@/lib/prefs/gamePrefs";
 import { FX_TIMING } from "@/lib/fx/types";
-
-const SEAT_CORNERS = ["bl", "tr", "tl", "br"] as const;
-
-function targetForPlayer(
-  playerId: string,
-  seatIndex: number,
-): { x: number; y: number } {
-  const node = document.querySelector(
-    `[data-hud-cash="${CSS.escape(playerId)}"]`,
-  );
-  if (node) {
-    const r = node.getBoundingClientRect();
-    if (r.width > 0 && r.height > 0) {
-      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
-    }
-  }
-  const w = window.innerWidth;
-  const h = window.innerHeight;
-  const corner = SEAT_CORNERS[seatIndex] ?? "br";
-  switch (corner) {
-    case "bl":
-      return { x: 24, y: h - 88 };
-    case "br":
-      return { x: w - 24, y: h - 88 };
-    case "tl":
-      return { x: 24, y: 72 };
-    default:
-      return { x: w - 24, y: 72 };
-  }
-}
 
 function originForFly(fromSector?: SectorId): { x: number; y: number } {
   if (fromSector) {
@@ -62,7 +35,9 @@ export function CashFlyLayer({ playerIds }: { playerIds: string[] }) {
   const seen = useRef<Set<string>>(new Set());
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    queueMicrotask(() => setMounted(true));
+  }, []);
 
   useEffect(() => {
     if (!mounted || !fx) return;
@@ -74,25 +49,21 @@ export function CashFlyLayer({ playerIds }: { playerIds: string[] }) {
       seen.current.add(fly.id);
 
       const seatIndex = playerIds.indexOf(fly.playerId);
-      const end = targetForPlayer(fly.playerId, seatIndex >= 0 ? seatIndex : 0);
+      const end = cashFlySeatPoint(
+        fly.playerId,
+        seatIndex >= 0 ? seatIndex : 0,
+      );
       const start = originForFly(fly.fromSector);
-      const positive = fly.delta >= 0;
       const fromPeg = fly.fromSector != null;
       const dx = end.x - start.x;
       const dy = end.y - start.y;
 
-      const el = document.createElement("span");
-      el.className = `settle-cash-fly${positive ? " is-up" : " is-down"}${fromPeg ? " is-peg-fly" : ""}`;
-      el.textContent = `${positive ? "+" : "−"}${money(Math.abs(fly.delta))}`;
-      el.style.cssText = [
-        `left:${start.x}px`,
-        `top:${start.y}px`,
-        "background:transparent",
-        "box-shadow:none",
-        "border:none",
-        "padding:0",
-        "margin:0",
-      ].join(";");
+      const el = createCashFlyElement({
+        signed: fly.delta,
+        start,
+        extraClass: fromPeg ? "is-peg-fly" : "",
+        clearChrome: true,
+      });
       layer.appendChild(el);
 
       const duration = fxMs(

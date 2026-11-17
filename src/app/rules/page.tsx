@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { markdownToHtml } from "@/lib/markdownLite";
 
 export const metadata: Metadata = {
@@ -23,12 +24,12 @@ export default async function RulesPage() {
   return (
     <main className="rb-page">
       <header className="rb-top">
-        <a href="/" className="brand-link">
+        <Link href="/" className="brand-link">
           TICKER
-        </a>
-        <a href="/" className="btn btn-ghost rb-back">
+        </Link>
+        <Link href="/" className="btn btn-ghost rb-back">
           ← Back
-        </a>
+        </Link>
       </header>
       <article
         className="rb-body"

@@ -682,8 +682,8 @@ describe("roll / trade / fees", () => {
     );
     g.holdings = [{ tileIndex: 3, ownerId: "b", shares: 4 }];
     g = applyAction(g, "a", { type: "roll" }, rngSeq([1 / 6, 0]));
-    const fee = feePerShare(80) * 4;
-    expect(fee).toBe(Math.round(8 * BALANCE.visitFeeMult) * 4);
+    const fee = feePerShare(90) * 4; // KO P₀
+    expect(fee).toBe(Math.round(9 * BALANCE.visitFeeMult) * 4);
     expect(g.players[0]!.cash).toBe(STARTING_CASH - fee);
     expect(g.players[1]!.cash).toBe(STARTING_CASH + fee);
   });

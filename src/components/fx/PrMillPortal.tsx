@@ -170,7 +170,9 @@ export function PrMillPortal({
     .slice(0, MAX_SKIP_FACES)
     .join(",")}`;
 
-  onDoneRef.current = onDone;
+  useEffect(() => {
+    onDoneRef.current = onDone;
+  }, [onDone]);
 
   const sequence = useMemo(() => {
     const skips = sequenceKey.split("|")[1]?.split(",").filter(Boolean) ?? [];
@@ -184,15 +186,19 @@ export function PrMillPortal({
   const applied = deltas ?? [];
   const side = order?.side ?? null;
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    queueMicrotask(() => setMounted(true));
+  }, []);
 
   useEffect(() => {
     if (!active) {
-      setPhase("deal");
-      setIndex(0);
-      setFaceUp(false);
-      setOnTable(false);
-      setPile(null);
+      queueMicrotask(() => {
+        setPhase("deal");
+        setIndex(0);
+        setFaceUp(false);
+        setOnTable(false);
+        setPile(null);
+      });
       return;
     }
 
@@ -202,12 +208,14 @@ export function PrMillPortal({
     const cards = [...skips, matchId];
     const p = pileBox();
     const c = eventCardCenterRect();
-    setPile(p);
-    setNatural({ x: c.x, y: c.y, w: c.w, h: c.h });
-    setIndex(0);
-    setFaceUp(false);
-    setOnTable(false);
-    setPhase("deal");
+    queueMicrotask(() => {
+      setPile(p);
+      setNatural({ x: c.x, y: c.y, w: c.w, h: c.h });
+      setIndex(0);
+      setFaceUp(false);
+      setOnTable(false);
+      setPhase("deal");
+    });
 
     const slideMs = FX_TIMING.prTableSlideMs;
     const flipMs = FX_TIMING.prTableFlipMs;

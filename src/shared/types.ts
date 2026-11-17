@@ -31,7 +31,11 @@ export const MAX_SHARES_OWNED = 10;
 /** Can bankrupt if over-levered — keep moderate so skill cash-buffer matters. */
 export const INCOME_TAX = 120;
 export const WEALTH_TAX = 250;
-/** 0 = unlimited turns (game ends only by bankruptcy / last player standing). */
+/**
+ * Always 0 — live tables never turn-cap.
+ * Match ends only when one fund remains (bankruptcy / resign).
+ * Kept on GameState for older snapshots / harness metadata.
+ */
 export const STANDARD_TURNS = 0;
 export const SECTOR_MIN = -5;
 export const SECTOR_MAX = 5;

@@ -1,41 +1,20 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { BOARD, GROUP_COLORS } from "@/lib/game/board";
 import { tileGridPosition } from "@/lib/game/engine";
 import { useT } from "@/lib/i18n";
+import { useFitScale } from "@/lib/ui/useFitScale";
 
 /**
  * Read-only scaled board for home / menu backdrop (no room, no interactions).
  */
 export function BoardBackdrop({ blurred = true }: { blurred?: boolean }) {
   const t = useT();
-  const shellRef = useRef<HTMLDivElement>(null);
-  const tableRef = useRef<HTMLDivElement>(null);
-  const [scale, setScale] = useState(1);
-  const [fit, setFit] = useState({ w: 0, h: 0 });
-
-  useEffect(() => {
-    const shell = shellRef.current;
-    const table = tableRef.current;
-    if (!shell || !table) return;
-
-    const measure = () => {
-      const sw = shell.clientWidth;
-      const sh = shell.clientHeight;
-      const tw = table.offsetWidth;
-      const th = table.offsetHeight;
-      if (tw < 1 || th < 1 || sw < 1 || sh < 1) return;
-      const next = Math.min(sw / tw, sh / th) * 0.96;
-      setScale(next);
-      setFit({ w: tw * next, h: th * next });
-    };
-
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(shell);
-    return () => ro.disconnect();
-  }, []);
+  const { shellRef, tableRef, scale, w: fitW, h: fitH } = useFitScale({
+    factor: 0.96,
+    maxScale: 1.4,
+    subtractPadding: true,
+  });
 
   return (
     <div
@@ -51,20 +30,13 @@ export function BoardBackdrop({ blurred = true }: { blurred?: boolean }) {
       }
       aria-hidden
     >
-      <div
-        className="board-shell"
-        ref={shellRef}
-        style={{
-          ["--hud-pad-x" as string]: "clamp(0.75rem, 3vw, 2rem)",
-          ["--hud-pad-y" as string]: "clamp(0.75rem, 3vh, 2rem)",
-        }}
-      >
+      <div className="board-shell home-board-shell" ref={shellRef}>
         <div
           className="board-fit"
-          style={fit.w ? { width: fit.w, height: fit.h } : undefined}
+          style={fitW ? { width: fitW, height: fitH } : undefined}
         >
           <div
-            className="mono-table"
+            className="board-table"
             ref={tableRef}
             style={{
               transform: `scale(${scale})`,

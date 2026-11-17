@@ -71,15 +71,17 @@ export function TradeModal({
   useEffect(() => {
     const focused =
       focusTile != null ? BOARD[focusTile] : undefined;
-    if (focused && isListedCompany(focused)) {
-      setTileIndex(focusTile!);
-      setMode("buy");
-      return;
-    }
-    // No valid land focus — sell among real holdings only (else empty desk).
-    setMode("sell");
-    if (holdings[0]) setTileIndex(holdings[0].index);
-    else setTileIndex(-1);
+    queueMicrotask(() => {
+      if (focused && isListedCompany(focused)) {
+        setTileIndex(focusTile!);
+        setMode("buy");
+        return;
+      }
+      // No valid land focus — sell among real holdings only (else empty desk).
+      setMode("sell");
+      if (holdings[0]) setTileIndex(holdings[0].index);
+      else setTileIndex(-1);
+    });
   }, [focusTile, holdings]);
 
   const player = game.players.find((p) => p.id === playerId);

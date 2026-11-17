@@ -21,8 +21,9 @@
 # misc
 .DS_Store
 *.pem
-.cursor/debug-*.log
-.cursor/*.log
+
+# editor / agent local
+.cursor/
 
 # debug
 npm-debug.log*
@@ -44,7 +45,8 @@ next-env.d.ts
 .wrangler
 .dev.vars
 
-# balance harness dumps
+# harness dumps (scripts write these to repo root)
 /balance-*.json
 /balance-catalog*.json
 /balance-report.json
+/fund-matrix*.json

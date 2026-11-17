@@ -41,15 +41,19 @@ function withLockedPace(prefs: GamePrefs): GamePrefs {
 }
 
 export function GamePrefsProvider({ children }: { children: ReactNode }) {
-  const [prefs, setPrefs] = useState<GamePrefs>(DEFAULT_GAME_PREFS);
+  const [prefs, setPrefs] = useState<GamePrefs>(() =>
+    typeof window === "undefined"
+      ? DEFAULT_GAME_PREFS
+      : withLockedPace(loadGamePrefs()),
+  );
 
   useEffect(() => {
     const loaded = withLockedPace(loadGamePrefs());
-    setPrefs(loaded);
-    setLiveFxScale(prefsFxScale(loaded));
+    setLiveFxScale(prefsFxScale());
     pushSfx(loaded);
     // Persist v2 prefs so SFX-on migration sticks after first load.
     saveGamePrefs(loaded);
+    queueMicrotask(() => setPrefs(loaded));
   }, []);
 
   const commit = useCallback((next: GamePrefs) => {
@@ -59,11 +63,13 @@ export function GamePrefsProvider({ children }: { children: ReactNode }) {
     pushSfx(locked);
   }, []);
 
-  const setFxSpeed = useCallback((_fxSpeed: FxSpeed) => {
+  const setFxSpeed = useCallback((..._args: [FxSpeed]) => {
+    void _args;
     /* speed locked — ignore */
   }, []);
 
-  const setReduceMotion = useCallback((_on: boolean) => {
+  const setReduceMotion = useCallback((..._args: [boolean]) => {
+    void _args;
     /* reduce-motion locked off — ignore */
   }, []);
 
@@ -92,7 +98,7 @@ export function GamePrefsProvider({ children }: { children: ReactNode }) {
       setReduceMotion,
       setSfxMuted,
       setSfxVolume,
-      fxScale: prefsFxScale(prefs),
+      fxScale: prefsFxScale(),
     }),
     [prefs, setFxSpeed, setReduceMotion, setSfxMuted, setSfxVolume],
   );

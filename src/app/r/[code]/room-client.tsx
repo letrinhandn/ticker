@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { GameRoom } from "@/components/room/GameRoom";
 import { useT } from "@/lib/i18n";
 import { getDisplayName, setDisplayName } from "@/lib/net/playerId";
@@ -22,14 +22,12 @@ export function RoomClient({
   fund2?: string;
 }) {
   const t = useT();
-  const [name, setName] = useState<string | null>(null);
-
-  useEffect(() => {
+  const [name] = useState<string | null>(() => {
     const existing = getDisplayName().trim();
     const next = existing || "Player";
     if (!existing) setDisplayName(next);
-    setName(next);
-  }, []);
+    return next;
+  });
 
   if (!code) {
     return (

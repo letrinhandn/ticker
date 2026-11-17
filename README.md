@@ -1,82 +1,58 @@
-# PlotParty / Marketpoly
+# TICKER
 
-Light multiplayer stock-market board game. Create a room, share a 6-character code, play online. No accounts.
-
-Fan-made property trading game — not affiliated with Hasbro or Monopoly.
+Multiplayer stock-market board game. Share a room code, take a seat, trade until one fund remains. No accounts.
 
 ## Stack
 
-- **Frontend:** Next.js (App Router) — 2D board UI
-- **Realtime:** Cloudflare PartyServer (Durable Object per room)
-- **Rules:** [`docs/rulebook/MARKETPOLY_RULEBOOK_V5.md`](docs/rulebook/MARKETPOLY_RULEBOOK_V5.md)
+- Next.js (App Router) for the board UI
+- Cloudflare PartyServer for one Durable Object per room
+- Rules: [`docs/rulebook/MARKETPOLY_RULEBOOK_V5.md`](docs/rulebook/MARKETPOLY_RULEBOOK_V5.md)
 
 ## Layout
 
 ```text
 src/
-  content/          # Runtime JSON decks (canonical)
-  shared/           # Protocol + GameState types
-  lib/game/         # Engine, board, pricing, content loaders, bots
-  components/       # board | cards | hud | room | shell
-party/              # PartyServer Durable Object
-docs/rulebook/      # Shipped V4 rulebook
-docs/archive/       # Historical / design-only files
+  app/              # Routes
+  components/       # board | cards | fx | hud | room | shell
+  content/          # Canonical decks (companies, news, PR)
+  lib/game/         # Engine, bots, balance harness
+  lib/fx/           # Peg / cash / card choreography
+  shared/           # Protocol + GameState
+party/              # PartyServer worker
+docs/rulebook/      # Shipped V5 rules
+docs/archive/       # Historical drafts only
+scripts/            # Balance / fund-matrix CLIs
 ```
 
-## Local development
+## Develop
 
 ```bash
 npm install
 cp .env.example .env.local   # NEXT_PUBLIC_PARTY_HOST=localhost:8888
-npm run dev:all              # Next :3010 + PartyServer :8888
+npm run dev:all              # Next :3010 + Party :8888
 ```
 
-Or two terminals:
+Open http://localhost:3010. You land in a room lobby as a spectator, then join a seat. Leave mid-game and that seat keeps autoplaying.
 
-```bash
-npm run party:dev   # wrangler on :8888
-npm run dev         # Next on :3010
-```
-
-1. Open http://localhost:3010 → **Create room** or **Play vs bot**
-2. Open the invite link in another browser / incognito → enter a name
-3. Both **Ready up** → host **Start game**
-
-## Tests
+## Test / balance
 
 ```bash
 npm test
-npm run build
+npm run balance:sim -- --scenario standard2 --games 200
+npm run balance:funds -- --games 12
+npm run balance:audit -- --games 600 --fundGames 14
 ```
 
-## Production
+## Deploy
 
-| Piece | URL |
-|-------|-----|
-| Frontend (Vercel) | https://plotparty-amber.vercel.app |
-| Realtime (Cloudflare) | https://plotparty.letrinhan123.workers.dev |
-
-### Redeploy
+| Piece | Host |
+|-------|------|
+| Frontend | Vercel |
+| Realtime | Cloudflare Workers |
 
 ```bash
-# PartyServer
 npm run party:deploy
-
-# Frontend (env must be set on Vercel project)
-npx vercel env add NEXT_PUBLIC_PARTY_HOST production
-# value: plotparty.letrinhan123.workers.dev
 npx vercel deploy --prod
 ```
 
-Rebuild the frontend after changing the party host (it is baked in at build time).
-
-## Scripts
-
-| Script | Purpose |
-|--------|---------|
-| `dev` | Next only |
-| `party:dev` | Wrangler PartyServer |
-| `dev:all` | Both |
-| `test` | Vitest engine tests |
-| `build` | Next production build |
-| `party:deploy` | Deploy PartyServer |
+Set `NEXT_PUBLIC_PARTY_HOST` on Vercel to the Workers hostname, then rebuild the frontend.

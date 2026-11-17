@@ -20,7 +20,7 @@ import type { GameState } from "@/shared/types";
 import { CompanyLogo } from "./CompanyLogo";
 import { EtfPie } from "./EtfPie";
 import { MarketNewsTileCard } from "./MarketNewsCard";
-import { MonopolyCornerCard } from "./MonopolyCornerCard";
+import { CornerDeedCard } from "./CornerDeedCard";
 import { TaxCard } from "./TaxCard";
 import {
   companyByTileIndex,
@@ -140,7 +140,7 @@ export function DeedCard({
     tile.kind === "goto_halt"
   ) {
     return (
-      <MonopolyCornerCard
+      <CornerDeedCard
         variant={tile.kind}
         footer={footer}
         compact={compact}

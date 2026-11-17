@@ -1,11 +1,5 @@
-"use client";
-
-import {
-  BOT_FUNDS,
-  FUND_KIND_ORDER,
-  type FundKind,
-} from "@/lib/game/bots/botRoster";
-import { useT, type MessageKey } from "@/lib/i18n";
+import type { FundKind } from "@/lib/game/bots/botRoster";
+import type { MessageKey } from "@/lib/i18n";
 
 const KIND_KEY: Record<FundKind, MessageKey> = {
   index: "fund.kind.index",
@@ -32,39 +26,6 @@ const KIND_SHORT: Record<FundKind, MessageKey> = {
   quant: "fund.kindShort.quant",
   market_make: "fund.kindShort.market_make",
 };
-
-/** `<optgroup>` list for fund pickers — by fund kind. */
-export function FundSelectOptions({
-  disabledNames = [],
-}: {
-  disabledNames?: string[];
-}) {
-  const t = useT();
-  const blocked = new Set(disabledNames.map((n) => n.toLowerCase()));
-
-  return (
-    <>
-      {FUND_KIND_ORDER.map((kind) => {
-        const funds = BOT_FUNDS.filter((f) => f.kind === kind);
-        if (funds.length === 0) return null;
-        return (
-          <optgroup key={kind} label={t(KIND_KEY[kind])}>
-            {funds.map((f) => (
-              <option
-                key={f.name}
-                value={f.name}
-                disabled={blocked.has(f.name.toLowerCase())}
-                title={f.blurb}
-              >
-                {f.name}
-              </option>
-            ))}
-          </optgroup>
-        );
-      })}
-    </>
-  );
-}
 
 export function fundKindLabelKey(kind: FundKind): MessageKey {
   return KIND_KEY[kind];

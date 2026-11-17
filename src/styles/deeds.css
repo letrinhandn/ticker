@@ -1,0 +1,617 @@
+/* —— Title deed cards (flip shell) —— */
+.deed-card {
+  position: relative;
+  width: min(250px, 84vw);
+  font-family: var(--font-body);
+  animation: card-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.deed-compact {
+  width: 148px;
+  flex: 0 0 auto;
+  font-size: 0.72rem;
+}
+
+.deed-flip {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.deed-flip.is-interactive {
+  cursor: pointer;
+}
+
+.deed-card.is-flipped .deed-flip {
+  transform: rotateY(180deg);
+}
+
+.deed-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: linear-gradient(180deg, #fffdf8 0%, #f3ecdf 100%);
+  color: #1a1a1a;
+  border: 1px solid rgba(20, 20, 20, 0.85);
+  border-radius: 12px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.5) inset,
+    0 16px 36px rgba(0, 0, 0, 0.38);
+  overflow: hidden;
+}
+
+.deed-front {
+  position: relative;
+}
+
+.deed-back {
+  position: absolute;
+  inset: 0;
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  background: var(--deed-band, #333);
+  color: #fff;
+  border-color: rgba(0, 0, 0, 0.35);
+}
+
+.deed-card.is-light-band .deed-back {
+  color: #1a1a1a;
+  border-color: rgba(0, 0, 0, 0.45);
+}
+
+.deed-card.is-light-band .deed-flip-hint-on-band {
+  color: rgba(26, 26, 26, 0.55);
+}
+
+.deed-card.is-flipped .deed-back {
+  pointer-events: auto;
+}
+
+.deed-card.is-flipped .deed-front {
+  pointer-events: none;
+}
+
+.deed-mortgage-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.85rem 0.75rem 0.7rem;
+}
+
+.deed-mortgage-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.deed-mortgage-label {
+  margin: 0;
+  text-align: center;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.72;
+}
+
+.deed-mortgage-scale {
+  list-style: none;
+  margin: 0.15rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.14rem 0.4rem;
+}
+
+.deed-mortgage-scale li {
+  display: grid;
+  grid-template-columns: 1.7rem 1fr;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.32rem;
+  border-radius: 0.28rem;
+  font-size: 0.7rem;
+  line-height: 1.15;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.deed-card.is-light-band .deed-mortgage-scale li {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.deed-mortgage-scale li span {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
+  text-align: right;
+}
+
+.deed-mortgage-scale li strong {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.deed-back-rows {
+  width: 100%;
+  margin: 0;
+  color: inherit;
+}
+
+.deed-back-rows li {
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.deed-back-rows span,
+.deed-back-rows strong {
+  color: inherit;
+}
+
+.deed-card.is-light-band .deed-back-rows li {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.deed-back-scale {
+  width: 100%;
+  margin: 0.2rem 0 0;
+  padding: 0.3rem 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  color: inherit;
+}
+
+.deed-card.is-light-band .deed-back-scale {
+  border-top-color: rgba(0, 0, 0, 0.14);
+}
+
+.deed-back-scale .deed-scale-label {
+  color: inherit;
+  opacity: 0.72;
+}
+
+.deed-back-scale li {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.deed-card.is-light-band .deed-back-scale li {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.deed-back-scale li span,
+.deed-back-scale li strong {
+  color: inherit;
+}
+
+.deed-back-scale li.is-live {
+  outline: 1.5px solid currentColor;
+  outline-offset: -1px;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.deed-card.is-light-band .deed-back-scale li.is-live {
+  background: rgba(0, 0, 0, 0.14);
+}
+
+.deed-flip-hint {
+  display: block;
+  width: 100%;
+  margin: 0.25rem 0 0;
+  text-align: center;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 26, 0.42);
+  font-weight: 700;
+}
+
+.deed-flip-hint-on-band {
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: 0.35rem;
+}
+
+.deed-compact .deed-flip-hint {
+  display: none;
+}
+
+.deed-header {
+  background: var(--deed-band, #333);
+  color: #fff;
+  text-align: center;
+  padding: 0.7rem 0.7rem 0.75rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.18);
+}
+
+.deed-chip {
+  display: inline-grid;
+  place-items: center;
+  margin: 0.28rem auto 0;
+  min-width: 2.1rem;
+  padding: 0.1rem 0.32rem;
+  border-radius: 0.22rem;
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.deed-eyebrow {
+  margin: 0;
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+.deed-title {
+  margin: 0.18rem 0 0;
+  font-family: var(--font-display);
+  font-size: 1.18rem;
+  line-height: 1.08;
+  color: #fff;
+}
+
+.deed-compact .deed-title {
+  font-size: 0.84rem;
+}
+
+.deed-body {
+  padding: 0.55rem 0.75rem 0.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.42rem;
+}
+
+.deed-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.deed-rows li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.28rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 0.78rem;
+}
+
+.deed-rows li:last-child {
+  border-bottom: none;
+}
+
+.deed-rows span {
+  color: rgba(26, 26, 26, 0.62);
+  font-weight: 600;
+}
+
+.deed-rows strong {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: #1a1a1a;
+}
+
+.deed-rows .is-emphasis {
+  padding-top: 0.4rem;
+  margin-top: 0.1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.14);
+}
+
+.deed-rows .is-emphasis span {
+  color: #1a1a1a;
+  font-weight: 700;
+}
+
+.deed-rows .is-emphasis strong {
+  font-size: 1.05rem;
+}
+
+.deed-scale {
+  margin-top: 0.1rem;
+  padding-top: 0.35rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ETF level grid cells — live cell uses sector color (same language as company). */
+.deed-etf-cell {
+  display: block;
+  text-align: center;
+  padding: 0.22rem 0.15rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 0.3rem;
+}
+
+.deed-etf-cell.is-current {
+  color: #fff;
+  font-weight: 900;
+}
+
+.deed-etf-cell.is-current.is-light {
+  color: #1a1a1a;
+}
+
+.deed-compact .deed-etf-grid {
+  display: none !important;
+}
+
+.deed-scale-label {
+  margin: 0 0 0.28rem;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 26, 0.48);
+  font-weight: 700;
+  text-align: center;
+}
+
+.deed-scale ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.16rem 0.45rem;
+}
+
+.deed-scale li {
+  display: grid;
+  grid-template-columns: 1.7rem 1fr;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.22rem 0.35rem;
+  border-radius: 0.28rem;
+  font-size: 0.72rem;
+  line-height: 1.15;
+  background: rgba(0, 0, 0, 0.035);
+}
+
+.deed-scale li span {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: rgba(26, 26, 26, 0.5);
+  text-align: right;
+}
+
+.deed-scale li strong {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #1a1a1a;
+  text-align: right;
+}
+
+.deed-scale li.is-live {
+  background: var(--deed-band, #333);
+}
+
+.deed-scale li.is-live span,
+.deed-scale li.is-live strong {
+  color: #fff;
+  font-weight: 800;
+}
+
+.deed-card.is-light-band .deed-scale li.is-live span,
+.deed-card.is-light-band .deed-scale li.is-live strong {
+  color: #1a1a1a;
+}
+
+.deed-note {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: #3a3a3a;
+}
+
+/* Corner spaces: one physical playing card (3:4) */
+.corner-deed-card {
+  width: min(220px, 72vw);
+  margin: 0 auto;
+  animation: card-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.corner-deed-card.is-compact {
+  width: min(148px, 42vw);
+}
+
+.corner-deed-shell {
+  aspect-ratio: 3 / 4;
+  border-radius: 12px;
+  border: 1px solid rgba(20, 20, 20, 0.85);
+  padding: 0.42rem;
+  background: linear-gradient(180deg, #fffdf8 0%, #efe6d6 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.55) inset,
+    0 16px 36px rgba(0, 0, 0, 0.38);
+}
+
+.corner-deed-face {
+  height: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  align-items: center;
+  justify-items: center;
+  gap: 0.28rem;
+  padding: 0.7rem 0.45rem 0.55rem;
+  border: 3px solid #222;
+  border-radius: 7px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 38%),
+    #b8d9cc;
+  color: #1a1a1a;
+  text-align: center;
+}
+
+.corner-deed-top,
+.corner-deed-bottom {
+  margin: 0;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: #1f1f1f;
+}
+
+.corner-deed-top {
+  font-size: clamp(0.95rem, 4.2vw, 1.15rem);
+}
+
+.corner-deed-bottom {
+  font-size: clamp(0.78rem, 3.4vw, 0.95rem);
+  letter-spacing: 0.1em;
+  max-width: 100%;
+}
+
+.corner-deed-art-wrap {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+}
+
+.corner-deed-art {
+  width: min(78%, 9.5rem);
+  height: auto;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.1));
+}
+
+.corner-deed-card.is-compact .corner-deed-top {
+  font-size: 0.78rem;
+}
+
+.corner-deed-card.is-compact .corner-deed-bottom {
+  font-size: 0.62rem;
+}
+
+.corner-deed-card.is-compact .corner-deed-art {
+  width: min(72%, 5.5rem);
+}
+
+.corner-deed-note {
+  margin: 0.15rem 0 0;
+  padding: 0.4rem 0.25rem 0;
+  border-top: 1.5px solid rgba(26, 26, 26, 0.28);
+  font-size: 0.68rem;
+  line-height: 1.35;
+  color: #243028;
+  text-align: center;
+  font-weight: 600;
+  max-width: 100%;
+}
+
+.corner-deed-card.is-compact .corner-deed-note {
+  font-size: 0.55rem;
+  padding-top: 0.28rem;
+}
+
+/* START / GO: quiet parchment + minimal arrow art */
+.corner-deed-go .corner-deed-face {
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.45), transparent 42%),
+    #efe2c4;
+}
+
+.corner-deed-go .corner-deed-top {
+  color: #6b4e2e;
+  letter-spacing: 0.18em;
+}
+
+.corner-deed-go .corner-deed-art {
+  opacity: 0.92;
+  max-width: 42%;
+}
+
+.corner-deed-go .corner-deed-bottom {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 5vw, 1.45rem);
+  letter-spacing: 0.08em;
+  color: #1a1a1a;
+}
+
+.corner-deed-bullets {
+  list-style: none;
+  margin: 0.2rem 0 0;
+  padding: 0.4rem 0.2rem 0;
+  border-top: 1.5px solid rgba(26, 26, 26, 0.28);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
+  text-align: left;
+}
+
+.corner-deed-bullets li {
+  position: relative;
+  margin: 0;
+  padding: 0 0.15rem 0 0.85rem;
+  font-size: 0.68rem;
+  line-height: 1.3;
+  font-weight: 650;
+  color: #2a2418;
+}
+
+.corner-deed-bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0.15rem;
+  top: 0.38em;
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 50%;
+  background: #c0392b;
+  box-shadow: 0 0 0 1px #1a1a1a;
+}
+
+.corner-deed-card.is-compact .corner-deed-bullets li {
+  font-size: 0.52rem;
+  padding-left: 0.7rem;
+}
+
+/* Tax cards: warm parchment face */
+.corner-deed-tax .corner-deed-face {
+  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 40%),
+    #e8c89a;
+}
+
+.corner-deed-tax.is-wealth .corner-deed-face {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 40%),
+    #d9b57a;
+}
+
+.corner-deed-amount {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #1a1a1a;
+}
+
+.corner-deed-tax .corner-deed-note {
+  color: #3a2a12;
+  border-top-color: rgba(26, 26, 26, 0.22);
+}
+
+.corner-deed-card.is-compact .corner-deed-amount {
+  font-size: 0.85rem;
+}
+

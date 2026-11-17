@@ -85,7 +85,7 @@ export function RoomProvider({
       query,
     });
     socketRef.current = socket;
-    setStatus("connecting");
+    queueMicrotask(() => setStatus("connecting"));
 
     const onMessage = (ev: MessageEvent) => {
       try {

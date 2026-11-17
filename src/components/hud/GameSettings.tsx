@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
 import { LanguageSetting } from "@/components/shell/LanguageSetting";
 import { useT } from "@/lib/i18n";
@@ -14,6 +15,7 @@ import { playDiceRoll, playSfx, playStamp, unlockSfx } from "@/lib/sfx/sounds";
  * One fixed FX speed; SFX lives here only (no HUD toggle).
  */
 export function GameSettings({ roomCode }: { roomCode: string }) {
+  const router = useRouter();
   const t = useT();
   const { snapshot, send, playerId } = useRoom();
   const { prefs, setSfxMuted, setSfxVolume } = useGamePrefs();
@@ -32,15 +34,19 @@ export function GameSettings({ roomCode }: { roomCode: string }) {
     game && (isHost || snapshot?.hostId == null || Boolean(me)),
   );
 
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    queueMicrotask(() => setMounted(true));
+  }, []);
 
   useEffect(() => {
     if (!open) {
-      setCopied(null);
-      setNameSaved(false);
+      queueMicrotask(() => {
+        setCopied(null);
+        setNameSaved(false);
+      });
       return;
     }
-    setNameDraft(getDisplayName() || me?.name || "");
+    queueMicrotask(() => setNameDraft(getDisplayName() || me?.name || ""));
   }, [open, me?.name]);
 
   async function copyText(kind: "code" | "link", text: string) {
@@ -65,6 +71,14 @@ export function GameSettings({ roomCode }: { roomCode: string }) {
     if (!ok) return;
     send({ type: "declare_bankrupt" });
     setOpen(false);
+  }
+
+  function leaveTable() {
+    // Mid-match leave keeps the seat in play under autoplay; then exit room.
+    if (playing && me && !me.bankrupt) {
+      send({ type: "leave_seat" });
+    }
+    router.push("/");
   }
 
   function restart() {
@@ -245,9 +259,13 @@ export function GameSettings({ roomCode }: { roomCode: string }) {
                       {t("settings.resign")}
                     </button>
                   ) : null}
-                  <a className="btn btn-primary" href="/">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={leaveTable}
+                  >
                     {t("settings.leave")}
-                  </a>
+                  </button>
                 </section>
               </div>
             </article>

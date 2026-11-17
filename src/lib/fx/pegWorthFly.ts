@@ -1,41 +1,17 @@
 import type { SectorId } from "@/shared/types";
-import { money } from "@/lib/money";
+import {
+  cashFlySeatPoint,
+  createCashFlyElement,
+} from "@/lib/fx/cashFlyDom";
 import { fxMs } from "@/lib/prefs/gamePrefs";
 import { FX_TIMING } from "@/lib/fx/types";
 import { playCashDelta } from "@/lib/sfx/sounds";
-
-const SEAT_CORNERS = ["bl", "tr", "tl", "br"] as const;
 
 export type PegWorthDelta = {
   playerId: string;
   delta: number;
   seatIndex: number;
 };
-
-function seatPoint(playerId: string, seatIndex: number): { x: number; y: number } {
-  const node = document.querySelector(
-    `[data-hud-cash="${CSS.escape(playerId)}"]`,
-  );
-  if (node) {
-    const r = node.getBoundingClientRect();
-    if (r.width > 0 && r.height > 0) {
-      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
-    }
-  }
-  const w = window.innerWidth;
-  const h = window.innerHeight;
-  const corner = SEAT_CORNERS[seatIndex] ?? "br";
-  switch (corner) {
-    case "bl":
-      return { x: 24, y: h - 88 };
-    case "br":
-      return { x: w - 24, y: h - 88 };
-    case "tl":
-      return { x: 24, y: 72 };
-    default:
-      return { x: w - 24, y: 72 };
-  }
-}
 
 function pegPoint(sector: SectorId): { x: number; y: number } {
   const peg = document.querySelector(
@@ -81,19 +57,15 @@ export function playPegWorthFlies(
 
   for (let i = 0; i < deltas.length; i++) {
     const fly = deltas[i]!;
-    const positive = fly.delta >= 0;
-    const end = seatPoint(fly.playerId, fly.seatIndex);
-    const el = document.createElement("span");
-    el.className = `settle-cash-fly is-peg-fly${positive ? " is-up" : " is-down"}`;
-    el.textContent = `${positive ? "+" : "−"}${money(Math.abs(fly.delta))}`;
-    el.style.cssText = [
-      `left:${start.x}px`,
-      `top:${start.y}px`,
-      `z-index:${170 + i}`,
-    ].join(";");
+    const end = cashFlySeatPoint(fly.playerId, fly.seatIndex);
+    const el = createCashFlyElement({
+      signed: fly.delta,
+      start,
+      extraClass: "is-peg-fly",
+      zIndex: 170 + i,
+    });
     layer.appendChild(el);
 
-    // Stagger slightly when several seats are hit from one peg.
     const delay = i * 70;
     window.setTimeout(() => {
       playCashDelta(fly.delta, { volume: 0.85 });
@@ -145,7 +117,6 @@ export function playPegWorthFlies(
     layer.remove();
   });
 
-  // Safety if a browser drops finished.
   window.setTimeout(() => layer.remove(), duration + deltas.length * 70 + 200);
 
   return done;

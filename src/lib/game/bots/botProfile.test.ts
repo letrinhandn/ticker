@@ -133,7 +133,8 @@ describe("per-kind trading logic", () => {
       { id: "a", name: "A", token: "amber" },
     ]);
     g.players[0]!.cash = 4000;
-    g.sectorIndex.staples = 0;
+    // Soft tape only — flat levels no longer free-warehouse forever.
+    g.sectorIndex.staples = -1;
     g.pending = { type: "trade", tradesLeft: 1, focusTile: 1 };
     expect(chooseBotTradeStance(g, "bot-rival", 1)).toBe("corner_dip");
   });

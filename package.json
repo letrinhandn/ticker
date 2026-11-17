@@ -15,6 +15,7 @@
     "balance:catalog": "npx tsx scripts/balance-sim.ts --catalog",
     "balance:tune": "npx tsx scripts/balance-tune.ts",
     "balance:baseline": "npx tsx scripts/balance-tune.ts --baseline",
+    "balance:audit": "npx tsx scripts/balance-audit.ts",
     "balance:funds": "npx tsx scripts/fund-matrix.ts",
     "balance:funds:mega": "npx tsx scripts/fund-matrix-parallel.ts"
   },

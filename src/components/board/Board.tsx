@@ -28,6 +28,7 @@ import { useRoom } from "@/lib/net/RoomContext";
 import { useGameActions } from "@/lib/net/useGameActions";
 import { fxMs } from "@/lib/prefs/gamePrefs";
 import { useBrowseHoldActive } from "@/lib/ui/BrowseHoldContext";
+import { useFitScale } from "@/lib/ui/useFitScale";
 import { CompanyLogo } from "@/components/cards/CompanyLogo";
 import { DeckBrowser } from "@/components/cards/DeckBrowser";
 import { DeckCardBackFace } from "@/components/cards/DeckCards";
@@ -243,51 +244,14 @@ function useTokenMotion(
   return visual;
 }
 
-function useBoardFit() {
-  const shellRef = useRef<HTMLDivElement>(null);
-  const tableRef = useRef<HTMLDivElement>(null);
-  const [fit, setFit] = useState({ scale: 1, w: 0, h: 0 });
-
-  useEffect(() => {
-    const shell = shellRef.current;
-    const table = tableRef.current;
-    if (!shell || !table) return;
-
-    const update = () => {
-      // Keep board inside HUD corner cards
-      const style = getComputedStyle(shell);
-      const padX =
-        (parseFloat(style.paddingLeft) || 0) +
-        (parseFloat(style.paddingRight) || 0);
-      const padY =
-        (parseFloat(style.paddingTop) || 0) +
-        (parseFloat(style.paddingBottom) || 0);
-      const sw = Math.max(0, shell.clientWidth - padX);
-      const sh = Math.max(0, shell.clientHeight - padY);
-      // Measure unscaled size (offsetWidth ignores transform)
-      const tw = table.offsetWidth;
-      const th = table.offsetHeight;
-      if (!sw || !sh || !tw || !th) return;
-      const next = Math.min(sw / tw, sh / th);
-      const scale = Number.isFinite(next) && next > 0 ? next : 1;
-      setFit({ scale, w: tw * scale, h: th * scale });
-    };
-
-    const ro = new ResizeObserver(update);
-    ro.observe(shell);
-    ro.observe(table);
-    update();
-    window.addEventListener("orientationchange", update);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("orientationchange", update);
-    };
-  }, []);
-
-  return { shellRef, tableRef, ...fit };
-}
-
-export function Board({ game }: { game: GameState }) {
+export function Board({
+  game,
+  fillStage = false,
+}: {
+  game: GameState;
+  /** Lobby peek / no HUD — use minimal shell insets so the table fills. */
+  fillStage?: boolean;
+}) {
   const t = useT();
   const { playerId, diceRolling, setTokensMoving } = useRoom();
   const { canRoll, roll } = useGameActions();
@@ -307,7 +271,12 @@ export function Board({ game }: { game: GameState }) {
     diceRolling,
     setTokensMoving,
   );
-  const { shellRef, tableRef, scale, w: fitW, h: fitH } = useBoardFit();
+  const { shellRef, tableRef, scale, w: fitW, h: fitH } = useFitScale({
+    // Lobby peek has no HUD — still subtract home safe pads, but never HUD seats.
+    subtractPadding: true,
+    maxScale: 1.4,
+    factor: fillStage ? 0.96 : 1,
+  });
   const landPulse = fx?.landPulseTile ?? null;
   const focusTile = fx?.focusTile ?? null;
 
@@ -321,7 +290,10 @@ export function Board({ game }: { game: GameState }) {
   }
 
   return (
-    <div className="board-shell" ref={shellRef}>
+    <div
+      className={`board-shell${fillStage ? " home-board-shell" : ""}`}
+      ref={shellRef}
+    >
       <div
         className="board-fit"
         style={
@@ -331,7 +303,7 @@ export function Board({ game }: { game: GameState }) {
         }
       >
         <div
-          className="mono-table"
+          className="board-table"
           ref={tableRef}
           style={{
             transform: `scale(${scale})`,

@@ -9,10 +9,11 @@ import {
 } from "@/lib/game/bots/botRoster";
 import { companyByTileIndex } from "@/lib/game/content/companies";
 import { FUNDS_BY_TILE } from "@/lib/game/content/funds";
-import { currentSharePrice, netWorth, portfolioValue } from "@/lib/game/pricing";
+import { currentSharePrice, portfolioValue } from "@/lib/game/pricing";
+import { useGameFxOptional } from "@/lib/fx/GameFxContext";
 import { fundNameKey, useT } from "@/lib/i18n";
 import { money } from "@/lib/money";
-import type { GameState } from "@/shared/types";
+import type { GameState, SectorId } from "@/shared/types";
 import { HoldingsPie, type PieSlice } from "@/components/board/HoldingsPie";
 import { FundLogo } from "@/components/cards/FundLogo";
 import { fundKindShortKey } from "@/components/cards/FundSelectOptions";
@@ -40,15 +41,25 @@ export function PlayerProfile({
   peeked?: boolean;
 }) {
   const t = useT();
+  const fx = useGameFxOptional();
   const player = game.players.find((p) => p.id === playerId);
   if (!player) return null;
 
+  // Same FX book as seat HUD — cash / holdings / pegs stay coherent mid-settle.
+  const levels: Record<SectorId, number> =
+    fx?.seatSectorVisual ?? fx?.sectorVisual ?? game.sectorIndex;
+  const book: GameState =
+    fx?.holdingsVisual != null
+      ? { ...game, holdings: fx.holdingsVisual }
+      : game;
+  const shownCash = fx?.displayCash[player.id] ?? player.cash;
+
   const mine = viewerId === player.id;
-  const raw = game.holdings
+  const raw = book.holdings
     .filter((h) => h.ownerId === player.id)
     .map((h) => {
       const tile = BOARD[h.tileIndex]!;
-      const price = currentSharePrice(game, h.tileIndex);
+      const price = currentSharePrice(book, h.tileIndex, levels);
       const company =
         tile.kind === "company" ? companyByTileIndex(h.tileIndex) : undefined;
       const fund = tile.kind === "etf" ? FUNDS_BY_TILE[h.tileIndex] : undefined;
@@ -77,8 +88,8 @@ export function PlayerProfile({
 
   const companyValue = companies.reduce((s, h) => s + h.value, 0);
   const etfValue = etfs.reduce((s, h) => s + h.value, 0);
-  const assets = portfolioValue(game, player.id);
-  const worth = netWorth(game, player.id);
+  const assets = portfolioValue(book, player.id, levels);
+  const worth = shownCash + assets;
   const estRev = companies.reduce((s, h) => s + h.estRev, 0);
   const estCost = companies.reduce((s, h) => s + h.estCost, 0);
   const companyShares = companies.reduce((s, h) => s + h.shares, 0);
@@ -158,7 +169,7 @@ export function PlayerProfile({
               <div className="pp-stat-row is-balance">
                 <div className="pp-stat">
                   <span>{t("portfolio.cash")}</span>
-                  <strong>{money(player.cash)}</strong>
+                  <strong>{money(shownCash)}</strong>
                 </div>
                 <div className="pp-stat">
                   <span>{t("portfolio.assets")}</span>

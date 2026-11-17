@@ -1,0 +1,57 @@
+:root {
+  --bg0: #0f1c18;
+  --bg1: #173028;
+  --ink: #f2efe6;
+  --muted: #a8b5ae;
+  --accent: #d4a24c;
+  --accent-2: #3d9b7a;
+  --panel: rgba(22, 40, 34, 0.88);
+  --line: rgba(242, 239, 230, 0.12);
+  --token-amber: #e8a54b;
+  --token-teal: #3ecfbe;
+  --token-rose: #e07a8a;
+  --token-violet: #9b7edc;
+  --danger: #d45d5d;
+  --font-display: var(--font-nunito), system-ui, sans-serif;
+  --font-body: var(--font-nunito), system-ui, sans-serif;
+  /* Safe areas + stage insets — board fit reads these via shell padding */
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-l: env(safe-area-inset-left, 0px);
+  --hud-gap: 0.55rem;
+  --modal-pad: max(0.75rem, var(--safe-t)) max(0.75rem, var(--safe-r))
+    max(0.75rem, var(--safe-b)) max(0.75rem, var(--safe-l));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-body);
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 0%, #2a5a48 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 90% 20%, #3a4a28 0%, transparent 50%),
+    linear-gradient(165deg, var(--bg0), var(--bg1) 50%, #0c1613);
+  background-attachment: fixed;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.page-pad {
+  padding: 1.5rem;
+  max-width: 720px;
+  margin: 0 auto;
+}
+

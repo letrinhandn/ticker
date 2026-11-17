@@ -31,7 +31,7 @@ export function stepBot(
 
   // Unstick: if the chosen action was a no-op, force a safe progress action.
   if (sameFingerPrint(state, next)) {
-    action = forceProgress(state, botId);
+    action = forceProgress(state);
     if (!action) return null;
     next = applyAction(state, botId, action, rng);
     if (sameFingerPrint(state, next)) return null;
@@ -50,7 +50,7 @@ function sameFingerPrint(a: GameState, b: GameState) {
   );
 }
 
-function forceProgress(state: GameState, botId: string): EngineAction | null {
+function forceProgress(state: GameState): EngineAction | null {
   const pending = state.pending;
   if (
     pending?.type === "info" ||

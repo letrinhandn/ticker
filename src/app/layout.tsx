@@ -1,9 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Nunito } from "next/font/google";
 import { Providers } from "@/components/shell/Providers";
 import "./globals.css";
 
-/** One rounded sans for UI + brand — readable game-app type, not serif “AI” display. */
 const nunito = Nunito({
   variable: "--font-nunito",
   subsets: ["latin", "latin-ext"],
@@ -14,6 +13,14 @@ export const metadata: Metadata = {
   title: "TICKER",
   description:
     "Buy, sell, and survive the market. Two players or a bot. No accounts.",
+};
+
+/** Edge-to-edge on notched phones so env(safe-area-inset-*) is non-zero. */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0d1f14",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
