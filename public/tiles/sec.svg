@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Monopoly-style investigator behind bars (no agency logo) -->
+  <rect x="10" y="10" width="44" height="44" rx="2" fill="#d9eee6" stroke="#1a1a1a" stroke-width="2.5"/>
+  <!-- bars -->
+  <path d="M20 12v40M28 12v40M36 12v40M44 12v40" stroke="#1a1a1a" stroke-width="2.2"/>
+  <!-- head -->
+  <circle cx="32" cy="26" r="7" fill="#f3e7d8" stroke="#1a1a1a" stroke-width="2"/>
+  <!-- hair -->
+  <path d="M25 24c1-6 13-6 14 0v2c-2-3-12-3-14 0z" fill="#1a1a1a"/>
+  <!-- suit -->
+  <path d="M22 48c2-10 8-14 10-14s8 4 10 14" fill="#2f4a6e" stroke="#1a1a1a" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M32 34v14" stroke="#f3e7d8" stroke-width="2"/>
+  <!-- briefcase / folder -->
+  <rect x="40" y="38" width="12" height="9" rx="1" fill="#c94436" stroke="#1a1a1a" stroke-width="1.8"/>
+  <path d="M40 41h12" stroke="#1a1a1a" stroke-width="1.5"/>
+</svg>

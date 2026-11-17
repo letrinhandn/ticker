@@ -1,0 +1,875 @@
+{
+  "id": "marketpolyCompanyCards",
+  "schemaVersion": "1.1.0",
+  "status": "playtest",
+  "companyCount": 22,
+  "currencyUnit": "M$",
+  "supportedLocales": [
+    "vi",
+    "en"
+  ],
+  "sourceConfig": "marketpoly_complete_100_en_vi.json",
+  "ui": {
+    "companyCard": {
+      "front": {
+        "titleFields": [
+          "sectorId",
+          "name",
+          "ticker"
+        ],
+        "bodyFields": [
+          "basePricePerShareM",
+          "visitFeePerShareM",
+          "pricePerShareByLevelM"
+        ],
+        "priceGridLevels": [
+          -5,
+          -4,
+          -3,
+          -2,
+          -1,
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "priceGridColumns": 2,
+        "highlightCurrentLevel": true,
+        "currentLevelSource": "live_sector_track"
+      },
+      "back": {
+        "titleFields": [
+          "ticker"
+        ],
+        "bodyFields": [
+          "operations.revenueBasePerShareM",
+          "operations.fixedCostPerShareM"
+        ]
+      },
+      "localization": {
+        "vi": {
+          "basePricePerShareM": "Giá gốc / cổ",
+          "visitFeePerShareM": "Phí ghé ô / cổ",
+          "pricePerShareByLevelM": "Giá / cổ theo nấc ngành",
+          "revenueBasePerShareM": "Doanh thu / cổ",
+          "fixedCostPerShareM": "Chi phí / cổ"
+        },
+        "en": {
+          "basePricePerShareM": "Base price / share",
+          "visitFeePerShareM": "Visit fee / share",
+          "pricePerShareByLevelM": "Share price by sector level",
+          "revenueBasePerShareM": "Revenue / share",
+          "fixedCostPerShareM": "Cost / share"
+        }
+      }
+    }
+  },
+  "rules": {
+    "companyStartSettlement": {
+      "status": "proposed_playtest",
+      "trigger": "pass_or_land_on_start_by_normal_move",
+      "settleFor": "active_player_only",
+      "eligibleAssetType": "company",
+      "excludeFunds": true,
+      "duringSetup": false,
+      "fixedStartPayoutM": 0,
+      "sectorLevelSnapshot": "before_drawing_market_news",
+      "formula": "net_per_share = base_revenue_per_share + state_revenue_adjustment_per_share - fixed_cost_per_share",
+      "payment": "net_once_with_bank; positive_bank_pays_player; negative_player_pays_bank; zero_no_transfer",
+      "ifPlayerCannotPay": "use_existing_forced_liquidation_and_insolvency_rules",
+      "resolveBeforeMarketNews": true,
+      "visitFeesSeparate": true,
+      "companyFinancialsAreSimulated": true,
+      "states": [
+        {
+          "id": "weak",
+          "minLevel": -5,
+          "maxLevel": -2,
+          "revenueAdjustmentPerShareM": -4,
+          "nameEn": "Weak",
+          "nameVi": "Yếu"
+        },
+        {
+          "id": "normal",
+          "minLevel": -1,
+          "maxLevel": 1,
+          "revenueAdjustmentPerShareM": 0,
+          "nameEn": "Normal",
+          "nameVi": "Bình thường"
+        },
+        {
+          "id": "strong",
+          "minLevel": 2,
+          "maxLevel": 5,
+          "revenueAdjustmentPerShareM": 4,
+          "nameEn": "Strong",
+          "nameVi": "Mạnh"
+        }
+      ]
+    }
+  },
+  "sectors": [
+    {
+      "id": "CS",
+      "nameEn": "Consumer Staples",
+      "nameVi": "Tiêu dùng thiết yếu",
+      "color": "#79503A"
+    },
+    {
+      "id": "EN",
+      "nameEn": "Energy",
+      "nameVi": "Năng lượng",
+      "color": "#7FB8CF"
+    },
+    {
+      "id": "CM",
+      "nameEn": "Communication",
+      "nameVi": "Truyền thông",
+      "color": "#CE568E"
+    },
+    {
+      "id": "IN",
+      "nameEn": "Industrials",
+      "nameVi": "Công nghiệp",
+      "color": "#E89032"
+    },
+    {
+      "id": "FI",
+      "nameEn": "Financials",
+      "nameVi": "Tài chính",
+      "color": "#C8353B"
+    },
+    {
+      "id": "CD",
+      "nameEn": "Consumer Discretionary",
+      "nameVi": "Tiêu dùng không thiết yếu",
+      "color": "#E4BD31"
+    },
+    {
+      "id": "HC",
+      "nameEn": "Healthcare",
+      "nameVi": "Y tế",
+      "color": "#3C966E"
+    },
+    {
+      "id": "TE",
+      "nameEn": "Technology",
+      "nameVi": "Công nghệ",
+      "color": "#24568B"
+    }
+  ],
+  "companiesById": {
+    "WMT": {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "Walmart",
+      "sectorId": "CS",
+      "companyType": "sector_company",
+      "basePricePerShareM": 55,
+      "visitFeePerShareM": 6,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 55,
+        "1": 61,
+        "2": 66,
+        "3": 72,
+        "4": 77,
+        "5": 83,
+        "-5": 28,
+        "-4": 33,
+        "-3": 39,
+        "-2": 44,
+        "-1": 50
+      },
+      "boardTileId": "tile_01",
+      "operations": {
+        "revenueBasePerShareM": 8,
+        "fixedCostPerShareM": 3
+      }
+    },
+    "KO": {
+      "id": "KO",
+      "ticker": "KO",
+      "name": "Coca-Cola",
+      "sectorId": "CS",
+      "companyType": "sector_company",
+      "basePricePerShareM": 80,
+      "visitFeePerShareM": 8,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 80,
+        "1": 88,
+        "2": 96,
+        "3": 104,
+        "4": 112,
+        "5": 120,
+        "-5": 40,
+        "-4": 48,
+        "-3": 56,
+        "-2": 64,
+        "-1": 72
+      },
+      "boardTileId": "tile_03",
+      "operations": {
+        "revenueBasePerShareM": 9,
+        "fixedCostPerShareM": 3
+      }
+    },
+    "XOM": {
+      "id": "XOM",
+      "ticker": "XOM",
+      "name": "ExxonMobil",
+      "sectorId": "EN",
+      "companyType": "sector_company",
+      "basePricePerShareM": 95,
+      "visitFeePerShareM": 10,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 95,
+        "1": 105,
+        "2": 114,
+        "3": 124,
+        "4": 133,
+        "5": 143,
+        "-5": 48,
+        "-4": 57,
+        "-3": 67,
+        "-2": 76,
+        "-1": 86
+      },
+      "boardTileId": "tile_06",
+      "operations": {
+        "revenueBasePerShareM": 11,
+        "fixedCostPerShareM": 10
+      }
+    },
+    "CVX": {
+      "id": "CVX",
+      "ticker": "CVX",
+      "name": "Chevron",
+      "sectorId": "EN",
+      "companyType": "sector_company",
+      "basePricePerShareM": 115,
+      "visitFeePerShareM": 12,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 115,
+        "1": 127,
+        "2": 138,
+        "3": 150,
+        "4": 161,
+        "5": 173,
+        "-5": 58,
+        "-4": 69,
+        "-3": 81,
+        "-2": 92,
+        "-1": 104
+      },
+      "boardTileId": "tile_08",
+      "operations": {
+        "revenueBasePerShareM": 12,
+        "fixedCostPerShareM": 11
+      }
+    },
+    "SHEL": {
+      "id": "SHEL",
+      "ticker": "SHEL",
+      "name": "Shell",
+      "sectorId": "EN",
+      "companyType": "sector_company",
+      "basePricePerShareM": 145,
+      "visitFeePerShareM": 15,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 145,
+        "1": 160,
+        "2": 174,
+        "3": 189,
+        "4": 203,
+        "5": 218,
+        "-5": 73,
+        "-4": 87,
+        "-3": 102,
+        "-2": 116,
+        "-1": 131
+      },
+      "boardTileId": "tile_09",
+      "operations": {
+        "revenueBasePerShareM": 14,
+        "fixedCostPerShareM": 13
+      }
+    },
+    "GOOGL": {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Alphabet",
+      "sectorId": "CM",
+      "companyType": "sector_company",
+      "basePricePerShareM": 125,
+      "visitFeePerShareM": 13,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 125,
+        "1": 138,
+        "2": 150,
+        "3": 163,
+        "4": 175,
+        "5": 188,
+        "-5": 63,
+        "-4": 75,
+        "-3": 88,
+        "-2": 100,
+        "-1": 113
+      },
+      "boardTileId": "tile_11",
+      "operations": {
+        "revenueBasePerShareM": 16,
+        "fixedCostPerShareM": 11
+      }
+    },
+    "META": {
+      "id": "META",
+      "ticker": "META",
+      "name": "Meta",
+      "sectorId": "CM",
+      "companyType": "sector_company",
+      "basePricePerShareM": 158,
+      "visitFeePerShareM": 16,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 158,
+        "1": 174,
+        "2": 190,
+        "3": 205,
+        "4": 221,
+        "5": 237,
+        "-5": 79,
+        "-4": 95,
+        "-3": 111,
+        "-2": 126,
+        "-1": 142
+      },
+      "boardTileId": "tile_13",
+      "operations": {
+        "revenueBasePerShareM": 18,
+        "fixedCostPerShareM": 13
+      }
+    },
+    "NFLX": {
+      "id": "NFLX",
+      "ticker": "NFLX",
+      "name": "Netflix",
+      "sectorId": "CM",
+      "companyType": "sector_company",
+      "basePricePerShareM": 200,
+      "visitFeePerShareM": 20,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 200,
+        "1": 220,
+        "2": 240,
+        "3": 260,
+        "4": 280,
+        "5": 300,
+        "-5": 100,
+        "-4": 120,
+        "-3": 140,
+        "-2": 160,
+        "-1": 180
+      },
+      "boardTileId": "tile_14",
+      "operations": {
+        "revenueBasePerShareM": 17,
+        "fixedCostPerShareM": 14
+      }
+    },
+    "CAT": {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "Caterpillar",
+      "sectorId": "IN",
+      "companyType": "sector_company",
+      "basePricePerShareM": 165,
+      "visitFeePerShareM": 17,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 165,
+        "1": 182,
+        "2": 198,
+        "3": 215,
+        "4": 231,
+        "5": 248,
+        "-5": 83,
+        "-4": 99,
+        "-3": 115,
+        "-2": 132,
+        "-1": 149
+      },
+      "boardTileId": "tile_16",
+      "operations": {
+        "revenueBasePerShareM": 16,
+        "fixedCostPerShareM": 13
+      }
+    },
+    "BA": {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "Boeing",
+      "sectorId": "IN",
+      "companyType": "sector_company",
+      "basePricePerShareM": 200,
+      "visitFeePerShareM": 20,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 200,
+        "1": 220,
+        "2": 240,
+        "3": 260,
+        "4": 280,
+        "5": 300,
+        "-5": 100,
+        "-4": 120,
+        "-3": 140,
+        "-2": 160,
+        "-1": 180
+      },
+      "boardTileId": "tile_18",
+      "operations": {
+        "revenueBasePerShareM": 17,
+        "fixedCostPerShareM": 16
+      }
+    },
+    "SIE": {
+      "id": "SIE",
+      "ticker": "SIE",
+      "name": "Siemens",
+      "sectorId": "IN",
+      "companyType": "sector_company",
+      "basePricePerShareM": 250,
+      "visitFeePerShareM": 25,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 250,
+        "1": 275,
+        "2": 300,
+        "3": 325,
+        "4": 350,
+        "5": 375,
+        "-5": 125,
+        "-4": 150,
+        "-3": 175,
+        "-2": 200,
+        "-1": 225
+      },
+      "boardTileId": "tile_19",
+      "operations": {
+        "revenueBasePerShareM": 20,
+        "fixedCostPerShareM": 15
+      }
+    },
+    "JPM": {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan",
+      "sectorId": "FI",
+      "companyType": "sector_company",
+      "basePricePerShareM": 205,
+      "visitFeePerShareM": 21,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 205,
+        "1": 226,
+        "2": 246,
+        "3": 267,
+        "4": 287,
+        "5": 308,
+        "-5": 103,
+        "-4": 123,
+        "-3": 144,
+        "-2": 164,
+        "-1": 185
+      },
+      "boardTileId": "tile_21",
+      "operations": {
+        "revenueBasePerShareM": 22,
+        "fixedCostPerShareM": 12
+      }
+    },
+    "V": {
+      "id": "V",
+      "ticker": "V",
+      "name": "Visa",
+      "sectorId": "FI",
+      "companyType": "sector_company",
+      "basePricePerShareM": 250,
+      "visitFeePerShareM": 25,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 250,
+        "1": 275,
+        "2": 300,
+        "3": 325,
+        "4": 350,
+        "5": 375,
+        "-5": 125,
+        "-4": 150,
+        "-3": 175,
+        "-2": 200,
+        "-1": 225
+      },
+      "boardTileId": "tile_23",
+      "operations": {
+        "revenueBasePerShareM": 24,
+        "fixedCostPerShareM": 11
+      }
+    },
+    "MA": {
+      "id": "MA",
+      "ticker": "MA",
+      "name": "Mastercard",
+      "sectorId": "FI",
+      "companyType": "sector_company",
+      "basePricePerShareM": 290,
+      "visitFeePerShareM": 29,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 290,
+        "1": 319,
+        "2": 348,
+        "3": 377,
+        "4": 406,
+        "5": 435,
+        "-5": 145,
+        "-4": 174,
+        "-3": 203,
+        "-2": 232,
+        "-1": 261
+      },
+      "boardTileId": "tile_24",
+      "operations": {
+        "revenueBasePerShareM": 26,
+        "fixedCostPerShareM": 13
+      }
+    },
+    "AMZN": {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sectorId": "CD",
+      "companyType": "sector_company",
+      "basePricePerShareM": 240,
+      "visitFeePerShareM": 24,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 240,
+        "1": 264,
+        "2": 288,
+        "3": 312,
+        "4": 336,
+        "5": 360,
+        "-5": 120,
+        "-4": 144,
+        "-3": 168,
+        "-2": 192,
+        "-1": 216
+      },
+      "boardTileId": "tile_26",
+      "operations": {
+        "revenueBasePerShareM": 18,
+        "fixedCostPerShareM": 16
+      }
+    },
+    "TSLA": {
+      "id": "TSLA",
+      "ticker": "TSLA",
+      "name": "Tesla",
+      "sectorId": "CD",
+      "companyType": "sector_company",
+      "basePricePerShareM": 295,
+      "visitFeePerShareM": 30,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 295,
+        "1": 325,
+        "2": 354,
+        "3": 384,
+        "4": 413,
+        "5": 443,
+        "-5": 148,
+        "-4": 177,
+        "-3": 207,
+        "-2": 236,
+        "-1": 266
+      },
+      "boardTileId": "tile_27",
+      "operations": {
+        "revenueBasePerShareM": 19,
+        "fixedCostPerShareM": 17
+      }
+    },
+    "NKE": {
+      "id": "NKE",
+      "ticker": "NKE",
+      "name": "Nike",
+      "sectorId": "CD",
+      "companyType": "sector_company",
+      "basePricePerShareM": 340,
+      "visitFeePerShareM": 34,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 340,
+        "1": 374,
+        "2": 408,
+        "3": 442,
+        "4": 476,
+        "5": 510,
+        "-5": 170,
+        "-4": 204,
+        "-3": 238,
+        "-2": 272,
+        "-1": 306
+      },
+      "boardTileId": "tile_29",
+      "operations": {
+        "revenueBasePerShareM": 20,
+        "fixedCostPerShareM": 15
+      }
+    },
+    "JNJ": {
+      "id": "JNJ",
+      "ticker": "JNJ",
+      "name": "Johnson & Johnson",
+      "sectorId": "HC",
+      "companyType": "sector_company",
+      "basePricePerShareM": 280,
+      "visitFeePerShareM": 28,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 280,
+        "1": 308,
+        "2": 336,
+        "3": 364,
+        "4": 392,
+        "5": 420,
+        "-5": 140,
+        "-4": 168,
+        "-3": 196,
+        "-2": 224,
+        "-1": 252
+      },
+      "boardTileId": "tile_31",
+      "operations": {
+        "revenueBasePerShareM": 26,
+        "fixedCostPerShareM": 14
+      }
+    },
+    "PFE": {
+      "id": "PFE",
+      "ticker": "PFE",
+      "name": "Pfizer",
+      "sectorId": "HC",
+      "companyType": "sector_company",
+      "basePricePerShareM": 325,
+      "visitFeePerShareM": 33,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 325,
+        "1": 358,
+        "2": 390,
+        "3": 423,
+        "4": 455,
+        "5": 488,
+        "-5": 163,
+        "-4": 195,
+        "-3": 227,
+        "-2": 260,
+        "-1": 293
+      },
+      "boardTileId": "tile_32",
+      "operations": {
+        "revenueBasePerShareM": 24,
+        "fixedCostPerShareM": 16
+      }
+    },
+    "LLY": {
+      "id": "LLY",
+      "ticker": "LLY",
+      "name": "Eli Lilly",
+      "sectorId": "HC",
+      "companyType": "sector_company",
+      "basePricePerShareM": 390,
+      "visitFeePerShareM": 39,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 390,
+        "1": 429,
+        "2": 468,
+        "3": 507,
+        "4": 546,
+        "5": 585,
+        "-5": 195,
+        "-4": 234,
+        "-3": 273,
+        "-2": 312,
+        "-1": 351
+      },
+      "boardTileId": "tile_34",
+      "operations": {
+        "revenueBasePerShareM": 30,
+        "fixedCostPerShareM": 16
+      }
+    },
+    "AAPL": {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sectorId": "TE",
+      "companyType": "sector_company",
+      "basePricePerShareM": 345,
+      "visitFeePerShareM": 35,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 345,
+        "1": 380,
+        "2": 414,
+        "3": 449,
+        "4": 483,
+        "5": 518,
+        "-5": 173,
+        "-4": 207,
+        "-3": 241,
+        "-2": 276,
+        "-1": 311
+      },
+      "boardTileId": "tile_37",
+      "operations": {
+        "revenueBasePerShareM": 28,
+        "fixedCostPerShareM": 12
+      }
+    },
+    "MSFT": {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sectorId": "TE",
+      "companyType": "sector_company",
+      "basePricePerShareM": 430,
+      "visitFeePerShareM": 43,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "0": 430,
+        "1": 473,
+        "2": 516,
+        "3": 559,
+        "4": 602,
+        "5": 645,
+        "-5": 215,
+        "-4": 258,
+        "-3": 301,
+        "-2": 344,
+        "-1": 387
+      },
+      "boardTileId": "tile_39",
+      "operations": {
+        "revenueBasePerShareM": 34,
+        "fixedCostPerShareM": 14
+      }
+    }
+  },
+  "integrationNotes": {
+    "vi": "Thay companiesById và ui.companyCard, thêm rules.companyStartSettlement. Khi kích hoạt luật mới, bỏ thưởng START Bull/Bear cũ và xử lý quyết toán trước Market News. File không thay luật thuế hay cấu hình ETF.",
+    "en": "Replace companiesById and ui.companyCard; add rules.companyStartSettlement. When enabling this rule, remove the old Bull/Bear START payout and settle before Market News. This file does not change tax or ETF configuration."
+  },
+  "testCases": [
+    {
+      "id": "KO_NORMAL",
+      "holdings": {
+        "KO": 4
+      },
+      "sectorLevels": {
+        "CS": 1
+      },
+      "expectedSettlementM": 12,
+      "expectedPricePerShareM": 77
+    },
+    {
+      "id": "KO_WEAK",
+      "holdings": {
+        "KO": 4
+      },
+      "sectorLevels": {
+        "CS": -2
+      },
+      "expectedSettlementM": -4
+    },
+    {
+      "id": "MIXED",
+      "holdings": {
+        "KO": 4,
+        "TSLA": 4
+      },
+      "sectorLevels": {
+        "CS": 1,
+        "CD": -2
+      },
+      "expectedSettlementM": 0
+    },
+    {
+      "id": "ETF_ONLY",
+      "holdings": {},
+      "fundHoldings": {
+        "GRW": 4
+      },
+      "sectorLevels": {
+        "TE": 5
+      },
+      "expectedSettlementM": 0
+    }
+  ]
+}

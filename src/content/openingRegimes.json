@@ -1,0 +1,45 @@
+{
+  "note": "V5 opening 1d6: faces 1–5 apply these presets (sourced from marketNews100 ids). Face 6 keeps all sectors at 0.",
+  "presets": [
+    {
+      "die": 1,
+      "sourceNewsId": "B01",
+      "nameEn": "AI Investment Boom",
+      "nameVi": "Đầu tư AI bùng nổ",
+      "regime": "bull",
+      "shocks": { "tech": 2, "comms": 1, "industrials": 1 }
+    },
+    {
+      "die": 2,
+      "sourceNewsId": "B11",
+      "nameEn": "Rate Cut Surprise",
+      "nameVi": "Lãi suất bất ngờ giảm",
+      "regime": "bull",
+      "shocks": { "discretionary": 2, "tech": 1, "financials": -1 }
+    },
+    {
+      "die": 3,
+      "sourceNewsId": "B21",
+      "nameEn": "Grocery Margin Recovery",
+      "nameVi": "Chi phí thực phẩm hạ",
+      "regime": "bull",
+      "shocks": { "staples": 2 }
+    },
+    {
+      "die": 4,
+      "sourceNewsId": "R01",
+      "nameEn": "Banking Crisis",
+      "nameVi": "Khủng hoảng ngân hàng",
+      "regime": "bear",
+      "shocks": { "financials": -2, "industrials": -1, "discretionary": -1 }
+    },
+    {
+      "die": 5,
+      "sourceNewsId": "R11",
+      "nameEn": "Rate Hike Surprise",
+      "nameVi": "Chi phí vay tăng",
+      "regime": "bear",
+      "shocks": { "discretionary": -2, "tech": -1, "financials": -1 }
+    }
+  ]
+}

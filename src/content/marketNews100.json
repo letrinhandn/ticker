@@ -1,0 +1,1357 @@
+{
+  "id": "marketNews",
+  "name": "Market News",
+  "expectedCount": 100,
+  "countByMarket": {
+    "bull": 50,
+    "bear": 50
+  },
+  "drawOrder": "shuffle_together",
+  "effectUnit": "sector_level_step",
+  "cards": [
+    {
+      "id": "B01",
+      "name": "AI Investment Boom",
+      "market": "bull",
+      "deltaLevelsBySector": {
+        "TE": 2,
+        "CM": 1,
+        "IN": 1
+      },
+      "headlineVi": "Doanh nghiệp tăng ngân sách cho AI và trung tâm dữ liệu.",
+      "nameEn": "AI Investment Boom",
+      "headlineEn": "Businesses increase spending on AI and data centers.",
+      "nameVi": "Đầu tư AI bùng nổ"
+    },
+    {
+      "id": "B02",
+      "name": "Infrastructure Boom",
+      "market": "bull",
+      "deltaLevelsBySector": {
+        "IN": 2,
+        "EN": 1,
+        "FI": 1
+      },
+      "headlineVi": "Các dự án hạ tầng mới kéo đơn hàng máy móc và vật liệu đi lên.",
+      "nameEn": "Infrastructure Boom",
+      "headlineEn": "New infrastructure projects lift orders for machinery and materials.",
+      "nameVi": "Đầu tư hạ tầng tăng mạnh"
+    },
+    {
+      "id": "B03",
+      "name": "Credit Expansion",
+      "market": "bull",
+      "deltaLevelsBySector": {
+        "FI": 2,
+        "CD": 1
+      },
+      "headlineVi": "Ngân hàng nới tín dụng, người tiêu dùng dễ vay mua hàng hơn.",
+      "nameEn": "Credit Expansion",
+      "headlineEn": "Banks loosen lending standards, making it easier for consumers to finance purchases.",
+      "nameVi": "Tín dụng mở rộng"
+    },
+    {
+      "id": "B04",
+      "name": "Consumer Confidence",
+      "market": "bull",
+      "deltaLevelsBySector": {
+        "CD": 2,
+        "CS": 1
+      },
+      "headlineVi": "Hộ gia đình tăng chi cho mua sắm và giải trí.",
+      "nameEn": "Consumer Confidence",
+      "headlineEn": "Households spend more on shopping and entertainment.",
+      "nameVi": "Niềm tin tiêu dùng phục hồi"
+    },
+    {
+      "id": "B05",
+      "name": "Healthcare Breakthrough",
+      "market": "bull",
+      "deltaLevelsBySector": {
+        "HC": 2,
+        "TE": 1
+      },
+      "headlineVi": "Kết quả thử nghiệm mở đường cho một liệu pháp mới.",
+      "nameEn": "Healthcare Breakthrough",
+      "headlineEn": "Trial results pave the way for a new treatment.",
+      "nameVi": "Đột phá y tế"
+    },
+    {
+      "id": "B06",
+      "name": "Advertising Boom",
+      "market": "bull",
+      "deltaLevelsBySector": {
+        "CM": 2,
+        "TE": 1
+      },
+      "headlineVi": "Nhãn hàng tăng ngân sách quảng cáo trên nền tảng số.",
+      "nameEn": "Advertising Boom",
+      "headlineEn": "Brands increase their advertising budgets on digital platforms.",
+      "nameVi": "Quảng cáo tăng tốc"
+    },
+    {
+      "id": "B07",
+      "name": "Energy Demand Surge",
+      "market": "bull",
+      "deltaLevelsBySector": {
+        "EN": 2,
+        "IN": -1
+      },
+      "headlineVi": "Nhu cầu nhiên liệu tăng, khiến chi phí vận hành nhà máy cao hơn.",
+      "nameEn": "Energy Demand Surge",
+      "headlineEn": "Rising fuel demand pushes up factory operating costs.",
+      "nameVi": "Nhu cầu năng lượng tăng"
+    },
+    {
+      "id": "B08",
+      "name": "Productivity Growth",
+      "market": "bull",
+      "deltaLevelsBySector": {
+        "TE": 1,
+        "IN": 1,
+        "FI": 1
+      },
+      "headlineVi": "Doanh nghiệp tăng năng suất nhờ đầu tư công nghệ và tự động hóa.",
+      "nameEn": "Productivity Growth",
+      "headlineEn": "Businesses boost productivity by investing in technology and automation.",
+      "nameVi": "Năng suất cải thiện"
+    },
+    {
+      "id": "B09",
+      "name": "Retail Spending Boom",
+      "market": "bull",
+      "deltaLevelsBySector": {
+        "CS": 2,
+        "CD": 1
+      },
+      "headlineVi": "Sức mua tại các chuỗi bán lẻ tăng trên nhiều nhóm hàng.",
+      "nameEn": "Retail Spending Boom",
+      "headlineEn": "Retail chains report stronger sales across several product categories.",
+      "nameVi": "Sức mua bán lẻ tăng"
+    },
+    {
+      "id": "B10",
+      "name": "Global Recovery",
+      "market": "bull",
+      "deltaLevelsBySector": {
+        "FI": 1,
+        "TE": 1,
+        "IN": 1,
+        "CD": 1
+      },
+      "headlineVi": "Đơn hàng và tín dụng phục hồi cùng lúc tại nhiều thị trường.",
+      "nameEn": "Global Recovery",
+      "headlineEn": "Orders and lending recover together across multiple markets.",
+      "nameVi": "Phục hồi toàn cầu"
+    },
+    {
+      "id": "B11",
+      "name": "Rate Cut Surprise",
+      "market": "bull",
+      "headlineVi": "Lãi suất giảm bất ngờ, chi phí vay mua hàng và đầu tư đi xuống.",
+      "deltaLevelsBySector": {
+        "CD": 2,
+        "TE": 1,
+        "FI": -1
+      },
+      "nameEn": "Rate Cut Surprise",
+      "headlineEn": "An unexpected rate cut lowers borrowing costs for purchases and investment.",
+      "nameVi": "Lãi suất bất ngờ giảm"
+    },
+    {
+      "id": "B12",
+      "name": "Soft Landing",
+      "market": "bull",
+      "headlineVi": "Lạm phát hạ nhiệt trong khi việc làm và đơn hàng vẫn ổn định.",
+      "deltaLevelsBySector": {
+        "IN": 1,
+        "FI": 1,
+        "CD": 1
+      },
+      "nameEn": "Soft Landing",
+      "headlineEn": "Inflation cools while employment and orders remain steady.",
+      "nameVi": "Lạm phát hạ nhiệt"
+    },
+    {
+      "id": "B13",
+      "name": "Factory Automation Orders",
+      "market": "bull",
+      "headlineVi": "Nhà máy tăng đặt mua robot và phần mềm điều khiển.",
+      "deltaLevelsBySector": {
+        "IN": 2,
+        "TE": 1
+      },
+      "nameEn": "Factory Automation Orders",
+      "headlineEn": "Factories order more robots and control software.",
+      "nameVi": "Tự động hóa nhà máy"
+    },
+    {
+      "id": "B14",
+      "name": "Semiconductor Expansion",
+      "market": "bull",
+      "headlineVi": "Các hãng bán dẫn mở rộng công suất sau loạt đơn hàng mới.",
+      "deltaLevelsBySector": {
+        "TE": 2,
+        "IN": 1
+      },
+      "nameEn": "Semiconductor Expansion",
+      "headlineEn": "Chipmakers expand capacity after a wave of new orders.",
+      "nameVi": "Mở rộng công suất chip"
+    },
+    {
+      "id": "B15",
+      "name": "Cloud Contract Wave",
+      "market": "bull",
+      "headlineVi": "Doanh nghiệp ký thêm hợp đồng chuyển hệ thống lên đám mây.",
+      "deltaLevelsBySector": {
+        "TE": 2,
+        "CM": 1
+      },
+      "nameEn": "Cloud Contract Wave",
+      "headlineEn": "Businesses sign more contracts to move their systems to the cloud.",
+      "nameVi": "Làn sóng chuyển lên đám mây"
+    },
+    {
+      "id": "B16",
+      "name": "Telecom Upgrade Cycle",
+      "market": "bull",
+      "headlineVi": "Các nhà mạng tăng chi cho thiết bị để nâng cấp hạ tầng mạng.",
+      "deltaLevelsBySector": {
+        "CM": 2,
+        "TE": 1,
+        "IN": 1
+      },
+      "nameEn": "Telecom Upgrade Cycle",
+      "headlineEn": "Telecom operators spend more on equipment to upgrade their networks.",
+      "nameVi": "Nâng cấp mạng viễn thông"
+    },
+    {
+      "id": "B17",
+      "name": "Streaming Subscriber Surge",
+      "market": "bull",
+      "headlineVi": "Lượt đăng ký dịch vụ phát trực tuyến vượt kỳ vọng.",
+      "deltaLevelsBySector": {
+        "CM": 2,
+        "CD": 1
+      },
+      "nameEn": "Streaming Subscriber Surge",
+      "headlineEn": "Streaming subscriptions exceed expectations.",
+      "nameVi": "Thuê bao trực tuyến tăng"
+    },
+    {
+      "id": "B18",
+      "name": "Travel Rebound",
+      "market": "bull",
+      "headlineVi": "Đặt vé và phòng tăng mạnh trước mùa du lịch.",
+      "deltaLevelsBySector": {
+        "CD": 2,
+        "IN": 1,
+        "EN": 1
+      },
+      "nameEn": "Travel Rebound",
+      "headlineEn": "Travel and hotel bookings rise sharply ahead of the holiday season.",
+      "nameVi": "Du lịch vào mùa"
+    },
+    {
+      "id": "B19",
+      "name": "EV Orders Accelerate",
+      "market": "bull",
+      "headlineVi": "Đơn đặt xe điện tăng sau khi nhiều mẫu mới ra mắt.",
+      "deltaLevelsBySector": {
+        "CD": 2,
+        "TE": 1,
+        "IN": 1
+      },
+      "nameEn": "EV Orders Accelerate",
+      "headlineEn": "Electric vehicle orders rise after several new models launch.",
+      "nameVi": "Đơn hàng xe điện tăng"
+    },
+    {
+      "id": "B20",
+      "name": "Back-to-School Demand",
+      "market": "bull",
+      "headlineVi": "Mùa tựu trường kéo doanh số hàng thiết yếu và thiết bị học tập đi lên.",
+      "deltaLevelsBySector": {
+        "CS": 1,
+        "CD": 1,
+        "TE": 1
+      },
+      "nameEn": "Back-to-School Demand",
+      "headlineEn": "Back-to-school shopping boosts sales of essentials and learning devices.",
+      "nameVi": "Mùa tựu trường"
+    },
+    {
+      "id": "B21",
+      "name": "Grocery Margin Recovery",
+      "market": "bull",
+      "headlineVi": "Chi phí đầu vào hạ, các chuỗi thực phẩm cải thiện lợi nhuận.",
+      "deltaLevelsBySector": {
+        "CS": 2
+      },
+      "nameEn": "Grocery Margin Recovery",
+      "headlineEn": "Lower input costs improve profits at food retail chains.",
+      "nameVi": "Chi phí thực phẩm hạ"
+    },
+    {
+      "id": "B22",
+      "name": "Beverage Export Boom",
+      "market": "bull",
+      "headlineVi": "Đơn hàng đồ uống xuất khẩu tăng sau khi mở thêm thị trường.",
+      "deltaLevelsBySector": {
+        "CS": 2,
+        "IN": 1
+      },
+      "nameEn": "Beverage Export Boom",
+      "headlineEn": "Beverage export orders rise as new markets open up.",
+      "nameVi": "Xuất khẩu đồ uống tăng"
+    },
+    {
+      "id": "B23",
+      "name": "Staples Logistics Upgrade",
+      "market": "bull",
+      "headlineVi": "Chuỗi thực phẩm giảm hao hụt nhờ kho lạnh và vận tải tốt hơn.",
+      "deltaLevelsBySector": {
+        "CS": 1,
+        "IN": 1
+      },
+      "nameEn": "Staples Logistics Upgrade",
+      "headlineEn": "Better cold storage and transport reduce losses in the food supply chain.",
+      "nameVi": "Chuỗi lạnh cải thiện"
+    },
+    {
+      "id": "B24",
+      "name": "Payment Volume Record",
+      "market": "bull",
+      "headlineVi": "Giao dịch thẻ tăng theo doanh số bán lẻ.",
+      "deltaLevelsBySector": {
+        "FI": 2,
+        "CD": 1
+      },
+      "nameEn": "Payment Volume Record",
+      "headlineEn": "Card transactions rise alongside retail sales.",
+      "nameVi": "Giao dịch thẻ tăng"
+    },
+    {
+      "id": "B25",
+      "name": "IPO Window Reopens",
+      "market": "bull",
+      "headlineVi": "Nhiều doanh nghiệp công nghệ khởi động lại kế hoạch niêm yết.",
+      "deltaLevelsBySector": {
+        "FI": 2,
+        "TE": 1
+      },
+      "nameEn": "IPO Window Reopens",
+      "headlineEn": "Several tech companies revive plans to go public.",
+      "nameVi": "Làn sóng niêm yết trở lại"
+    },
+    {
+      "id": "B26",
+      "name": "Insurance Underwriting Gains",
+      "market": "bull",
+      "headlineVi": "Tỷ lệ bồi thường thấp hơn dự kiến giúp các hãng bảo hiểm tăng lợi nhuận.",
+      "deltaLevelsBySector": {
+        "FI": 2
+      },
+      "nameEn": "Insurance Underwriting Gains",
+      "headlineEn": "Fewer insurance claims than expected lift insurers' profits.",
+      "nameVi": "Bồi thường bảo hiểm giảm"
+    },
+    {
+      "id": "B27",
+      "name": "Mortgage Demand Recovers",
+      "market": "bull",
+      "headlineVi": "Hồ sơ vay mua nhà tăng, kéo theo đơn hàng xây dựng và nội thất.",
+      "deltaLevelsBySector": {
+        "FI": 1,
+        "IN": 1,
+        "CD": 1
+      },
+      "nameEn": "Mortgage Demand Recovers",
+      "headlineEn": "Mortgage applications rise, lifting demand for construction and furnishings.",
+      "nameVi": "Vay mua nhà tăng"
+    },
+    {
+      "id": "B28",
+      "name": "Refining Margin Rebound",
+      "market": "bull",
+      "headlineVi": "Biên lợi nhuận lọc dầu phục hồi nhờ nhu cầu nhiên liệu tăng.",
+      "deltaLevelsBySector": {
+        "EN": 2
+      },
+      "nameEn": "Refining Margin Rebound",
+      "headlineEn": "Refining margins recover as fuel demand grows.",
+      "nameVi": "Biên lọc dầu phục hồi"
+    },
+    {
+      "id": "B29",
+      "name": "Gas Export Contracts",
+      "market": "bull",
+      "headlineVi": "Các dự án xuất khẩu khí ký thêm hợp đồng dài hạn.",
+      "deltaLevelsBySector": {
+        "EN": 2,
+        "IN": 1
+      },
+      "nameEn": "Gas Export Contracts",
+      "headlineEn": "Gas export projects secure more long-term contracts.",
+      "nameVi": "Hợp đồng xuất khẩu khí"
+    },
+    {
+      "id": "B30",
+      "name": "Oilfield Services Backlog",
+      "market": "bull",
+      "headlineVi": "Nhà khai thác tăng ngân sách khoan và đặt thêm thiết bị.",
+      "deltaLevelsBySector": {
+        "EN": 2,
+        "IN": 1
+      },
+      "nameEn": "Oilfield Services Backlog",
+      "headlineEn": "Producers increase drilling budgets and order more equipment.",
+      "nameVi": "Đầu tư khoan tăng"
+    },
+    {
+      "id": "B31",
+      "name": "Grid Investment Package",
+      "market": "bull",
+      "headlineVi": "Gói đầu tư lưới điện thúc đẩy đơn hàng thiết bị và phần mềm.",
+      "deltaLevelsBySector": {
+        "IN": 2,
+        "TE": 1,
+        "EN": 1
+      },
+      "nameEn": "Grid Investment Package",
+      "headlineEn": "Investment in the power grid boosts orders for equipment and software.",
+      "nameVi": "Đầu tư lưới điện"
+    },
+    {
+      "id": "B32",
+      "name": "Aerospace Orders Rise",
+      "market": "bull",
+      "headlineVi": "Các hãng bay đặt thêm máy bay và linh kiện để mở rộng đội bay.",
+      "deltaLevelsBySector": {
+        "IN": 2,
+        "CD": 1
+      },
+      "nameEn": "Aerospace Orders Rise",
+      "headlineEn": "Airlines order more aircraft and parts to expand their fleets.",
+      "nameVi": "Mở rộng đội bay"
+    },
+    {
+      "id": "B33",
+      "name": "Port Bottlenecks Ease",
+      "market": "bull",
+      "headlineVi": "Cảng thông suốt hơn, hàng về kho nhanh và chi phí vận tải giảm.",
+      "deltaLevelsBySector": {
+        "IN": 1,
+        "CS": 1,
+        "CD": 1
+      },
+      "nameEn": "Port Bottlenecks Ease",
+      "headlineEn": "Ports clear cargo faster, cutting delivery times and transport costs.",
+      "nameVi": "Cảng thông suốt"
+    },
+    {
+      "id": "B34",
+      "name": "Medical Device Approvals",
+      "market": "bull",
+      "headlineVi": "Thiết bị chẩn đoán mới được cấp phép, kéo theo đơn hàng linh kiện.",
+      "deltaLevelsBySector": {
+        "HC": 2,
+        "TE": 1
+      },
+      "nameEn": "Medical Device Approvals",
+      "headlineEn": "A new diagnostic device wins approval, boosting orders for components.",
+      "nameVi": "Thiết bị chẩn đoán được duyệt"
+    },
+    {
+      "id": "B35",
+      "name": "Hospital Capacity Expansion",
+      "market": "bull",
+      "headlineVi": "Các bệnh viện mở rộng cơ sở và tăng đặt mua thiết bị.",
+      "deltaLevelsBySector": {
+        "HC": 2,
+        "IN": 1
+      },
+      "nameEn": "Hospital Capacity Expansion",
+      "headlineEn": "Hospitals expand their facilities and order more equipment.",
+      "nameVi": "Bệnh viện mở rộng"
+    },
+    {
+      "id": "B36",
+      "name": "Preventive Care Demand",
+      "market": "bull",
+      "headlineVi": "Nhu cầu khám sàng lọc và dịch vụ phòng bệnh tăng.",
+      "deltaLevelsBySector": {
+        "HC": 2
+      },
+      "nameEn": "Preventive Care Demand",
+      "headlineEn": "Demand for screening and preventive care rises.",
+      "nameVi": "Nhu cầu phòng bệnh tăng"
+    },
+    {
+      "id": "B37",
+      "name": "Biotech Funding Rebounds",
+      "market": "bull",
+      "headlineVi": "Vốn quay lại các dự án công nghệ sinh học sau một loạt kết quả tốt.",
+      "deltaLevelsBySector": {
+        "HC": 2,
+        "FI": 1
+      },
+      "nameEn": "Biotech Funding Rebounds",
+      "headlineEn": "Funding returns to biotech projects after a run of promising results.",
+      "nameVi": "Vốn trở lại công nghệ sinh học"
+    },
+    {
+      "id": "B38",
+      "name": "Digital Health Contracts",
+      "market": "bull",
+      "headlineVi": "Các bệnh viện ký hợp đồng triển khai hồ sơ và chẩn đoán số.",
+      "deltaLevelsBySector": {
+        "HC": 1,
+        "TE": 1
+      },
+      "nameEn": "Digital Health Contracts",
+      "headlineEn": "Hospitals sign contracts to roll out digital records and diagnostics.",
+      "nameVi": "Số hóa bệnh viện"
+    },
+    {
+      "id": "B39",
+      "name": "Harvest Supply Normalizes",
+      "market": "bull",
+      "headlineVi": "Nguồn cung nông sản ổn định, giúp giá nguyên liệu thực phẩm giảm.",
+      "deltaLevelsBySector": {
+        "CS": 2,
+        "CD": 1
+      },
+      "nameEn": "Harvest Supply Normalizes",
+      "headlineEn": "Steady crop supplies bring down food ingredient costs.",
+      "nameVi": "Nguồn cung nông sản ổn định"
+    },
+    {
+      "id": "B40",
+      "name": "E-Commerce Fulfillment Gains",
+      "market": "bull",
+      "headlineVi": "Giao hàng nhanh hơn thúc đẩy doanh số trực tuyến và quảng cáo.",
+      "deltaLevelsBySector": {
+        "CD": 2,
+        "CM": 1,
+        "IN": 1
+      },
+      "nameEn": "E-Commerce Fulfillment Gains",
+      "headlineEn": "Faster delivery boosts online sales and advertising.",
+      "nameVi": "Giao hàng nhanh hơn"
+    },
+    {
+      "id": "B41",
+      "name": "Cybersecurity Spending Rises",
+      "market": "bull",
+      "headlineVi": "Các tổ chức tài chính tăng đầu tư vào bảo mật hệ thống.",
+      "deltaLevelsBySector": {
+        "TE": 2,
+        "FI": 1
+      },
+      "nameEn": "Cybersecurity Spending Rises",
+      "headlineEn": "Financial institutions increase spending on cybersecurity.",
+      "nameVi": "Đầu tư an ninh mạng"
+    },
+    {
+      "id": "B42",
+      "name": "Sports Rights Expansion",
+      "market": "bull",
+      "headlineVi": "Các nền tảng mua thêm bản quyền thể thao, kéo quảng cáo và hàng lưu niệm đi lên.",
+      "deltaLevelsBySector": {
+        "CM": 2,
+        "CD": 1
+      },
+      "nameEn": "Sports Rights Expansion",
+      "headlineEn": "Platforms buy more sports rights, boosting advertising and merchandise sales.",
+      "nameVi": "Mở rộng bản quyền thể thao"
+    },
+    {
+      "id": "B43",
+      "name": "Local Media Ad Rebound",
+      "market": "bull",
+      "headlineVi": "Doanh nghiệp bán lẻ tăng chi cho quảng cáo địa phương.",
+      "deltaLevelsBySector": {
+        "CM": 2,
+        "CS": 1
+      },
+      "nameEn": "Local Media Ad Rebound",
+      "headlineEn": "Retailers spend more on local advertising.",
+      "nameVi": "Quảng cáo địa phương tăng"
+    },
+    {
+      "id": "B44",
+      "name": "Household Essentials Restocking",
+      "market": "bull",
+      "headlineVi": "Nhà bán lẻ tăng nhập hàng thiết yếu để phục vụ nhu cầu ổn định.",
+      "deltaLevelsBySector": {
+        "CS": 2,
+        "IN": 1
+      },
+      "nameEn": "Household Essentials Restocking",
+      "headlineEn": "Retailers stock up on essentials to meet steady demand.",
+      "nameVi": "Siêu thị tăng nhập hàng"
+    },
+    {
+      "id": "B45",
+      "name": "Fuel Costs Fall",
+      "market": "bull",
+      "headlineVi": "Nhiên liệu rẻ hơn hỗ trợ vận tải và du lịch, nhưng gây áp lực lên hãng dầu.",
+      "deltaLevelsBySector": {
+        "IN": 1,
+        "CD": 1,
+        "EN": -2
+      },
+      "nameEn": "Fuel Costs Fall",
+      "headlineEn": "Cheaper fuel helps transport and tourism but puts pressure on oil companies.",
+      "nameVi": "Nhiên liệu hạ giá"
+    },
+    {
+      "id": "B46",
+      "name": "Defensive Earnings Beat",
+      "market": "bull",
+      "headlineVi": "Doanh nghiệp thực phẩm và y tế báo lợi nhuận vượt dự báo.",
+      "deltaLevelsBySector": {
+        "CS": 2,
+        "HC": 2
+      },
+      "nameEn": "Defensive Earnings Beat",
+      "headlineEn": "Food and healthcare companies report better-than-expected earnings.",
+      "nameVi": "Lợi nhuận vượt dự báo"
+    },
+    {
+      "id": "B47",
+      "name": "Medical Research Grants",
+      "market": "bull",
+      "headlineVi": "Tài trợ nghiên cứu mới thúc đẩy phòng thí nghiệm mua thêm thiết bị.",
+      "deltaLevelsBySector": {
+        "HC": 2,
+        "TE": 1
+      },
+      "nameEn": "Medical Research Grants",
+      "headlineEn": "New research funding helps laboratories buy more equipment.",
+      "nameVi": "Tài trợ nghiên cứu mới"
+    },
+    {
+      "id": "B48",
+      "name": "Emerging Markets Demand",
+      "market": "bull",
+      "headlineVi": "Đơn hàng máy móc, nhiên liệu và hàng thiết yếu từ thị trường mới nổi tăng.",
+      "deltaLevelsBySector": {
+        "IN": 1,
+        "EN": 1,
+        "CS": 1
+      },
+      "nameEn": "Emerging Markets Demand",
+      "headlineEn": "Emerging markets order more machinery, fuel, and essentials.",
+      "nameVi": "Đơn hàng từ thị trường mới nổi"
+    },
+    {
+      "id": "B49",
+      "name": "Business Connectivity Contracts",
+      "market": "bull",
+      "headlineVi": "Doanh nghiệp ký thêm hợp đồng mạng và truyền dữ liệu.",
+      "deltaLevelsBySector": {
+        "CM": 2,
+        "TE": 1
+      },
+      "nameEn": "Business Connectivity Contracts",
+      "headlineEn": "Businesses sign more networking and data transmission contracts.",
+      "nameVi": "Hợp đồng truyền dữ liệu tăng"
+    },
+    {
+      "id": "B50",
+      "name": "Stable Energy Supply",
+      "market": "bull",
+      "headlineVi": "Nguồn nhiên liệu ổn định giúp nhà máy giữ nhịp sản xuất.",
+      "deltaLevelsBySector": {
+        "EN": 1,
+        "IN": 1
+      },
+      "nameEn": "Stable Energy Supply",
+      "headlineEn": "Reliable fuel supplies help factories keep production steady.",
+      "nameVi": "Nguồn nhiên liệu ổn định"
+    },
+    {
+      "id": "R01",
+      "name": "Banking Crisis",
+      "market": "bear",
+      "deltaLevelsBySector": {
+        "FI": -2,
+        "IN": -1,
+        "CD": -1
+      },
+      "headlineVi": "Lo ngại thanh khoản ngân hàng khiến tín dụng bị siết.",
+      "nameEn": "Banking Crisis",
+      "headlineEn": "Bank liquidity concerns prompt lenders to tighten credit.",
+      "nameVi": "Khủng hoảng ngân hàng"
+    },
+    {
+      "id": "R02",
+      "name": "Technology Correction",
+      "market": "bear",
+      "deltaLevelsBySector": {
+        "TE": -2,
+        "CM": -1
+      },
+      "headlineVi": "Cổ phiếu công nghệ bị chốt lời sau một đợt tăng mạnh.",
+      "nameEn": "Technology Correction",
+      "headlineEn": "Investors take profits on tech stocks after a strong rally.",
+      "nameVi": "Công nghệ điều chỉnh"
+    },
+    {
+      "id": "R03",
+      "name": "Oil Supply Shock",
+      "market": "bear",
+      "deltaLevelsBySector": {
+        "EN": 2,
+        "IN": -1,
+        "CD": -1
+      },
+      "headlineVi": "Nguồn cung dầu gián đoạn, giá nhiên liệu và chi phí vận tải tăng.",
+      "nameEn": "Oil Supply Shock",
+      "headlineEn": "Oil supply disruptions push up fuel prices and transport costs.",
+      "nameVi": "Cú sốc nguồn cung dầu"
+    },
+    {
+      "id": "R04",
+      "name": "Consumer Recession",
+      "market": "bear",
+      "deltaLevelsBySector": {
+        "CD": -2,
+        "CM": -1
+      },
+      "headlineVi": "Hộ gia đình cắt giảm các khoản chi không thiết yếu.",
+      "nameEn": "Consumer Recession",
+      "headlineEn": "Households cut back on discretionary spending.",
+      "nameVi": "Tiêu dùng suy giảm"
+    },
+    {
+      "id": "R05",
+      "name": "Healthcare Regulation",
+      "market": "bear",
+      "deltaLevelsBySector": {
+        "HC": -2,
+        "FI": -1
+      },
+      "headlineVi": "Quy định mới gây áp lực lên biên lợi nhuận ngành y tế.",
+      "nameEn": "Healthcare Regulation",
+      "headlineEn": "New regulations squeeze healthcare profit margins.",
+      "nameVi": "Siết quy định y tế"
+    },
+    {
+      "id": "R06",
+      "name": "Supply Chain Breakdown",
+      "market": "bear",
+      "deltaLevelsBySector": {
+        "IN": -2,
+        "EN": -1,
+        "CS": -1
+      },
+      "headlineVi": "Linh kiện và nguyên liệu giao chậm, nhiều nhà máy giảm công suất.",
+      "nameEn": "Supply Chain Breakdown",
+      "headlineEn": "Late deliveries of parts and materials force factories to cut output.",
+      "nameVi": "Đứt gãy chuỗi cung ứng"
+    },
+    {
+      "id": "R07",
+      "name": "Advertising Recession",
+      "market": "bear",
+      "deltaLevelsBySector": {
+        "CM": -2,
+        "TE": -1
+      },
+      "headlineVi": "Doanh nghiệp cắt ngân sách quảng cáo khi doanh thu chậm lại.",
+      "nameEn": "Advertising Recession",
+      "headlineEn": "Businesses cut advertising budgets as revenue growth slows.",
+      "nameVi": "Quảng cáo suy giảm"
+    },
+    {
+      "id": "R08",
+      "name": "Inflation Spike",
+      "market": "bear",
+      "deltaLevelsBySector": {
+        "CD": -2,
+        "IN": -1,
+        "CS": -1
+      },
+      "headlineVi": "Giá sinh hoạt tăng, sức mua và biên lợi nhuận cùng chịu áp lực.",
+      "nameEn": "Inflation Spike",
+      "headlineEn": "Higher living costs put pressure on spending and profit margins.",
+      "nameVi": "Lạm phát tăng vọt"
+    },
+    {
+      "id": "R09",
+      "name": "Commodity Crash",
+      "market": "bear",
+      "deltaLevelsBySector": {
+        "EN": -2,
+        "IN": -1
+      },
+      "headlineVi": "Giá nguyên liệu giảm mạnh khi nhu cầu sản xuất yếu đi.",
+      "nameEn": "Commodity Crash",
+      "headlineEn": "Commodity prices fall sharply as manufacturing demand weakens.",
+      "nameVi": "Giá hàng hóa lao dốc"
+    },
+    {
+      "id": "R10",
+      "name": "Global Market Sell-off",
+      "market": "bear",
+      "deltaLevelsBySector": {
+        "TE": -1,
+        "FI": -1,
+        "IN": -1,
+        "CD": -1,
+        "HC": 1
+      },
+      "headlineVi": "Nhà đầu tư bán tài sản rủi ro và chuyển một phần vốn sang y tế.",
+      "nameEn": "Global Market Sell-off",
+      "headlineEn": "Investors sell riskier assets and shift some money into healthcare.",
+      "nameVi": "Bán tháo toàn cầu"
+    },
+    {
+      "id": "R11",
+      "name": "Rate Hike Surprise",
+      "market": "bear",
+      "headlineVi": "Chi phí vay tăng, người mua hoãn các khoản chi lớn.",
+      "deltaLevelsBySector": {
+        "CD": -2,
+        "TE": -1,
+        "FI": -1
+      },
+      "nameEn": "Rate Hike Surprise",
+      "headlineEn": "Higher borrowing costs lead consumers to delay big purchases.",
+      "nameVi": "Chi phí vay tăng"
+    },
+    {
+      "id": "R12",
+      "name": "Manufacturing Downturn",
+      "market": "bear",
+      "headlineVi": "Chỉ số đơn hàng nhà máy giảm, kéo theo nhu cầu nhiên liệu thấp hơn.",
+      "deltaLevelsBySector": {
+        "IN": -2,
+        "EN": -1
+      },
+      "nameEn": "Manufacturing Downturn",
+      "headlineEn": "Factory orders fall, dragging down fuel demand.",
+      "nameVi": "Đơn hàng nhà máy giảm"
+    },
+    {
+      "id": "R13",
+      "name": "Chip Inventory Glut",
+      "market": "bear",
+      "headlineVi": "Tồn kho chip tăng, các hãng giảm giá và cắt đơn máy móc.",
+      "deltaLevelsBySector": {
+        "TE": -2,
+        "IN": -1
+      },
+      "nameEn": "Chip Inventory Glut",
+      "headlineEn": "Chip inventories rise, prompting manufacturers to cut prices and equipment orders.",
+      "nameVi": "Tồn kho chip tăng"
+    },
+    {
+      "id": "R14",
+      "name": "Cloud Budget Freeze",
+      "market": "bear",
+      "headlineVi": "Doanh nghiệp hoãn chuyển hệ thống lên đám mây để tiết kiệm chi phí.",
+      "deltaLevelsBySector": {
+        "TE": -2,
+        "CM": -1
+      },
+      "nameEn": "Cloud Budget Freeze",
+      "headlineEn": "Businesses delay moving systems to the cloud to save money.",
+      "nameVi": "Hoãn chuyển lên đám mây"
+    },
+    {
+      "id": "R15",
+      "name": "Telecom Capex Cuts",
+      "market": "bear",
+      "headlineVi": "Nhà mạng hoãn nâng cấp hạ tầng, ảnh hưởng nhà cung cấp thiết bị.",
+      "deltaLevelsBySector": {
+        "CM": -2,
+        "TE": -1,
+        "IN": -1
+      },
+      "nameEn": "Telecom Capex Cuts",
+      "headlineEn": "Telecom operators postpone network upgrades, hurting equipment suppliers.",
+      "nameVi": "Hoãn nâng cấp mạng"
+    },
+    {
+      "id": "R16",
+      "name": "Streaming Churn",
+      "market": "bear",
+      "headlineVi": "Nhiều khách hủy gói phát trực tuyến sau đợt tăng giá thuê bao.",
+      "deltaLevelsBySector": {
+        "CM": -2
+      },
+      "nameEn": "Streaming Churn",
+      "headlineEn": "Subscribers cancel streaming plans after a price increase.",
+      "nameVi": "Thuê bao trực tuyến giảm"
+    },
+    {
+      "id": "R17",
+      "name": "Travel Demand Slump",
+      "market": "bear",
+      "headlineVi": "Lượng đặt vé và phòng giảm, các hãng vận tải hạ dự báo doanh thu.",
+      "deltaLevelsBySector": {
+        "CD": -2,
+        "IN": -1,
+        "EN": -1
+      },
+      "nameEn": "Travel Demand Slump",
+      "headlineEn": "Travel and hotel bookings decline, prompting carriers to lower revenue forecasts.",
+      "nameVi": "Du lịch chững lại"
+    },
+    {
+      "id": "R18",
+      "name": "Auto Loan Stress",
+      "market": "bear",
+      "headlineVi": "Nợ quá hạn tăng khiến ngân hàng siết điều kiện vay mua xe.",
+      "deltaLevelsBySector": {
+        "FI": -2,
+        "CD": -1
+      },
+      "nameEn": "Auto Loan Stress",
+      "headlineEn": "Rising delinquencies prompt banks to tighten auto lending.",
+      "nameVi": "Siết vay mua xe"
+    },
+    {
+      "id": "R19",
+      "name": "EV Subsidy Rollback",
+      "market": "bear",
+      "headlineVi": "Ưu đãi xe điện giảm, khách hàng trì hoãn đơn mua mới.",
+      "deltaLevelsBySector": {
+        "CD": -2,
+        "TE": -1,
+        "IN": -1
+      },
+      "nameEn": "EV Subsidy Rollback",
+      "headlineEn": "Reduced electric vehicle incentives lead customers to delay purchases.",
+      "nameVi": "Ưu đãi xe điện giảm"
+    },
+    {
+      "id": "R20",
+      "name": "Grocery Cost Squeeze",
+      "market": "bear",
+      "headlineVi": "Chi phí bao bì và nguyên liệu tăng nhanh hơn giá bán lẻ.",
+      "deltaLevelsBySector": {
+        "CS": -2
+      },
+      "nameEn": "Grocery Cost Squeeze",
+      "headlineEn": "Packaging and ingredient costs rise faster than retail prices.",
+      "nameVi": "Chi phí đầu vào tăng"
+    },
+    {
+      "id": "R21",
+      "name": "Beverage Recall",
+      "market": "bear",
+      "headlineVi": "Một đợt thu hồi diện rộng làm tăng chi phí và giảm doanh số đồ uống.",
+      "deltaLevelsBySector": {
+        "CS": -2
+      },
+      "nameEn": "Beverage Recall",
+      "headlineEn": "A widespread recall raises costs and cuts beverage sales.",
+      "nameVi": "Thu hồi đồ uống"
+    },
+    {
+      "id": "R22",
+      "name": "Cold Chain Failure",
+      "market": "bear",
+      "headlineVi": "Sự cố kho lạnh làm hư hỏng hàng thực phẩm và gián đoạn vận chuyển.",
+      "deltaLevelsBySector": {
+        "CS": -2,
+        "IN": -1
+      },
+      "nameEn": "Cold Chain Failure",
+      "headlineEn": "A cold storage failure spoils food and disrupts deliveries.",
+      "nameVi": "Sự cố kho lạnh"
+    },
+    {
+      "id": "R23",
+      "name": "Payment Volume Slows",
+      "market": "bear",
+      "headlineVi": "Doanh số qua thẻ thấp hơn dự báo do chi tiêu hộ gia đình suy yếu.",
+      "deltaLevelsBySector": {
+        "FI": -2,
+        "CD": -1
+      },
+      "nameEn": "Payment Volume Slows",
+      "headlineEn": "Card spending falls short of forecasts as household demand weakens.",
+      "nameVi": "Chi tiêu qua thẻ suy yếu"
+    },
+    {
+      "id": "R24",
+      "name": "IPO Pipeline Delays",
+      "market": "bear",
+      "headlineVi": "Doanh nghiệp hoãn niêm yết khi nhu cầu đầu tư giảm.",
+      "deltaLevelsBySector": {
+        "FI": -2,
+        "TE": -1
+      },
+      "nameEn": "IPO Pipeline Delays",
+      "headlineEn": "Companies postpone listings as investor demand fades.",
+      "nameVi": "Hoãn niêm yết"
+    },
+    {
+      "id": "R25",
+      "name": "Insurance Claims Spike",
+      "market": "bear",
+      "headlineVi": "Thiên tai làm chi phí bồi thường bảo hiểm tăng đột biến.",
+      "deltaLevelsBySector": {
+        "FI": -2,
+        "IN": 1
+      },
+      "nameEn": "Insurance Claims Spike",
+      "headlineEn": "Natural disasters drive a sharp rise in insurance claims costs.",
+      "nameVi": "Bồi thường thiên tai tăng"
+    },
+    {
+      "id": "R26",
+      "name": "Housing Credit Tightens",
+      "market": "bear",
+      "headlineVi": "Ngân hàng siết vay mua nhà, kéo đơn xây dựng và nội thất đi xuống.",
+      "deltaLevelsBySector": {
+        "FI": -1,
+        "IN": -1,
+        "CD": -1
+      },
+      "nameEn": "Housing Credit Tightens",
+      "headlineEn": "Tighter mortgage lending reduces orders for construction and furnishings.",
+      "nameVi": "Siết vay mua nhà"
+    },
+    {
+      "id": "R27",
+      "name": "Refining Margin Squeeze",
+      "market": "bear",
+      "headlineVi": "Giá dầu đầu vào tăng nhưng giá bán nhiên liệu không theo kịp.",
+      "deltaLevelsBySector": {
+        "EN": -2
+      },
+      "nameEn": "Refining Margin Squeeze",
+      "headlineEn": "Crude oil costs rise faster than retail fuel prices.",
+      "nameVi": "Biên lọc dầu thu hẹp"
+    },
+    {
+      "id": "R28",
+      "name": "Gas Export Outage",
+      "market": "bear",
+      "headlineVi": "Một đầu mối xuất khẩu khí ngừng hoạt động, doanh thu giao hàng giảm.",
+      "deltaLevelsBySector": {
+        "EN": -2,
+        "IN": -1
+      },
+      "nameEn": "Gas Export Outage",
+      "headlineEn": "A gas export hub shuts down, cutting revenue from shipments.",
+      "nameVi": "Gián đoạn xuất khẩu khí"
+    },
+    {
+      "id": "R29",
+      "name": "Oilfield Project Delays",
+      "market": "bear",
+      "headlineVi": "Nhà khai thác hoãn dự án mới và giảm đơn mua thiết bị khoan.",
+      "deltaLevelsBySector": {
+        "EN": -2,
+        "IN": -1
+      },
+      "nameEn": "Oilfield Project Delays",
+      "headlineEn": "Producers postpone new projects and cut drilling equipment orders.",
+      "nameVi": "Hoãn dự án khoan"
+    },
+    {
+      "id": "R30",
+      "name": "Grid Project Overruns",
+      "market": "bear",
+      "headlineVi": "Chi phí đội lên khiến một số dự án thiết bị điện bị hoãn.",
+      "deltaLevelsBySector": {
+        "IN": -2,
+        "TE": -1
+      },
+      "nameEn": "Grid Project Overruns",
+      "headlineEn": "Cost overruns delay several electrical equipment projects.",
+      "nameVi": "Hoãn dự án thiết bị điện"
+    },
+    {
+      "id": "R31",
+      "name": "Aircraft Delivery Delays",
+      "market": "bear",
+      "headlineVi": "Giao máy bay chậm khiến hãng vận tải hoãn mở tuyến mới.",
+      "deltaLevelsBySector": {
+        "IN": -2,
+        "CD": -1
+      },
+      "nameEn": "Aircraft Delivery Delays",
+      "headlineEn": "Aircraft delivery delays force carriers to postpone new routes.",
+      "nameVi": "Chậm giao máy bay"
+    },
+    {
+      "id": "R32",
+      "name": "Shipping Disruption",
+      "market": "bear",
+      "headlineVi": "Tuyến vận tải bị gián đoạn, hàng về kho chậm và chi phí tăng.",
+      "deltaLevelsBySector": {
+        "IN": -2,
+        "CS": -1,
+        "CD": -1,
+        "EN": 1
+      },
+      "nameEn": "Shipping Disruption",
+      "headlineEn": "Disrupted shipping routes delay deliveries and drive up costs.",
+      "nameVi": "Gián đoạn vận tải"
+    },
+    {
+      "id": "R33",
+      "name": "Medical Device Recall",
+      "market": "bear",
+      "headlineVi": "Thiết bị chẩn đoán bị thu hồi, kéo theo chi phí thay thế lớn.",
+      "deltaLevelsBySector": {
+        "HC": -2,
+        "TE": -1
+      },
+      "nameEn": "Medical Device Recall",
+      "headlineEn": "A diagnostic device recall results in costly replacements.",
+      "nameVi": "Thu hồi thiết bị chẩn đoán"
+    },
+    {
+      "id": "R34",
+      "name": "Hospital Budget Cuts",
+      "market": "bear",
+      "headlineVi": "Bệnh viện hoãn mở rộng cơ sở và cắt đơn mua thiết bị.",
+      "deltaLevelsBySector": {
+        "HC": -2,
+        "IN": -1
+      },
+      "nameEn": "Hospital Budget Cuts",
+      "headlineEn": "Hospitals delay expansion and cut equipment orders.",
+      "nameVi": "Bệnh viện hoãn mở rộng"
+    },
+    {
+      "id": "R35",
+      "name": "Drug Trial Setback",
+      "market": "bear",
+      "headlineVi": "Kết quả thử nghiệm không đạt mục tiêu, dự án thuốc bị trì hoãn.",
+      "deltaLevelsBySector": {
+        "HC": -2
+      },
+      "nameEn": "Drug Trial Setback",
+      "headlineEn": "A clinical trial misses its target, delaying drug development.",
+      "nameVi": "Thử nghiệm thuốc không đạt"
+    },
+    {
+      "id": "R36",
+      "name": "Biotech Funding Drought",
+      "market": "bear",
+      "headlineVi": "Các quỹ cắt đầu tư vào dự án thuốc ở giai đoạn đầu.",
+      "deltaLevelsBySector": {
+        "HC": -2,
+        "FI": -1
+      },
+      "nameEn": "Biotech Funding Drought",
+      "headlineEn": "Funds cut investment in early-stage drug projects.",
+      "nameVi": "Vốn đầu tư dược suy giảm"
+    },
+    {
+      "id": "R37",
+      "name": "Health Reimbursement Cuts",
+      "market": "bear",
+      "headlineVi": "Mức chi trả bảo hiểm giảm, gây áp lực lên doanh thu dịch vụ y tế.",
+      "deltaLevelsBySector": {
+        "HC": -2
+      },
+      "nameEn": "Health Reimbursement Cuts",
+      "headlineEn": "Lower insurance reimbursements squeeze healthcare providers' revenue.",
+      "nameVi": "Giảm mức chi trả bảo hiểm"
+    },
+    {
+      "id": "R38",
+      "name": "Poor Harvest",
+      "market": "bear",
+      "headlineVi": "Vụ mùa kém đẩy chi phí nguyên liệu thực phẩm và nhà hàng lên cao.",
+      "deltaLevelsBySector": {
+        "CS": -2,
+        "CD": -1
+      },
+      "nameEn": "Poor Harvest",
+      "headlineEn": "A poor harvest raises ingredient costs for food producers and restaurants.",
+      "nameVi": "Mất mùa đẩy giá thực phẩm"
+    },
+    {
+      "id": "R39",
+      "name": "Online Returns Surge",
+      "market": "bear",
+      "headlineVi": "Tỷ lệ hoàn hàng trực tuyến tăng, làm giảm lợi nhuận bán lẻ.",
+      "deltaLevelsBySector": {
+        "CD": -2,
+        "CM": -1
+      },
+      "nameEn": "Online Returns Surge",
+      "headlineEn": "More online orders are returned, reducing retail profits.",
+      "nameVi": "Hoàn hàng trực tuyến tăng"
+    },
+    {
+      "id": "R40",
+      "name": "Major Data Breach",
+      "market": "bear",
+      "headlineVi": "Sự cố rò rỉ dữ liệu làm tăng chi phí khắc phục và bồi thường.",
+      "deltaLevelsBySector": {
+        "TE": -2,
+        "FI": -1,
+        "CM": -1
+      },
+      "nameEn": "Major Data Breach",
+      "headlineEn": "A data breach raises remediation and compensation costs.",
+      "nameVi": "Rò rỉ dữ liệu"
+    },
+    {
+      "id": "R41",
+      "name": "Sports Rights Write-Down",
+      "market": "bear",
+      "headlineVi": "Doanh thu quảng cáo không đủ bù chi phí bản quyền thể thao.",
+      "deltaLevelsBySector": {
+        "CM": -2
+      },
+      "nameEn": "Sports Rights Write-Down",
+      "headlineEn": "Advertising revenue falls short of covering the cost of sports rights.",
+      "nameVi": "Áp lực chi phí bản quyền thể thao"
+    },
+    {
+      "id": "R42",
+      "name": "Local Media Revenue Slump",
+      "market": "bear",
+      "headlineVi": "Nhà bán lẻ địa phương cắt quảng cáo để giữ tiền mặt.",
+      "deltaLevelsBySector": {
+        "CM": -2,
+        "CD": -1
+      },
+      "nameEn": "Local Media Revenue Slump",
+      "headlineEn": "Local retailers cut advertising to conserve cash.",
+      "nameVi": "Cắt quảng cáo địa phương"
+    },
+    {
+      "id": "R43",
+      "name": "Staples Inventory Correction",
+      "market": "bear",
+      "headlineVi": "Siêu thị giảm nhập hàng thiết yếu vì tồn kho cao hơn kế hoạch.",
+      "deltaLevelsBySector": {
+        "CS": -2,
+        "IN": -1
+      },
+      "nameEn": "Staples Inventory Correction",
+      "headlineEn": "Supermarkets cut orders for essentials as inventories exceed plans.",
+      "nameVi": "Siêu thị giảm nhập hàng"
+    },
+    {
+      "id": "R44",
+      "name": "Input Cost Surge",
+      "market": "bear",
+      "headlineVi": "Chi phí năng lượng tăng, bào mòn lợi nhuận nhà máy và nhà bán lẻ.",
+      "deltaLevelsBySector": {
+        "EN": 2,
+        "IN": -2,
+        "CD": -1
+      },
+      "nameEn": "Input Cost Surge",
+      "headlineEn": "Higher energy costs squeeze factory and retail profits.",
+      "nameVi": "Chi phí năng lượng tăng"
+    },
+    {
+      "id": "R45",
+      "name": "Defensive Rotation",
+      "market": "bear",
+      "headlineVi": "Nhà đầu tư bán cổ phiếu tăng trưởng, chuyển vốn sang hàng thiết yếu và y tế.",
+      "deltaLevelsBySector": {
+        "TE": -2,
+        "CD": -1,
+        "CS": 1,
+        "HC": 1
+      },
+      "nameEn": "Defensive Rotation",
+      "headlineEn": "Investors sell growth stocks and move into consumer staples and healthcare.",
+      "nameVi": "Dòng vốn chuyển sang phòng thủ"
+    },
+    {
+      "id": "R46",
+      "name": "Research Funding Freeze",
+      "market": "bear",
+      "headlineVi": "Các chương trình nghiên cứu y tế tạm dừng giải ngân.",
+      "deltaLevelsBySector": {
+        "HC": -2,
+        "TE": -1
+      },
+      "nameEn": "Research Funding Freeze",
+      "headlineEn": "Medical research programs pause funding disbursements.",
+      "nameVi": "Tạm dừng tài trợ nghiên cứu"
+    },
+    {
+      "id": "R47",
+      "name": "Export Order Cancellations",
+      "market": "bear",
+      "headlineVi": "Khách quốc tế hủy đơn máy móc và nguyên liệu do nhu cầu yếu.",
+      "deltaLevelsBySector": {
+        "IN": -2,
+        "EN": -1,
+        "CS": -1
+      },
+      "nameEn": "Export Order Cancellations",
+      "headlineEn": "Overseas customers cancel machinery and material orders as demand weakens.",
+      "nameVi": "Đơn hàng quốc tế bị hủy"
+    },
+    {
+      "id": "R48",
+      "name": "Enterprise Ad Pullback",
+      "market": "bear",
+      "headlineVi": "Doanh nghiệp giảm ngân sách quảng bá trên nền tảng trực tuyến.",
+      "deltaLevelsBySector": {
+        "CM": -2,
+        "TE": -1
+      },
+      "nameEn": "Enterprise Ad Pullback",
+      "headlineEn": "Businesses cut spending on online advertising.",
+      "nameVi": "Cắt ngân sách quảng bá số"
+    },
+    {
+      "id": "R49",
+      "name": "Mobile Privacy Restrictions",
+      "market": "bear",
+      "headlineVi": "Quy định theo dõi mới khiến quảng cáo nhắm mục tiêu kém hiệu quả.",
+      "deltaLevelsBySector": {
+        "CM": -2,
+        "TE": -1
+      },
+      "nameEn": "Mobile Privacy Restrictions",
+      "headlineEn": "New tracking rules make targeted advertising less effective.",
+      "nameVi": "Siết quy định theo dõi"
+    },
+    {
+      "id": "R50",
+      "name": "Warm Winter Demand Miss",
+      "market": "bear",
+      "headlineVi": "Mùa đông ấm hơn dự báo khiến nhu cầu nhiên liệu sưởi giảm.",
+      "deltaLevelsBySector": {
+        "EN": -2
+      },
+      "nameEn": "Warm Winter Demand Miss",
+      "headlineEn": "A warmer-than-expected winter reduces demand for heating fuel.",
+      "nameVi": "Mùa đông ấm hơn dự báo"
+    }
+  ],
+  "nameEn": "Market News",
+  "nameVi": "Tin thị trường",
+  "localization": {
+    "supportedLanguages": [
+      "en",
+      "vi"
+    ],
+    "labels": {
+      "en": {
+        "bull": "Bull",
+        "bear": "Bear",
+        "sectorImpact": "Sector impact"
+      },
+      "vi": {
+        "bull": "Thị trường tăng",
+        "bear": "Thị trường giảm",
+        "sectorImpact": "Tác động theo ngành"
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="elliott">
+  <defs>
+    <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.15"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="12" fill="#1e293b"/>
+  <rect x="2.5" y="2.5" width="59" height="59" rx="10" fill="none" stroke="url(#sheen)" stroke-width="1.5"/>
+  
+      <path d="M18 18 h28 v8 H28 v6 h16 v8 H28 v8 H18 Z" fill="#f8f5ef"/>
+    
+</svg>

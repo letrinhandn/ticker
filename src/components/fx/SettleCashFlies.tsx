@@ -1,0 +1,192 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { money } from "@/lib/money";
+import { fxMs } from "@/lib/prefs/gamePrefs";
+import { FX_TIMING } from "@/lib/fx/types";
+import { playCashDelta } from "@/lib/sfx/sounds";
+
+const SEAT_CORNERS = ["bl", "tr", "tl", "br"] as const;
+export type SeatCorner = (typeof SEAT_CORNERS)[number];
+
+export type SettleCashFly = {
+  id: string;
+  signed: number;
+  /** Prefer exact HUD cash node via playerId. */
+  playerId?: string;
+  /** Fallback seat index 0..3, or -1 for fund. */
+  seatIndex: number;
+};
+
+/** Fallback anchors when the HUD node is not mounted yet. */
+function fallbackPoint(seatIndex: number): { x: number; y: number } {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  const corner: SeatCorner | "fund" =
+    seatIndex < 0 ? "fund" : (SEAT_CORNERS[seatIndex] ?? "br");
+  switch (corner) {
+    case "bl":
+      return { x: 24, y: h - 88 };
+    case "br":
+      return { x: w - 24, y: h - 88 };
+    case "tl":
+      return { x: 24, y: 72 };
+    case "tr":
+      return { x: w - 24, y: 72 };
+    default:
+      return { x: w * 0.5, y: h * 0.14 };
+  }
+}
+
+function cashNodePoint(playerId: string | undefined): { x: number; y: number } | null {
+  if (!playerId || typeof document === "undefined") return null;
+  const node = document.querySelector(
+    `[data-hud-cash="${CSS.escape(playerId)}"]`,
+  );
+  if (!node) return null;
+  const r = node.getBoundingClientRect();
+  if (r.width <= 0 || r.height <= 0) return null;
+  return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+}
+
+/**
+ * Full-viewport cash chips: start at settle card center, land on the
+ * exact seat cash figure (`data-hud-cash`).
+ */
+export function SettleCashFlies({
+  flies,
+  active,
+  onLanded,
+  /** Tax / START / fees: stamp only — skip harsh bill-counter layers. */
+  cashSfx = true,
+}: {
+  flies: SettleCashFly[];
+  active: boolean;
+  onLanded?: () => void;
+  cashSfx?: boolean;
+}) {
+  const layerRef = useRef<HTMLDivElement>(null);
+  const landedRef = useRef(onLanded);
+  const [mounted, setMounted] = useState(false);
+  landedRef.current = onLanded;
+
+  useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    if (!mounted || !active || flies.length === 0) return;
+    const layer = layerRef.current;
+    if (!layer) return;
+
+    let cancelled = false;
+    let done = false;
+    const markLanded = () => {
+      if (cancelled || done) return;
+      done = true;
+      landedRef.current?.();
+    };
+
+    const duration = fxMs(FX_TIMING.settleCashFlyMs);
+    const startX = window.innerWidth * 0.5;
+    const startY = window.innerHeight * 0.46;
+    const anims: Animation[] = [];
+
+    const sfxTimers: number[] = [];
+
+    flies.forEach((fly, i) => {
+      const el = document.createElement("span");
+      el.className = `settle-cash-fly${fly.signed >= 0 ? " is-up" : " is-down"}`;
+      el.textContent = `${fly.signed >= 0 ? "+" : "−"}${money(Math.abs(fly.signed))}`;
+      el.style.cssText = [
+        `left:${startX}px`,
+        `top:${startY}px`,
+        "background:transparent",
+        "box-shadow:none",
+        "text-shadow:none",
+        "border:none",
+        "padding:0",
+        "margin:0",
+      ].join(";");
+      layer.appendChild(el);
+
+      const delay = i * 70;
+      // Buy/sell keeps counter SFX; tax/START/fee rely on the stamp only.
+      if (cashSfx) {
+        sfxTimers.push(
+          window.setTimeout(() => {
+            if (cancelled) return;
+            playCashDelta(fly.signed, { volume: 0.72 });
+          }, delay),
+        );
+      }
+
+      const end =
+        cashNodePoint(fly.playerId) ?? fallbackPoint(fly.seatIndex);
+      const anim = el.animate(
+        [
+          {
+            offset: 0,
+            opacity: 1,
+            transform: "translate(-50%, -50%) scale(0.88)",
+          },
+          {
+            offset: 0.1,
+            opacity: 1,
+            transform: "translate(-50%, -50%) scale(1.14)",
+          },
+          {
+            offset: 0.82,
+            opacity: 1,
+            transform: "translate(-50%, -50%) scale(1.02)",
+          },
+          {
+            offset: 1,
+            opacity: 0.12,
+            left: `${end.x}px`,
+            top: `${end.y}px`,
+            transform: "translate(-50%, -50%) scale(0.9)",
+          },
+        ],
+        {
+          duration,
+          delay,
+          easing: "cubic-bezier(0.22, 0.82, 0.2, 1)",
+          fill: "forwards",
+        },
+      );
+      anims.push(anim);
+    });
+
+    Promise.all(anims.map((a) => a.finished.catch(() => undefined))).then(
+      markLanded,
+    );
+    const safety = window.setTimeout(
+      markLanded,
+      duration + flies.length * 70 + 120,
+    );
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(safety);
+      for (const t of sfxTimers) window.clearTimeout(t);
+      for (const anim of anims) anim.cancel();
+      layer.replaceChildren();
+    };
+  }, [mounted, active, flies, cashSfx]);
+
+  if (!mounted || !active || flies.length === 0) return null;
+
+  return createPortal(
+    <div ref={layerRef} className="settle-cash-fly-layer" aria-hidden />,
+    document.body,
+  );
+}
+
+export function seatIndexForPlayer(
+  playerId: string | undefined,
+  playerIds: string[],
+): number {
+  if (!playerId) return 0;
+  const idx = playerIds.indexOf(playerId);
+  return idx >= 0 ? idx : 0;
+}

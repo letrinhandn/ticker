@@ -1,0 +1,21 @@
+Marketpoly SFX — all CC0 (public domain). Attribution optional.
+
+Kenney.nl — Casino Audio (cards, dice, chips)
+  https://opengameart.org/content/54-casino-sound-effects-cards-dice-chips
+  https://kenney.nl/assets/casino-audio
+  card-*.ogg, chip*.ogg, dice-*.ogg, die-throw-*.ogg
+
+artisticdude — RPG Sound Pack
+  https://opengameart.org/content/rpg-sound-pack
+  stamp/thud-door.mp3 (unused); source pack also coins
+
+Bart — Swishes Sound Pack (stamp whoosh)
+  https://opengameart.org/content/swishes-sound-pack
+  stamp/swish-*.mp3
+
+Kenney Casino — stamp paper thocks
+  stamp/thud-card.ogg, stamp/thud-die.ogg, stamp/thud-shove.ogg
+
+Real bill-counter (cash/bill-counter.mp3) — Creative Commons 0
+  madvedj — banknote-counter.wav (warmed / leveled for game mix)
+    https://freesound.org/people/madvedj/sounds/178097/

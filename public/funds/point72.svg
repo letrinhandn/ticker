@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="point72">
+  <defs>
+    <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.15"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="12" fill="#1d4ed8"/>
+  <rect x="2.5" y="2.5" width="59" height="59" rx="10" fill="none" stroke="url(#sheen)" stroke-width="1.5"/>
+  
+      <text x="32" y="30" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#f8f5ef">POINT</text>
+      <text x="32" y="46" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="18" font-weight="800" fill="#f8f5ef">72</text>
+    
+</svg>

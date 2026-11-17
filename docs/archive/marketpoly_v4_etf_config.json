@@ -1,0 +1,2159 @@
+{
+  "schemaVersion": "1.1.0",
+  "game": {
+    "id": "marketpoly",
+    "name": "MARKETPOLY",
+    "rulebookVersion": "4.0",
+    "status": "playtest",
+    "locale": "vi-VN",
+    "currency": {
+      "unit": "M$",
+      "mPerB": 1000,
+      "simulated": true
+    },
+    "players": {
+      "min": 3,
+      "max": 5,
+      "startingCashM": 5000
+    },
+    "roundsPerPlayer": {
+      "quick": 12,
+      "standard": 16,
+      "extended": 20
+    },
+    "configurationRevision": "V4.0 – Playtest ETF"
+  },
+  "provenance": {
+    "rulebook": "MARKETPOLY_RULEBOOK_V4.md",
+    "boardAndCompanies": "Điều 4–7",
+    "pricesAndFees": "Điều 8, 10–13, 35–36",
+    "mockupFields": [
+      "ticker hiển thị",
+      "màu ngành",
+      "bố cục thẻ",
+      "mặt thế chấp CVX"
+    ],
+    "notes": [
+      "Ticker là mã hiển thị theo mockup, không dùng để xác nhận mã niêm yết thực tế.",
+      "V4.0 không có vay vốn trong luật cơ bản. Mặt thế chấp CVX từ mockup được giữ riêng, tắt mặc định; cách suy rộng sang công ty khác chỉ là đề xuất giao diện, không phải luật V4.0.",
+      "Màu ngành là đề xuất UI dựa trên mockup. Các giá có mũi tên trong ảnh bàn là trạng thái trong ván, không phải giá gốc.",
+      "Bản ETF thay 6 ô công ty đặc biệt bằng 6 quỹ và 3 ô SÀN bằng Market Regime; đây là thay đổi playtest, không phải nội dung rulebook V4.0 gốc. Mã quỹ là mã giả lập."
+    ]
+  },
+  "board": {
+    "size": 40,
+    "grid": {
+      "columns": 11,
+      "rows": 11,
+      "origin": "top_left"
+    },
+    "startIndex": 0,
+    "movement": "bottom_right_left_up_right_down",
+    "tiles": [
+      {
+        "id": "tile_00",
+        "index": 0,
+        "grid": {
+          "column": 10,
+          "row": 10
+        },
+        "type": "start",
+        "label": "START",
+        "effect": {
+          "drawMarketRegime": true,
+          "applyShockBeforePayout": true,
+          "payoutByMarketM": {
+            "bull": 200,
+            "bear": 100
+          },
+          "trigger": "pass_or_land_by_normal_move",
+          "payoutDuringSetup": false
+        }
+      },
+      {
+        "id": "tile_01",
+        "index": 1,
+        "grid": {
+          "column": 9,
+          "row": 10
+        },
+        "type": "company",
+        "label": "WMT",
+        "companyId": "WMT",
+        "sectorId": "CS"
+      },
+      {
+        "id": "tile_02",
+        "index": 2,
+        "grid": {
+          "column": 8,
+          "row": 10
+        },
+        "type": "market_regime",
+        "label": "REG",
+        "effect": {
+          "drawMarketRegime": true,
+          "applyShock": true
+        }
+      },
+      {
+        "id": "tile_03",
+        "index": 3,
+        "grid": {
+          "column": 7,
+          "row": 10
+        },
+        "type": "company",
+        "label": "KO",
+        "companyId": "KO",
+        "sectorId": "CS"
+      },
+      {
+        "id": "tile_04",
+        "index": 4,
+        "grid": {
+          "column": 6,
+          "row": 10
+        },
+        "type": "tax",
+        "label": "TAX",
+        "effect": {
+          "nameVi": "Thuế thu nhập",
+          "amountM": 100,
+          "recipient": "bank"
+        }
+      },
+      {
+        "id": "tile_05",
+        "index": 5,
+        "grid": {
+          "column": 5,
+          "row": 10
+        },
+        "type": "etf",
+        "label": "GRW",
+        "fundId": "GRW"
+      },
+      {
+        "id": "tile_06",
+        "index": 6,
+        "grid": {
+          "column": 4,
+          "row": 10
+        },
+        "type": "company",
+        "label": "XOM",
+        "companyId": "XOM",
+        "sectorId": "EN"
+      },
+      {
+        "id": "tile_07",
+        "index": 7,
+        "grid": {
+          "column": 3,
+          "row": 10
+        },
+        "type": "market_regime",
+        "label": "REG",
+        "effect": {
+          "drawMarketRegime": true,
+          "applyShock": true
+        }
+      },
+      {
+        "id": "tile_08",
+        "index": 8,
+        "grid": {
+          "column": 2,
+          "row": 10
+        },
+        "type": "company",
+        "label": "CVX",
+        "companyId": "CVX",
+        "sectorId": "EN"
+      },
+      {
+        "id": "tile_09",
+        "index": 9,
+        "grid": {
+          "column": 1,
+          "row": 10
+        },
+        "type": "company",
+        "label": "SHEL",
+        "companyId": "SHEL",
+        "sectorId": "EN"
+      },
+      {
+        "id": "tile_10",
+        "index": 10,
+        "grid": {
+          "column": 0,
+          "row": 10
+        },
+        "type": "market_halt",
+        "label": "HALT",
+        "effect": {
+          "feeToExitM": 50,
+          "exitOnDoubles": true,
+          "maxAttempts": 3,
+          "moveUsingThirdRollOnForcedExit": true
+        }
+      },
+      {
+        "id": "tile_11",
+        "index": 11,
+        "grid": {
+          "column": 0,
+          "row": 9
+        },
+        "type": "company",
+        "label": "GOOGL",
+        "companyId": "GOOGL",
+        "sectorId": "CM"
+      },
+      {
+        "id": "tile_12",
+        "index": 12,
+        "grid": {
+          "column": 0,
+          "row": 8
+        },
+        "type": "etf",
+        "label": "INF",
+        "fundId": "INF"
+      },
+      {
+        "id": "tile_13",
+        "index": 13,
+        "grid": {
+          "column": 0,
+          "row": 7
+        },
+        "type": "company",
+        "label": "META",
+        "companyId": "META",
+        "sectorId": "CM"
+      },
+      {
+        "id": "tile_14",
+        "index": 14,
+        "grid": {
+          "column": 0,
+          "row": 6
+        },
+        "type": "company",
+        "label": "NFLX",
+        "companyId": "NFLX",
+        "sectorId": "CM"
+      },
+      {
+        "id": "tile_15",
+        "index": 15,
+        "grid": {
+          "column": 0,
+          "row": 5
+        },
+        "type": "etf",
+        "label": "DEF",
+        "fundId": "DEF"
+      },
+      {
+        "id": "tile_16",
+        "index": 16,
+        "grid": {
+          "column": 0,
+          "row": 4
+        },
+        "type": "company",
+        "label": "CAT",
+        "companyId": "CAT",
+        "sectorId": "IN"
+      },
+      {
+        "id": "tile_17",
+        "index": 17,
+        "grid": {
+          "column": 0,
+          "row": 3
+        },
+        "type": "market_regime",
+        "label": "REG",
+        "effect": {
+          "drawMarketRegime": true,
+          "applyShock": true
+        }
+      },
+      {
+        "id": "tile_18",
+        "index": 18,
+        "grid": {
+          "column": 0,
+          "row": 2
+        },
+        "type": "company",
+        "label": "BA",
+        "companyId": "BA",
+        "sectorId": "IN"
+      },
+      {
+        "id": "tile_19",
+        "index": 19,
+        "grid": {
+          "column": 0,
+          "row": 1
+        },
+        "type": "company",
+        "label": "SIE",
+        "companyId": "SIE",
+        "sectorId": "IN"
+      },
+      {
+        "id": "tile_20",
+        "index": 20,
+        "grid": {
+          "column": 0,
+          "row": 0
+        },
+        "type": "free_market",
+        "label": "FREE",
+        "effect": {
+          "payoutM": 0,
+          "feeM": 0,
+          "maxVoluntaryOrders": 1
+        }
+      },
+      {
+        "id": "tile_21",
+        "index": 21,
+        "grid": {
+          "column": 1,
+          "row": 0
+        },
+        "type": "company",
+        "label": "JPM",
+        "companyId": "JPM",
+        "sectorId": "FI"
+      },
+      {
+        "id": "tile_22",
+        "index": 22,
+        "grid": {
+          "column": 2,
+          "row": 0
+        },
+        "type": "market_regime",
+        "label": "REG",
+        "effect": {
+          "drawMarketRegime": true,
+          "applyShock": true
+        }
+      },
+      {
+        "id": "tile_23",
+        "index": 23,
+        "grid": {
+          "column": 3,
+          "row": 0
+        },
+        "type": "company",
+        "label": "V",
+        "companyId": "V",
+        "sectorId": "FI"
+      },
+      {
+        "id": "tile_24",
+        "index": 24,
+        "grid": {
+          "column": 4,
+          "row": 0
+        },
+        "type": "company",
+        "label": "MA",
+        "companyId": "MA",
+        "sectorId": "FI"
+      },
+      {
+        "id": "tile_25",
+        "index": 25,
+        "grid": {
+          "column": 5,
+          "row": 0
+        },
+        "type": "etf",
+        "label": "CYC",
+        "fundId": "CYC"
+      },
+      {
+        "id": "tile_26",
+        "index": 26,
+        "grid": {
+          "column": 6,
+          "row": 0
+        },
+        "type": "company",
+        "label": "AMZN",
+        "companyId": "AMZN",
+        "sectorId": "CD"
+      },
+      {
+        "id": "tile_27",
+        "index": 27,
+        "grid": {
+          "column": 7,
+          "row": 0
+        },
+        "type": "company",
+        "label": "TSLA",
+        "companyId": "TSLA",
+        "sectorId": "CD"
+      },
+      {
+        "id": "tile_28",
+        "index": 28,
+        "grid": {
+          "column": 8,
+          "row": 0
+        },
+        "type": "etf",
+        "label": "DIV",
+        "fundId": "DIV"
+      },
+      {
+        "id": "tile_29",
+        "index": 29,
+        "grid": {
+          "column": 9,
+          "row": 0
+        },
+        "type": "company",
+        "label": "NKE",
+        "companyId": "NKE",
+        "sectorId": "CD"
+      },
+      {
+        "id": "tile_30",
+        "index": 30,
+        "grid": {
+          "column": 10,
+          "row": 0
+        },
+        "type": "go_to_market_halt",
+        "label": "TO HALT",
+        "effect": {
+          "destinationIndex": 10,
+          "collectStartPayout": false,
+          "endTurn": true,
+          "allowTrade": false
+        }
+      },
+      {
+        "id": "tile_31",
+        "index": 31,
+        "grid": {
+          "column": 10,
+          "row": 1
+        },
+        "type": "company",
+        "label": "JNJ",
+        "companyId": "JNJ",
+        "sectorId": "HC"
+      },
+      {
+        "id": "tile_32",
+        "index": 32,
+        "grid": {
+          "column": 10,
+          "row": 2
+        },
+        "type": "company",
+        "label": "PFE",
+        "companyId": "PFE",
+        "sectorId": "HC"
+      },
+      {
+        "id": "tile_33",
+        "index": 33,
+        "grid": {
+          "column": 10,
+          "row": 3
+        },
+        "type": "market_regime",
+        "label": "REG",
+        "effect": {
+          "drawMarketRegime": true,
+          "applyShock": true
+        }
+      },
+      {
+        "id": "tile_34",
+        "index": 34,
+        "grid": {
+          "column": 10,
+          "row": 4
+        },
+        "type": "company",
+        "label": "LLY",
+        "companyId": "LLY",
+        "sectorId": "HC"
+      },
+      {
+        "id": "tile_35",
+        "index": 35,
+        "grid": {
+          "column": 10,
+          "row": 5
+        },
+        "type": "etf",
+        "label": "CON",
+        "fundId": "CON"
+      },
+      {
+        "id": "tile_36",
+        "index": 36,
+        "grid": {
+          "column": 10,
+          "row": 6
+        },
+        "type": "market_regime",
+        "label": "REG",
+        "effect": {
+          "drawMarketRegime": true,
+          "applyShock": true
+        }
+      },
+      {
+        "id": "tile_37",
+        "index": 37,
+        "grid": {
+          "column": 10,
+          "row": 7
+        },
+        "type": "company",
+        "label": "AAPL",
+        "companyId": "AAPL",
+        "sectorId": "TE"
+      },
+      {
+        "id": "tile_38",
+        "index": 38,
+        "grid": {
+          "column": 10,
+          "row": 8
+        },
+        "type": "tax",
+        "label": "TAX",
+        "effect": {
+          "nameVi": "Thuế tài sản",
+          "amountM": 200,
+          "recipient": "bank"
+        }
+      },
+      {
+        "id": "tile_39",
+        "index": 39,
+        "grid": {
+          "column": 10,
+          "row": 9
+        },
+        "type": "company",
+        "label": "MSFT",
+        "companyId": "MSFT",
+        "sectorId": "TE"
+      }
+    ]
+  },
+  "sectorOrder": [
+    "CS",
+    "EN",
+    "CM",
+    "IN",
+    "FI",
+    "CD",
+    "HC",
+    "TE"
+  ],
+  "sectors": [
+    {
+      "id": "CS",
+      "nameEn": "Consumer Staples",
+      "nameVi": "Tiêu dùng thiết yếu",
+      "color": "#79503A"
+    },
+    {
+      "id": "EN",
+      "nameEn": "Energy",
+      "nameVi": "Năng lượng",
+      "color": "#7FB8CF"
+    },
+    {
+      "id": "CM",
+      "nameEn": "Communication",
+      "nameVi": "Truyền thông",
+      "color": "#CE568E"
+    },
+    {
+      "id": "IN",
+      "nameEn": "Industrials",
+      "nameVi": "Công nghiệp",
+      "color": "#E89032"
+    },
+    {
+      "id": "FI",
+      "nameEn": "Financials",
+      "nameVi": "Tài chính",
+      "color": "#C8353B"
+    },
+    {
+      "id": "CD",
+      "nameEn": "Consumer Discretionary",
+      "nameVi": "Tiêu dùng không thiết yếu",
+      "color": "#E4BD31"
+    },
+    {
+      "id": "HC",
+      "nameEn": "Healthcare",
+      "nameVi": "Y tế",
+      "color": "#3C966E"
+    },
+    {
+      "id": "TE",
+      "nameEn": "Technology",
+      "nameVi": "Công nghệ",
+      "color": "#24568B"
+    }
+  ],
+  "companiesById": {
+    "WMT": {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "Walmart",
+      "sectorId": "CS",
+      "companyType": "sector_company",
+      "basePricePerShareM": 60,
+      "visitFeePerShareM": 6,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 30,
+        "-4": 36,
+        "-3": 42,
+        "-2": 48,
+        "-1": 54,
+        "0": 60,
+        "1": 66,
+        "2": 72,
+        "3": 78,
+        "4": 84,
+        "5": 90
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 30,
+        "redeemPerShareM": 36
+      },
+      "boardTileId": "tile_01"
+    },
+    "KO": {
+      "id": "KO",
+      "ticker": "KO",
+      "name": "Coca-Cola",
+      "sectorId": "CS",
+      "companyType": "sector_company",
+      "basePricePerShareM": 70,
+      "visitFeePerShareM": 7,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 35,
+        "-4": 42,
+        "-3": 49,
+        "-2": 56,
+        "-1": 63,
+        "0": 70,
+        "1": 77,
+        "2": 84,
+        "3": 91,
+        "4": 98,
+        "5": 105
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 35,
+        "redeemPerShareM": 42
+      },
+      "boardTileId": "tile_03"
+    },
+    "XOM": {
+      "id": "XOM",
+      "ticker": "XOM",
+      "name": "ExxonMobil",
+      "sectorId": "EN",
+      "companyType": "sector_company",
+      "basePricePerShareM": 100,
+      "visitFeePerShareM": 10,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 50,
+        "-4": 60,
+        "-3": 70,
+        "-2": 80,
+        "-1": 90,
+        "0": 100,
+        "1": 110,
+        "2": 120,
+        "3": 130,
+        "4": 140,
+        "5": 150
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 50,
+        "redeemPerShareM": 60
+      },
+      "boardTileId": "tile_06"
+    },
+    "CVX": {
+      "id": "CVX",
+      "ticker": "CVX",
+      "name": "Chevron",
+      "sectorId": "EN",
+      "companyType": "sector_company",
+      "basePricePerShareM": 110,
+      "visitFeePerShareM": 11,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 55,
+        "-4": 66,
+        "-3": 77,
+        "-2": 88,
+        "-1": 99,
+        "0": 110,
+        "1": 121,
+        "2": 132,
+        "3": 143,
+        "4": 154,
+        "5": 165
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 55,
+        "redeemPerShareM": 66
+      },
+      "boardTileId": "tile_08"
+    },
+    "SHEL": {
+      "id": "SHEL",
+      "ticker": "SHEL",
+      "name": "Shell",
+      "sectorId": "EN",
+      "companyType": "sector_company",
+      "basePricePerShareM": 120,
+      "visitFeePerShareM": 12,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 60,
+        "-4": 72,
+        "-3": 84,
+        "-2": 96,
+        "-1": 108,
+        "0": 120,
+        "1": 132,
+        "2": 144,
+        "3": 156,
+        "4": 168,
+        "5": 180
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 60,
+        "redeemPerShareM": 72
+      },
+      "boardTileId": "tile_09"
+    },
+    "GOOGL": {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Alphabet",
+      "sectorId": "CM",
+      "companyType": "sector_company",
+      "basePricePerShareM": 140,
+      "visitFeePerShareM": 14,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 70,
+        "-4": 84,
+        "-3": 98,
+        "-2": 112,
+        "-1": 126,
+        "0": 140,
+        "1": 154,
+        "2": 168,
+        "3": 182,
+        "4": 196,
+        "5": 210
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 70,
+        "redeemPerShareM": 84
+      },
+      "boardTileId": "tile_11"
+    },
+    "META": {
+      "id": "META",
+      "ticker": "META",
+      "name": "Meta",
+      "sectorId": "CM",
+      "companyType": "sector_company",
+      "basePricePerShareM": 150,
+      "visitFeePerShareM": 15,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 75,
+        "-4": 90,
+        "-3": 105,
+        "-2": 120,
+        "-1": 135,
+        "0": 150,
+        "1": 165,
+        "2": 180,
+        "3": 195,
+        "4": 210,
+        "5": 225
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 75,
+        "redeemPerShareM": 90
+      },
+      "boardTileId": "tile_13"
+    },
+    "NFLX": {
+      "id": "NFLX",
+      "ticker": "NFLX",
+      "name": "Netflix",
+      "sectorId": "CM",
+      "companyType": "sector_company",
+      "basePricePerShareM": 160,
+      "visitFeePerShareM": 16,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 80,
+        "-4": 96,
+        "-3": 112,
+        "-2": 128,
+        "-1": 144,
+        "0": 160,
+        "1": 176,
+        "2": 192,
+        "3": 208,
+        "4": 224,
+        "5": 240
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 80,
+        "redeemPerShareM": 96
+      },
+      "boardTileId": "tile_14"
+    },
+    "CAT": {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "Caterpillar",
+      "sectorId": "IN",
+      "companyType": "sector_company",
+      "basePricePerShareM": 180,
+      "visitFeePerShareM": 18,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 90,
+        "-4": 108,
+        "-3": 126,
+        "-2": 144,
+        "-1": 162,
+        "0": 180,
+        "1": 198,
+        "2": 216,
+        "3": 234,
+        "4": 252,
+        "5": 270
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 90,
+        "redeemPerShareM": 108
+      },
+      "boardTileId": "tile_16"
+    },
+    "BA": {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "Boeing",
+      "sectorId": "IN",
+      "companyType": "sector_company",
+      "basePricePerShareM": 190,
+      "visitFeePerShareM": 19,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 95,
+        "-4": 114,
+        "-3": 133,
+        "-2": 152,
+        "-1": 171,
+        "0": 190,
+        "1": 209,
+        "2": 228,
+        "3": 247,
+        "4": 266,
+        "5": 285
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 95,
+        "redeemPerShareM": 114
+      },
+      "boardTileId": "tile_18"
+    },
+    "SIE": {
+      "id": "SIE",
+      "ticker": "SIE",
+      "name": "Siemens",
+      "sectorId": "IN",
+      "companyType": "sector_company",
+      "basePricePerShareM": 200,
+      "visitFeePerShareM": 20,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 100,
+        "-4": 120,
+        "-3": 140,
+        "-2": 160,
+        "-1": 180,
+        "0": 200,
+        "1": 220,
+        "2": 240,
+        "3": 260,
+        "4": 280,
+        "5": 300
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 100,
+        "redeemPerShareM": 120
+      },
+      "boardTileId": "tile_19"
+    },
+    "JPM": {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPMorgan",
+      "sectorId": "FI",
+      "companyType": "sector_company",
+      "basePricePerShareM": 220,
+      "visitFeePerShareM": 22,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 110,
+        "-4": 132,
+        "-3": 154,
+        "-2": 176,
+        "-1": 198,
+        "0": 220,
+        "1": 242,
+        "2": 264,
+        "3": 286,
+        "4": 308,
+        "5": 330
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 110,
+        "redeemPerShareM": 132
+      },
+      "boardTileId": "tile_21"
+    },
+    "V": {
+      "id": "V",
+      "ticker": "V",
+      "name": "Visa",
+      "sectorId": "FI",
+      "companyType": "sector_company",
+      "basePricePerShareM": 230,
+      "visitFeePerShareM": 23,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 115,
+        "-4": 138,
+        "-3": 161,
+        "-2": 184,
+        "-1": 207,
+        "0": 230,
+        "1": 253,
+        "2": 276,
+        "3": 299,
+        "4": 322,
+        "5": 345
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 115,
+        "redeemPerShareM": 138
+      },
+      "boardTileId": "tile_23"
+    },
+    "MA": {
+      "id": "MA",
+      "ticker": "MA",
+      "name": "Mastercard",
+      "sectorId": "FI",
+      "companyType": "sector_company",
+      "basePricePerShareM": 240,
+      "visitFeePerShareM": 24,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 120,
+        "-4": 144,
+        "-3": 168,
+        "-2": 192,
+        "-1": 216,
+        "0": 240,
+        "1": 264,
+        "2": 288,
+        "3": 312,
+        "4": 336,
+        "5": 360
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 120,
+        "redeemPerShareM": 144
+      },
+      "boardTileId": "tile_24"
+    },
+    "AMZN": {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sectorId": "CD",
+      "companyType": "sector_company",
+      "basePricePerShareM": 260,
+      "visitFeePerShareM": 26,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 130,
+        "-4": 156,
+        "-3": 182,
+        "-2": 208,
+        "-1": 234,
+        "0": 260,
+        "1": 286,
+        "2": 312,
+        "3": 338,
+        "4": 364,
+        "5": 390
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 130,
+        "redeemPerShareM": 156
+      },
+      "boardTileId": "tile_26"
+    },
+    "TSLA": {
+      "id": "TSLA",
+      "ticker": "TSLA",
+      "name": "Tesla",
+      "sectorId": "CD",
+      "companyType": "sector_company",
+      "basePricePerShareM": 270,
+      "visitFeePerShareM": 27,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 135,
+        "-4": 162,
+        "-3": 189,
+        "-2": 216,
+        "-1": 243,
+        "0": 270,
+        "1": 297,
+        "2": 324,
+        "3": 351,
+        "4": 378,
+        "5": 405
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 135,
+        "redeemPerShareM": 162
+      },
+      "boardTileId": "tile_27"
+    },
+    "NKE": {
+      "id": "NKE",
+      "ticker": "NKE",
+      "name": "Nike",
+      "sectorId": "CD",
+      "companyType": "sector_company",
+      "basePricePerShareM": 280,
+      "visitFeePerShareM": 28,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 140,
+        "-4": 168,
+        "-3": 196,
+        "-2": 224,
+        "-1": 252,
+        "0": 280,
+        "1": 308,
+        "2": 336,
+        "3": 364,
+        "4": 392,
+        "5": 420
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 140,
+        "redeemPerShareM": 168
+      },
+      "boardTileId": "tile_29"
+    },
+    "JNJ": {
+      "id": "JNJ",
+      "ticker": "JNJ",
+      "name": "Johnson & Johnson",
+      "sectorId": "HC",
+      "companyType": "sector_company",
+      "basePricePerShareM": 300,
+      "visitFeePerShareM": 30,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 150,
+        "-4": 180,
+        "-3": 210,
+        "-2": 240,
+        "-1": 270,
+        "0": 300,
+        "1": 330,
+        "2": 360,
+        "3": 390,
+        "4": 420,
+        "5": 450
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 150,
+        "redeemPerShareM": 180
+      },
+      "boardTileId": "tile_31"
+    },
+    "PFE": {
+      "id": "PFE",
+      "ticker": "PFE",
+      "name": "Pfizer",
+      "sectorId": "HC",
+      "companyType": "sector_company",
+      "basePricePerShareM": 310,
+      "visitFeePerShareM": 31,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 155,
+        "-4": 186,
+        "-3": 217,
+        "-2": 248,
+        "-1": 279,
+        "0": 310,
+        "1": 341,
+        "2": 372,
+        "3": 403,
+        "4": 434,
+        "5": 465
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 155,
+        "redeemPerShareM": 186
+      },
+      "boardTileId": "tile_32"
+    },
+    "LLY": {
+      "id": "LLY",
+      "ticker": "LLY",
+      "name": "Eli Lilly",
+      "sectorId": "HC",
+      "companyType": "sector_company",
+      "basePricePerShareM": 320,
+      "visitFeePerShareM": 32,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 160,
+        "-4": 192,
+        "-3": 224,
+        "-2": 256,
+        "-1": 288,
+        "0": 320,
+        "1": 352,
+        "2": 384,
+        "3": 416,
+        "4": 448,
+        "5": 480
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 160,
+        "redeemPerShareM": 192
+      },
+      "boardTileId": "tile_34"
+    },
+    "AAPL": {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sectorId": "TE",
+      "companyType": "sector_company",
+      "basePricePerShareM": 350,
+      "visitFeePerShareM": 35,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 175,
+        "-4": 210,
+        "-3": 245,
+        "-2": 280,
+        "-1": 315,
+        "0": 350,
+        "1": 385,
+        "2": 420,
+        "3": 455,
+        "4": 490,
+        "5": 525
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 175,
+        "redeemPerShareM": 210
+      },
+      "boardTileId": "tile_37"
+    },
+    "MSFT": {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sectorId": "TE",
+      "companyType": "sector_company",
+      "basePricePerShareM": 400,
+      "visitFeePerShareM": 40,
+      "totalShares": 10,
+      "startingBankShares": 10,
+      "ownershipPctPerShare": 10,
+      "pricePerShareByLevelM": {
+        "-5": 200,
+        "-4": 240,
+        "-3": 280,
+        "-2": 320,
+        "-1": 360,
+        "0": 400,
+        "1": 440,
+        "2": 480,
+        "3": 520,
+        "4": 560,
+        "5": 600
+      },
+      "mortgagePreview": {
+        "prototypeOnly": true,
+        "mortgagePerShareM": 200,
+        "redeemPerShareM": 240
+      },
+      "boardTileId": "tile_39"
+    }
+  },
+  "priceTrack": {
+    "minLevel": -5,
+    "maxLevel": 5,
+    "initialLevelBeforeFirstRegime": 0,
+    "stepPctOfBasePrice": 10,
+    "outOfRange": "clamp",
+    "currentPriceLookup": "companiesById[companyId].pricePerShareByLevelM[String(sectorLevel)]"
+  },
+  "rules": {
+    "setup": {
+      "drawInitialMarketRegime": true,
+      "applyInitialMarketRegimeShock": true
+    },
+    "trade": {
+      "defaultMaxVoluntaryOrdersPerTurn": 1,
+      "companyLimitPerOrder": 1,
+      "minSharesPerOrder": 1,
+      "maxSharesPerOrder": 10,
+      "settlementPrice": "after_price_reaction",
+      "onePriceReactionPerOrder": true,
+      "shortSellingAllowed": false,
+      "loansAllowed": false,
+      "appliesToAssetType": "company",
+      "voluntaryOrderLimitSharedAcrossCompaniesAndFunds": true
+    },
+    "visitFee": {
+      "pctOfBasePricePerShare": 10,
+      "excludeBankShares": true,
+      "excludeVisitorOwnedShares": true,
+      "settleBeforeVoluntaryTrade": true
+    },
+    "mortgage": {
+      "enabled": false,
+      "prototypePreviewOnly": true,
+      "previewMortgagePctOfBasePrice": 50,
+      "previewRedeemPctOfBasePrice": 60,
+      "basis": "CVX mockup: 55/66 M$; tỷ lệ đề xuất cho bản xem thử, không phải luật đã chốt."
+    },
+    "fundTrade": {
+      "countsAsVoluntaryOrder": true,
+      "maxFundsPerOrder": 1,
+      "minUnitsPerOrder": 1,
+      "maxUnitsPerOrder": 10,
+      "canTradeWithoutLandingOnFundTile": true,
+      "drawPriceReaction": false,
+      "moveSectorTracks": false,
+      "chargesVisitFee": false,
+      "canSellOwnedUnitsToBank": true,
+      "canTradeWithConsentingPlayer": true,
+      "allowForcedLiquidation": true,
+      "includeInFinalAssetValue": true,
+      "settlementPrice": "current_fund_price",
+      "insufficientCash": "reduce_quantity_to_affordable_whole_units_or_cancel",
+      "valuationMethod": "sum_sector_contributions_at_current_levels"
+    }
+  },
+  "decks": {
+    "marketRegime": {
+      "expectedCount": 20,
+      "cards": [
+        {
+          "id": "B01",
+          "name": "AI Investment Boom",
+          "market": "bull",
+          "deltaLevelsBySector": {
+            "TE": 2,
+            "CM": 1,
+            "IN": 1
+          }
+        },
+        {
+          "id": "B02",
+          "name": "Infrastructure Boom",
+          "market": "bull",
+          "deltaLevelsBySector": {
+            "IN": 2,
+            "EN": 1,
+            "FI": 1
+          }
+        },
+        {
+          "id": "B03",
+          "name": "Credit Expansion",
+          "market": "bull",
+          "deltaLevelsBySector": {
+            "FI": 2,
+            "CD": 1
+          }
+        },
+        {
+          "id": "B04",
+          "name": "Consumer Confidence",
+          "market": "bull",
+          "deltaLevelsBySector": {
+            "CD": 2,
+            "CS": 1
+          }
+        },
+        {
+          "id": "B05",
+          "name": "Healthcare Breakthrough",
+          "market": "bull",
+          "deltaLevelsBySector": {
+            "HC": 2,
+            "TE": 1
+          }
+        },
+        {
+          "id": "B06",
+          "name": "Advertising Boom",
+          "market": "bull",
+          "deltaLevelsBySector": {
+            "CM": 2,
+            "TE": 1
+          }
+        },
+        {
+          "id": "B07",
+          "name": "Energy Demand Surge",
+          "market": "bull",
+          "deltaLevelsBySector": {
+            "EN": 2,
+            "IN": -1
+          }
+        },
+        {
+          "id": "B08",
+          "name": "Productivity Growth",
+          "market": "bull",
+          "deltaLevelsBySector": {
+            "TE": 1,
+            "IN": 1,
+            "FI": 1
+          }
+        },
+        {
+          "id": "B09",
+          "name": "Retail Spending Boom",
+          "market": "bull",
+          "deltaLevelsBySector": {
+            "CS": 2,
+            "CD": 1
+          }
+        },
+        {
+          "id": "B10",
+          "name": "Global Recovery",
+          "market": "bull",
+          "deltaLevelsBySector": {
+            "FI": 1,
+            "TE": 1,
+            "IN": 1,
+            "CD": 1
+          }
+        },
+        {
+          "id": "R01",
+          "name": "Banking Crisis",
+          "market": "bear",
+          "deltaLevelsBySector": {
+            "FI": -2,
+            "IN": -1,
+            "CD": -1
+          }
+        },
+        {
+          "id": "R02",
+          "name": "Technology Correction",
+          "market": "bear",
+          "deltaLevelsBySector": {
+            "TE": -2,
+            "CM": -1
+          }
+        },
+        {
+          "id": "R03",
+          "name": "Oil Supply Shock",
+          "market": "bear",
+          "deltaLevelsBySector": {
+            "EN": 2,
+            "IN": -1,
+            "CD": -1
+          }
+        },
+        {
+          "id": "R04",
+          "name": "Consumer Recession",
+          "market": "bear",
+          "deltaLevelsBySector": {
+            "CD": -2,
+            "CM": -1
+          }
+        },
+        {
+          "id": "R05",
+          "name": "Healthcare Regulation",
+          "market": "bear",
+          "deltaLevelsBySector": {
+            "HC": -2,
+            "FI": -1
+          }
+        },
+        {
+          "id": "R06",
+          "name": "Supply Chain Breakdown",
+          "market": "bear",
+          "deltaLevelsBySector": {
+            "IN": -2,
+            "EN": -1,
+            "CS": -1
+          }
+        },
+        {
+          "id": "R07",
+          "name": "Advertising Recession",
+          "market": "bear",
+          "deltaLevelsBySector": {
+            "CM": -2,
+            "TE": -1
+          }
+        },
+        {
+          "id": "R08",
+          "name": "Inflation Spike",
+          "market": "bear",
+          "deltaLevelsBySector": {
+            "CD": -2,
+            "IN": -1,
+            "CS": -1
+          }
+        },
+        {
+          "id": "R09",
+          "name": "Commodity Crash",
+          "market": "bear",
+          "deltaLevelsBySector": {
+            "EN": -2,
+            "IN": -1
+          }
+        },
+        {
+          "id": "R10",
+          "name": "Global Market Sell-off",
+          "market": "bear",
+          "deltaLevelsBySector": {
+            "TE": -1,
+            "FI": -1,
+            "IN": -1,
+            "CD": -1,
+            "HC": 1
+          }
+        }
+      ]
+    },
+    "priceReaction": {
+      "expectedCount": 24,
+      "fullDeckIncluded": false,
+      "sourceStatus": "Phụ lục B: chưa chốt đủ 24 ma trận. Dữ liệu dưới đây là ví dụ chính thức, không phải bộ bài chạy ván.",
+      "matrix": {
+        "rows": "traded_sector",
+        "columns": "affected_sector",
+        "values": "signed_max_level_delta_for_buy",
+        "buySignMultiplier": 1,
+        "sellSignMultiplier": -1,
+        "neutralValue": 0,
+        "diagonalValue": 3
+      },
+      "volumeTiers": [
+        {
+          "minShares": 1,
+          "maxShares": 2,
+          "mainMagnitude": 0,
+          "secondaryMode": "none"
+        },
+        {
+          "minShares": 3,
+          "maxShares": 4,
+          "mainMagnitude": 1,
+          "secondaryMode": "none"
+        },
+        {
+          "minShares": 5,
+          "maxShares": 7,
+          "mainMagnitude": 2,
+          "secondaryMode": "one_level_if_absolute_cell_at_least_2"
+        },
+        {
+          "minShares": 8,
+          "maxShares": 10,
+          "mainMagnitude": 3,
+          "secondaryMode": "full_row"
+        }
+      ],
+      "exampleRows": [
+        {
+          "cardId": "PR-04",
+          "name": "Capital Rotation",
+          "tradedSectorId": "TE",
+          "buyDeltasBySector": {
+            "CS": -1,
+            "EN": -1,
+            "CM": 2,
+            "IN": 2,
+            "FI": 1,
+            "CD": 1,
+            "HC": -1,
+            "TE": 3
+          }
+        }
+      ]
+    }
+  },
+  "ui": {
+    "boardCompanyTile": {
+      "fields": [
+        "ticker",
+        "currentPricePerShareM"
+      ],
+      "useSectorColor": true,
+      "priceTrendIndicatorBasis": "current_sector_level_vs_zero"
+    },
+    "companyCard": {
+      "front": {
+        "titleFields": [
+          "sector.nameVi",
+          "name",
+          "ticker"
+        ],
+        "bodyFields": [
+          "basePricePerShareM",
+          "visitFeePerShareM",
+          "currentPricePerShareM",
+          "pricePerShareByLevelM"
+        ],
+        "priceGridLevels": [
+          -5,
+          -4,
+          -3,
+          -2,
+          -1,
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "priceGridColumns": 2,
+        "highlightCurrentLevel": true,
+        "labels": {
+          "basePricePerShareM": "Giá gốc / cổ",
+          "visitFeePerShareM": "Phí / cổ",
+          "currentPricePerShareM": "Giá hiện tại / cổ",
+          "pricePerShareByLevelM": "Giá / cổ theo nấc ngành"
+        }
+      },
+      "back": {
+        "showByDefault": false,
+        "requiresMortgageFeature": true,
+        "fields": [
+          "ticker",
+          "mortgagePreview.mortgagePerShareM",
+          "mortgagePreview.redeemPerShareM"
+        ]
+      }
+    },
+    "priceReactionCard": {
+      "sideCount": 1,
+      "matrixCount": 1,
+      "rowLabel": "Ngành giao dịch",
+      "columnLabel": "Ngành chịu tác động",
+      "legend": "MUA: giữ dấu · BÁN: đảo dấu cả hàng đã chọn"
+    },
+    "boardFundTile": {
+      "fields": [
+        "ticker",
+        "name",
+        "currentPricePerUnitM"
+      ]
+    },
+    "fundCard": {
+      "fields": [
+        "ticker",
+        "name",
+        "sectorIds",
+        "totalUnits",
+        "basePricePerUnitM",
+        "currentPricePerUnitM",
+        "components"
+      ],
+      "note": "Cộng 3 giá trị theo nấc ngành. Không thu phí."
+    }
+  },
+  "initialStateBeforeFirstRegime": {
+    "sectorLevels": {
+      "CS": 0,
+      "EN": 0,
+      "CM": 0,
+      "IN": 0,
+      "FI": 0,
+      "CD": 0,
+      "HC": 0,
+      "TE": 0
+    },
+    "playerStartTileIndex": 0,
+    "bankSharesByCompany": {
+      "WMT": 10,
+      "KO": 10,
+      "XOM": 10,
+      "CVX": 10,
+      "SHEL": 10,
+      "GOOGL": 10,
+      "META": 10,
+      "NFLX": 10,
+      "CAT": 10,
+      "BA": 10,
+      "SIE": 10,
+      "JPM": 10,
+      "V": 10,
+      "MA": 10,
+      "AMZN": 10,
+      "TSLA": 10,
+      "NKE": 10,
+      "JNJ": 10,
+      "PFE": 10,
+      "LLY": 10,
+      "AAPL": 10,
+      "MSFT": 10
+    },
+    "activeMarketRegimeId": null,
+    "bankUnitsByFund": {
+      "GRW": 10,
+      "INF": 10,
+      "DEF": 10,
+      "CYC": 10,
+      "DIV": 10,
+      "CON": 10
+    }
+  },
+  "fundsById": {
+    "GRW": {
+      "id": "GRW",
+      "ticker": "GRW",
+      "name": "Quỹ Tăng trưởng",
+      "replacesCompanyId": "GS",
+      "tileIndex": 5,
+      "totalUnits": 10,
+      "basePricePerUnitM": 300,
+      "visitFeePerUnitM": 0,
+      "sectorIds": [
+        "TE",
+        "CM",
+        "CD"
+      ],
+      "components": [
+        {
+          "sectorId": "TE",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        },
+        {
+          "sectorId": "CM",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        },
+        {
+          "sectorId": "CD",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        }
+      ]
+    },
+    "INF": {
+      "id": "INF",
+      "ticker": "INF",
+      "name": "Quỹ Hạ tầng",
+      "replacesCompanyId": "NEE",
+      "tileIndex": 12,
+      "totalUnits": 10,
+      "basePricePerUnitM": 300,
+      "visitFeePerUnitM": 0,
+      "sectorIds": [
+        "EN",
+        "IN",
+        "CM"
+      ],
+      "components": [
+        {
+          "sectorId": "EN",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        },
+        {
+          "sectorId": "IN",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        },
+        {
+          "sectorId": "CM",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        }
+      ]
+    },
+    "DEF": {
+      "id": "DEF",
+      "ticker": "DEF",
+      "name": "Quỹ Phòng thủ",
+      "replacesCompanyId": "MS",
+      "tileIndex": 15,
+      "totalUnits": 10,
+      "basePricePerUnitM": 300,
+      "visitFeePerUnitM": 0,
+      "sectorIds": [
+        "CS",
+        "HC",
+        "EN"
+      ],
+      "components": [
+        {
+          "sectorId": "CS",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        },
+        {
+          "sectorId": "HC",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        },
+        {
+          "sectorId": "EN",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        }
+      ]
+    },
+    "CYC": {
+      "id": "CYC",
+      "ticker": "CYC",
+      "name": "Quỹ Kinh tế",
+      "replacesCompanyId": "BLK",
+      "tileIndex": 25,
+      "totalUnits": 10,
+      "basePricePerUnitM": 300,
+      "visitFeePerUnitM": 0,
+      "sectorIds": [
+        "IN",
+        "FI",
+        "EN"
+      ],
+      "components": [
+        {
+          "sectorId": "IN",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        },
+        {
+          "sectorId": "FI",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        },
+        {
+          "sectorId": "EN",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        }
+      ]
+    },
+    "DIV": {
+      "id": "DIV",
+      "ticker": "DIV",
+      "name": "Quỹ Đa ngành",
+      "replacesCompanyId": "DUK",
+      "tileIndex": 28,
+      "totalUnits": 10,
+      "basePricePerUnitM": 300,
+      "visitFeePerUnitM": 0,
+      "sectorIds": [
+        "TE",
+        "FI",
+        "HC"
+      ],
+      "components": [
+        {
+          "sectorId": "TE",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        },
+        {
+          "sectorId": "FI",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        },
+        {
+          "sectorId": "HC",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        }
+      ]
+    },
+    "CON": {
+      "id": "CON",
+      "ticker": "CON",
+      "name": "Quỹ Tiêu dùng",
+      "replacesCompanyId": "SCHW",
+      "tileIndex": 35,
+      "totalUnits": 10,
+      "basePricePerUnitM": 300,
+      "visitFeePerUnitM": 0,
+      "sectorIds": [
+        "CS",
+        "CD",
+        "CM"
+      ],
+      "components": [
+        {
+          "sectorId": "CS",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        },
+        {
+          "sectorId": "CD",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        },
+        {
+          "sectorId": "CM",
+          "baseContributionM": 100,
+          "contributionByLevelM": {
+            "-5": 50,
+            "-4": 60,
+            "-3": 70,
+            "-2": 80,
+            "-1": 90,
+            "0": 100,
+            "1": 110,
+            "2": 120,
+            "3": 130,
+            "4": 140,
+            "5": 150
+          }
+        }
+      ]
+    }
+  }
+}
