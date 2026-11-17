@@ -47,12 +47,12 @@ npm run balance:audit -- --games 600 --fundGames 14
 
 | Piece | Host | Production |
 |-------|------|------------|
-| Frontend | Vercel | `ticker` project |
-| Realtime | Cloudflare Workers | `ticker.<account>.workers.dev` |
+| Frontend | Vercel | https://tickergame.vercel.app |
+| Realtime | Cloudflare Workers | https://ticker.letrinhan123.workers.dev |
 
 ```bash
 npm run party:deploy
 npx vercel deploy --prod
 ```
 
-Set `NEXT_PUBLIC_PARTY_HOST` on Vercel to `ticker.<account>.workers.dev`, then rebuild the frontend.
+`NEXT_PUBLIC_PARTY_HOST` on Vercel is set to `ticker.letrinhan123.workers.dev`.
