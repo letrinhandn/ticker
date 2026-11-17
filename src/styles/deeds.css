@@ -440,7 +440,8 @@
   height: 100%;
   box-sizing: border-box;
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  /* Art row must keep a floor so long notes cannot collapse it to 0. */
+  grid-template-rows: auto minmax(4.75rem, 1fr) auto auto;
   align-items: center;
   justify-items: center;
   gap: 0.28rem;
@@ -452,6 +453,7 @@
     #b8d9cc;
   color: #1a1a1a;
   text-align: center;
+  overflow: hidden;
 }
 
 .corner-deed-top,
@@ -477,9 +479,11 @@
 .corner-deed-art-wrap {
   width: 100%;
   height: 100%;
-  min-height: 0;
+  min-height: 4.75rem;
   display: grid;
   place-items: center;
+  overflow: hidden;
+  align-self: stretch;
 }
 
 .corner-deed-art {
@@ -512,6 +516,7 @@
   text-align: center;
   font-weight: 600;
   max-width: 100%;
+  min-height: 0;
 }
 
 .corner-deed-card.is-compact .corner-deed-note {
@@ -521,7 +526,7 @@
 
 /* START / GO: quiet parchment + minimal arrow art */
 .corner-deed-go .corner-deed-face {
-  grid-template-rows: auto minmax(0, 1fr) auto auto;
+  grid-template-rows: auto minmax(4.75rem, 1fr) auto auto;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.45), transparent 42%),
     #efe2c4;
@@ -585,7 +590,7 @@
 
 /* Tax cards: warm parchment face */
 .corner-deed-tax .corner-deed-face {
-  grid-template-rows: auto minmax(0, 1fr) auto auto auto;
+  grid-template-rows: auto minmax(4.75rem, 1fr) auto auto auto;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 40%),
     #e8c89a;

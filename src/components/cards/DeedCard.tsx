@@ -46,11 +46,16 @@ export function DeedCard({
   compact = false,
   footer,
   game,
+  forceFace,
+  interactive,
 }: {
   tileIndex: number;
   compact?: boolean;
   footer?: ReactNode;
   game?: GameState | null;
+  /** Tutorial / static: show only one face, no flip shell. */
+  forceFace?: "front" | "back";
+  interactive?: boolean;
 }) {
   const t = useT();
   const fx = useGameFxOptional();
@@ -87,7 +92,11 @@ export function DeedCard({
         : sectorMeta
           ? t(sectorNameKey(sectorMeta.sector))
           : t("kind.company");
-  const canFlip = isCompany && !compact && p0 > 0;
+  const canFlipBase = isCompany && !compact && p0 > 0;
+  const canFlip =
+    canFlipBase && forceFace == null && interactive !== false;
+  const showFront = forceFace !== "back";
+  const staticBackOnly = forceFace === "back";
   const title = tile.ticker ?? tile.name;
   const displayName =
     isEtf && fund ? t(fundNameKey(fund.id)) : tile.name;
@@ -173,7 +182,7 @@ export function DeedCard({
 
   return (
     <article
-      className={`deed-card ${compact ? "deed-compact" : ""} ${listed ? "is-listed" : ""}${flipped ? " is-flipped" : ""}${lightBand ? " is-light-band" : ""}`}
+      className={`deed-card ${compact ? "deed-compact" : ""} ${listed ? "is-listed" : ""}${flipped && forceFace == null ? " is-flipped" : ""}${lightBand ? " is-light-band" : ""}${forceFace ? " is-static-face" : ""}`}
       style={{
         ["--deed-band" as string]: band,
         perspective: canFlip ? 1200 : undefined,
@@ -183,23 +192,32 @@ export function DeedCard({
         className={`deed-flip${canFlip ? " is-interactive" : ""}`}
         style={{
           position: "relative",
-          transformStyle: "preserve-3d",
-          WebkitTransformStyle: "preserve-3d",
-          transition: "transform 0.55s cubic-bezier(0.22, 1, 0.36, 1)",
-          transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)",
+          transformStyle: forceFace ? undefined : "preserve-3d",
+          WebkitTransformStyle: forceFace ? undefined : "preserve-3d",
+          transition: forceFace
+            ? undefined
+            : "transform 0.55s cubic-bezier(0.22, 1, 0.36, 1)",
+          transform:
+            forceFace != null
+              ? undefined
+              : flipped
+                ? "rotateY(180deg)"
+                : "rotateY(0deg)",
           cursor: canFlip ? "pointer" : undefined,
         }}
         {...flipHandlers}
       >
+        {showFront ? (
         <div
           className="deed-face deed-front"
-          aria-hidden={flipped}
+          aria-hidden={forceFace == null ? flipped : false}
           style={{
             ...faceBase,
             position: "relative",
             background: "linear-gradient(180deg, #fffdf8 0%, #f3ecdf 100%)",
             color: "#1a1a1a",
-            pointerEvents: flipped ? "none" : "auto",
+            pointerEvents:
+              forceFace == null && flipped ? "none" : "auto",
           }}
         >
           <header className="deed-header">
@@ -393,16 +411,17 @@ export function DeedCard({
             {specialNote && <p className="deed-note">{specialNote}</p>}
           </div>
         </div>
+        ) : null}
 
-        {canFlip && (
+        {(staticBackOnly || (canFlipBase && forceFace == null)) && (
           <div
             className="deed-face deed-back"
-            aria-hidden={!flipped}
+            aria-hidden={staticBackOnly ? false : !flipped}
             style={{
               ...faceBase,
-              position: "absolute",
-              inset: 0,
-              transform: "rotateY(180deg)",
+              position: staticBackOnly ? "relative" : "absolute",
+              inset: staticBackOnly ? undefined : 0,
+              transform: staticBackOnly ? undefined : "rotateY(180deg)",
               display: "flex",
               flexDirection: "column",
               background: band,
@@ -410,7 +429,8 @@ export function DeedCard({
               borderColor: lightBand
                 ? "rgba(0,0,0,0.45)"
                 : "rgba(0,0,0,0.35)",
-              pointerEvents: flipped ? "auto" : "none",
+              pointerEvents:
+                staticBackOnly || flipped ? "auto" : "none",
             }}
           >
             <div
@@ -454,17 +474,19 @@ export function DeedCard({
                   })}
                 </ul>
               </div>
-              <p
-                className="deed-flip-hint"
-                style={{
-                  marginTop: "0.2rem",
-                  color: lightBand
-                    ? "rgba(26,26,26,0.55)"
-                    : "rgba(255,255,255,0.55)",
-                }}
-              >
-                {t("deed.tapFlip")}
-              </p>
+              {forceFace == null ? (
+                <p
+                  className="deed-flip-hint"
+                  style={{
+                    marginTop: "0.2rem",
+                    color: lightBand
+                      ? "rgba(26,26,26,0.55)"
+                      : "rgba(255,255,255,0.55)",
+                  }}
+                >
+                  {t("deed.tapFlip")}
+                </p>
+              ) : null}
             </div>
           </div>
         )}

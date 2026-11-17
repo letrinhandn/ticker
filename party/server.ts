@@ -9,7 +9,7 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
     if (url.pathname === "/" || url.pathname === "/health") {
-      return new Response("PlotParty realtime OK", { status: 200 });
+      return new Response("TICKER realtime OK", { status: 200 });
     }
     return (
       (await routePartykitRequest(request, env as never)) ||

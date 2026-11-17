@@ -1,0 +1,611 @@
+/* Tutorial / how-to-play */
+
+.tut-page {
+  min-height: 100dvh;
+  background:
+    radial-gradient(ellipse 70% 40% at 12% 0%, rgba(26, 107, 60, 0.1), transparent 55%),
+    radial-gradient(ellipse 50% 35% at 90% 8%, rgba(180, 140, 60, 0.08), transparent 50%),
+    linear-gradient(180deg, #f6f1e6 0%, #ebe3d2 100%) !important;
+  color: #1a1a1a !important;
+}
+
+.tut-page .tut-brand,
+.tut-page .brand-link {
+  color: #143d28;
+}
+
+.tut-page > a,
+.tut-top a,
+.tut-nav a,
+.tut-foot a {
+  color: inherit;
+}
+
+.tut-page .btn-ghost {
+  color: #1a1a1a;
+  border-color: rgba(0, 0, 0, 0.14);
+}
+
+.tut-page .btn-primary {
+  color: #f2efe6;
+}
+
+.tut-top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem clamp(1rem, 3vw, 1.5rem);
+  background: rgba(246, 241, 230, 0.96);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.tut-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.tut-shell {
+  display: grid;
+  grid-template-columns: minmax(11rem, 14rem) minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 2rem);
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1.35rem clamp(1rem, 3vw, 1.75rem) 4rem;
+}
+
+.tut-nav {
+  position: sticky;
+  top: 4.25rem;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  background: rgba(255, 252, 245, 0.78);
+}
+
+.tut-nav-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.tut-nav-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.tut-nav-list a {
+  display: block;
+  padding: 0.32rem 0.45rem;
+  border-radius: 8px;
+  color: #3a433d;
+  text-decoration: none;
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+.tut-nav-list a:hover {
+  background: rgba(26, 107, 60, 0.08);
+  color: #143d28;
+}
+
+.tut-play {
+  width: 100%;
+  justify-content: center;
+  margin-top: 0.35rem;
+}
+
+.tut-body {
+  min-width: 0;
+  max-width: 48rem;
+  margin-inline: auto;
+  width: 100%;
+}
+
+.tut-hero h1 {
+  margin: 0 0 0.7rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.85rem, 4.5vw, 2.55rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.tut-hero > p,
+.tut-section > p {
+  margin: 0.6rem 0;
+  font-size: 1rem;
+  line-height: 1.72;
+  color: #2a322e;
+  width: 100%;
+  max-width: none;
+  text-align: justify;
+  text-align-last: left;
+  text-justify: inter-word;
+  hyphens: none;
+  -webkit-hyphens: none;
+  overflow-wrap: break-word;
+  word-break: normal;
+}
+
+.tut-hint {
+  color: #5b675f !important;
+  font-size: 0.9rem !important;
+  text-align: justify !important;
+  text-align-last: left !important;
+  font-style: italic;
+  width: 100%;
+  max-width: none;
+}
+
+.tut-section {
+  margin-top: 2.75rem;
+  padding-top: 1.55rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  scroll-margin-top: 5rem;
+}
+
+.tut-section h2 {
+  margin: 0 0 0.85rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 3vw, 1.35rem);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+}
+
+/* Isolate real card typography from tutorial prose styles. */
+.tut-section .deed-card,
+.tut-section .pcard,
+.tut-section .corner-deed-card,
+.tut-section .tut-sector-wrap {
+  text-align: initial;
+  hyphens: manual;
+}
+
+.tut-section .deed-card p,
+.tut-section .pcard p,
+.tut-section .corner-deed-card p {
+  margin: revert;
+  font-size: revert;
+  line-height: revert;
+  color: revert;
+  text-align: revert;
+  max-width: none;
+  font-style: normal;
+}
+
+.tut-gallery,
+.tut-gallery-slot {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  justify-content: center;
+  align-items: start;
+  gap: 1.75rem;
+  width: 100%;
+  margin: 1.65rem 0 0.5rem;
+  min-height: 1rem;
+  overflow: visible;
+}
+
+.tut-gallery.is-faces {
+  gap: 2.5rem;
+}
+
+.tut-face-block {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.95rem;
+}
+
+.tut-face-title {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #3a433d;
+}
+
+.tut-stage {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.tut-stage-cap {
+  order: -1;
+  margin: 0;
+  width: 100%;
+  max-width: 18.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #4d5a52;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.tut-stage-frame {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: visible;
+}
+
+.tut-page .tut-stage.is-deck .pcard.pcard-shell,
+.tut-page .tut-stage.is-deck .pcard.is-event {
+  width: min(17.5rem, calc(100vw - 2.4rem)) !important;
+  max-width: min(17.5rem, calc(100vw - 2.4rem)) !important;
+  max-height: none !important;
+  height: auto !important;
+  aspect-ratio: 3 / 4;
+  margin: 0 auto;
+  flex: 0 0 auto;
+  cursor: default;
+}
+
+/* Prefer vw over % so fit-content parents cannot shrink cards to content min. */
+.tut-page .tut-stage.is-deed .deed-card {
+  width: min(16.5rem, calc(100vw - 2.4rem));
+  max-width: 100%;
+  margin: 0 auto;
+  aspect-ratio: 11 / 20;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.tut-page .tut-stage.is-deed .deed-flip {
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.tut-page .tut-stage.is-deed .deed-face {
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
+}
+
+.tut-page .tut-stage.is-corner .corner-deed-card {
+  width: min(16rem, calc(100vw - 2.4rem));
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Tutorial: let corner shells grow so art never collapses under long notes. */
+.tut-page .tut-stage.is-corner .corner-deed-shell {
+  aspect-ratio: auto;
+  min-height: 0;
+}
+
+.tut-page .tut-stage.is-corner .corner-deed-face {
+  grid-template-rows: auto minmax(6.5rem, auto) auto auto;
+  min-height: 21rem;
+}
+
+.tut-page .tut-stage.is-corner .corner-deed-tax .corner-deed-face {
+  grid-template-rows: auto minmax(6.5rem, auto) auto auto auto;
+}
+
+.tut-page .tut-stage.is-corner .corner-deed-art-wrap {
+  min-height: 6.5rem;
+  height: auto;
+}
+
+.tut-page .tut-stage.is-corner .corner-deed-art {
+  max-height: 8.5rem;
+}
+
+.tut-page .tut-stage.is-corner .corner-deed-note {
+  font-size: 0.68rem;
+  line-height: 1.35;
+  -webkit-line-clamp: unset;
+  display: block;
+  overflow: visible;
+}
+
+.tut-page .tut-stage.is-corner .corner-deed-bottom {
+  font-size: clamp(0.78rem, 2.8vw, 0.95rem);
+}
+
+/* Static company back fills the same shell as the front. */
+.tut-page .deed-card.is-static-face .deed-back {
+  position: relative !important;
+  inset: auto !important;
+  transform: none !important;
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 100%;
+}
+
+.tut-page .deed-card.is-static-face .deed-back > div {
+  flex: 1 1 auto;
+  height: 100%;
+  justify-content: flex-start !important;
+  gap: 0.85rem !important;
+  padding: 1rem 0.75rem 0.85rem !important;
+}
+
+.tut-page .deed-card.is-static-face .deed-back-scale {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 0.15rem;
+  padding-top: 0.55rem;
+}
+
+.tut-page .deed-card.is-static-face .deed-back-scale ul {
+  flex: 1 1 auto;
+  align-content: center;
+}
+
+.tut-page .deed-card.is-static-face .deed-back-scale li {
+  padding: 0.28rem 0.4rem;
+  font-size: 0.78rem;
+}
+
+/* Front + back company pair: identical card boxes. */
+.tut-gallery.is-deed-pair {
+  align-items: stretch;
+}
+
+.tut-gallery.is-deed-pair .tut-stage.is-deed {
+  height: 100%;
+  align-self: stretch;
+}
+
+.tut-gallery.is-deed-pair .tut-stage.is-deed .tut-stage-frame {
+  width: 100%;
+  flex: 1 1 auto;
+  align-items: stretch;
+}
+
+.tut-gallery.is-deed-pair .tut-stage.is-deed .deed-card {
+  width: min(16.5rem, 100%);
+  aspect-ratio: 11 / 20;
+  height: auto;
+}
+
+.tut-board-wrap {
+  width: 100%;
+  max-width: 36rem;
+  margin: 1.5rem auto 0.65rem;
+  aspect-ratio: 1 / 1;
+  max-height: min(72vw, 36rem);
+  border-radius: 16px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.08), transparent 45%),
+    #0f3d24;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.08) inset,
+    0 18px 36px rgba(0, 0, 0, 0.28);
+}
+
+.tut-board-shell {
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0.7rem !important;
+  border-radius: 0;
+}
+
+/* Static deck backs for front/back pairs. */
+.tut-pcard-back .pcard-flipper.is-static-back {
+  width: 100%;
+  height: 100%;
+  transform: none !important;
+}
+
+.tut-pcard-back .pcard-face-back.is-static {
+  position: relative !important;
+  inset: auto !important;
+  transform: none !important;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+}
+
+.tut-sector-wrap {
+  width: 100%;
+  max-width: 32rem;
+  margin: 1.35rem auto 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tut-sector-board {
+  width: 100% !important;
+  max-width: none;
+  padding: 0.9rem 0.85rem 0.75rem;
+  border-radius: 14px;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 0%, #2a5a48 0%, transparent 55%),
+    linear-gradient(165deg, #173028, #0f1c18 55%, #0c1613);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 14px 28px rgba(0, 0, 0, 0.28);
+}
+
+.tut-sector-legend {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem 0.75rem;
+}
+
+.tut-sector-legend li {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.86rem;
+  color: #2a322e;
+}
+
+.tut-sector-chip {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.85rem;
+  height: 1.15rem;
+  padding: 0 0.28rem;
+  border-radius: 0.28rem;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+}
+
+.tut-foot {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.75rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/*
+ * Pair galleries: auto-fit so front/back sit side-by-side only when the
+ * row can hold two card stages; otherwise stack and stay centered.
+ */
+.tut-gallery.is-pair {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15.25rem), max-content));
+  justify-content: center;
+  justify-items: center;
+  gap: 1.6rem 1.75rem;
+}
+
+.tut-gallery.is-pair .tut-stage {
+  width: min(16.5rem, 100%);
+}
+
+.tut-gallery.is-pair .tut-stage.is-deed .deed-card {
+  width: min(16.5rem, 100%);
+}
+
+.tut-gallery.is-pair .tut-stage.is-deck .pcard.pcard-shell,
+.tut-gallery.is-pair .tut-stage.is-deck .pcard.is-event {
+  width: min(16.5rem, 100%) !important;
+  max-width: min(16.5rem, 100%) !important;
+}
+
+.tut-gallery.is-pair .tut-stage.is-corner .corner-deed-card {
+  width: min(16rem, 100%);
+}
+
+@media (min-width: 960px) {
+  .tut-gallery.is-pair {
+    gap: 1.75rem 2.25rem;
+  }
+
+  .tut-gallery.is-pair .tut-stage.is-deed .deed-card {
+    width: 16.5rem;
+  }
+
+  .tut-gallery.is-pair .tut-stage.is-deck .pcard.pcard-shell,
+  .tut-gallery.is-pair .tut-stage.is-deck .pcard.is-event {
+    width: 17.5rem !important;
+    max-width: 17.5rem !important;
+  }
+
+  .tut-gallery.is-pair .tut-stage.is-corner .corner-deed-card {
+    width: 16rem;
+  }
+
+  .tut-sector-legend {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .tut-shell {
+    grid-template-columns: 1fr;
+    padding-top: 0.85rem;
+  }
+
+  .tut-nav {
+    position: static;
+    padding: 0.8rem 0.85rem;
+  }
+
+  .tut-nav-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.15rem 0.4rem;
+  }
+
+  .tut-play {
+    display: none;
+  }
+
+  .tut-body {
+    max-width: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .tut-top {
+    padding-inline: 1rem;
+  }
+
+  .tut-shell {
+    padding-inline: 1.05rem;
+  }
+
+  .tut-gallery {
+    gap: 1.5rem;
+  }
+
+  .tut-page .tut-stage.is-deed .deed-card {
+    width: min(16.5rem, calc(100vw - 2.1rem));
+  }
+
+  .tut-page .tut-stage.is-deck .pcard.pcard-shell,
+  .tut-page .tut-stage.is-deck .pcard.is-event {
+    width: min(16.5rem, calc(100vw - 2.1rem)) !important;
+    max-width: min(16.5rem, calc(100vw - 2.1rem)) !important;
+  }
+
+  .tut-page .tut-stage.is-corner .corner-deed-card {
+    width: min(16rem, calc(100vw - 2.1rem));
+  }
+
+  .tut-sector-legend {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -32,7 +32,7 @@ cp .env.example .env.local   # NEXT_PUBLIC_PARTY_HOST=localhost:8888
 npm run dev:all              # Next :3010 + Party :8888
 ```
 
-Open http://localhost:3010. You land in a room lobby as a spectator, then join a seat. Leave mid-game and that seat keeps autoplaying.
+Open http://localhost:3010. You land in a room lobby as a spectator, then join a seat. Leave mid-game and that seat keeps autoplaying. New players can read [/tutorial](/tutorial).
 
 ## Test / balance
 
@@ -45,14 +45,14 @@ npm run balance:audit -- --games 600 --fundGames 14
 
 ## Deploy
 
-| Piece | Host |
-|-------|------|
-| Frontend | Vercel |
-| Realtime | Cloudflare Workers |
+| Piece | Host | Production |
+|-------|------|------------|
+| Frontend | Vercel | `ticker` project |
+| Realtime | Cloudflare Workers | `ticker.<account>.workers.dev` |
 
 ```bash
 npm run party:deploy
 npx vercel deploy --prod
 ```
 
-Set `NEXT_PUBLIC_PARTY_HOST` on Vercel to the Workers hostname, then rebuild the frontend.
+Set `NEXT_PUBLIC_PARTY_HOST` on Vercel to `ticker.<account>.workers.dev`, then rebuild the frontend.

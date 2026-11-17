@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
 import { LanguageSetting } from "@/components/shell/LanguageSetting";
@@ -125,6 +126,13 @@ export function GameSettings({ roomCode }: { roomCode: string }) {
                 <section className="game-settings-block">
                   <p className="game-settings-label">{t("lang.label")}</p>
                   <LanguageSetting compact />
+                  <Link
+                    href="/tutorial"
+                    className="btn btn-secondary game-settings-link-btn"
+                    onClick={() => setOpen(false)}
+                  >
+                    {t("settings.tutorial")}
+                  </Link>
                 </section>
 
                 <section className="game-settings-block">

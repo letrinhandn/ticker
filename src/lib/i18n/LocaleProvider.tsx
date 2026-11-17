@@ -45,12 +45,9 @@ function readStoredLocale(): Locale {
 }
 
 export function LocaleProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>(() =>
-    typeof window === "undefined" ? "en" : readStoredLocale(),
-  );
-  const [ready, setReady] = useState(
-    () => typeof window !== "undefined",
-  );
+  // Always start from "en" so SSR and the first client paint match.
+  const [locale, setLocaleState] = useState<Locale>("en");
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const next = readStoredLocale();

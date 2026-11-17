@@ -48,6 +48,7 @@ const en = {
   "settings.yourName": "Your name",
   "settings.saveName": "Save",
   "settings.nameSaved": "Saved",
+  "settings.tutorial": "How to play",
 
   "home.tagline":
     "Buy, sell, and survive. Play with a friend, against a fund, or watch two funds play.",
@@ -144,6 +145,7 @@ const en = {
   "lobby.startingVs": "Starting against a fund",
   "lobby.startingAuto": "Starting fund versus fund",
   "lobby.newTable": "New table",
+  "lobby.tutorial": "How to play",
   "lobby.joinOther": "Join another room",
   "lobby.joinGo": "Go",
   "lobby.reopen": "Lobby",
@@ -413,6 +415,7 @@ const vi: Record<MessageKey, string> = {
   "settings.yourName": "Tên của bạn",
   "settings.saveName": "Lưu",
   "settings.nameSaved": "Đã lưu",
+  "settings.tutorial": "Hướng dẫn chơi",
   "common.close": "Đóng",
   "common.back": "Quay lại",
   "common.you": "bạn",
@@ -521,6 +524,7 @@ const vi: Record<MessageKey, string> = {
   "lobby.startingVs": "Đang bắt đầu đấu quỹ",
   "lobby.startingAuto": "Đang mở quỹ đấu quỹ",
   "lobby.newTable": "Bàn mới",
+  "lobby.tutorial": "Hướng dẫn chơi",
   "lobby.joinOther": "Vào phòng khác",
   "lobby.joinGo": "Vào",
   "lobby.reopen": "Sảnh",

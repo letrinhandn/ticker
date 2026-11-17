@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useT } from "@/lib/i18n";
 import { randomRoomCode } from "@/lib/net/playerId";
@@ -97,6 +98,12 @@ export function LobbyActions({
       )}
 
       <div className="flex flex-col gap-2 border-t border-white/10 pt-3">
+        <Link
+          href="/tutorial"
+          className="btn btn-ghost w-full justify-center"
+        >
+          {t("lobby.tutorial")}
+        </Link>
         <button
           type="button"
           className="flex w-full items-center justify-between rounded-xl border border-white/12 bg-black/20 px-3 py-2 text-left text-sm text-[#f2efe6]"
