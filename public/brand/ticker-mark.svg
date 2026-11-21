@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="TICKER">
+  <rect x="4" y="4" width="56" height="56" rx="10" fill="#143d28"/>
+  <rect x="4" y="4" width="56" height="56" rx="10" stroke="#c9a227" stroke-width="2.5"/>
+  <!-- Ascending bars — thick, square, game HUD -->
+  <rect x="16" y="36" width="8" height="12" fill="#c9a227"/>
+  <rect x="28" y="28" width="8" height="20" fill="#c9a227"/>
+  <rect x="40" y="18" width="8" height="30" fill="#c9a227"/>
+  <rect x="14" y="50" width="36" height="3" fill="#c9a227"/>
+</svg>
