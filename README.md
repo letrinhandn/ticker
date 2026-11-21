@@ -4,7 +4,9 @@ Multiplayer stock-market board game (Vietnamese name: Cờ chứng khoán).
 
 Share a room code, take a seat, and trade until one fund remains. No accounts.
 
-**Play:** [tickergame.vercel.app](https://tickergame.vercel.app) · **Tutorial:** [tickergame.vercel.app/tutorial](https://tickergame.vercel.app/tutorial) · **itch.io:** [comrade-lenan.itch.io/ticker](https://comrade-lenan.itch.io/ticker)
+**Play:** [tickergame.vercel.app](https://tickergame.vercel.app)  
+**Tutorial:** [tickergame.vercel.app/tutorial](https://tickergame.vercel.app/tutorial)  
+**itch.io:** [comrade-lenan.itch.io/ticker](https://comrade-lenan.itch.io/ticker)
 
 <p align="center">
   <img src="public/brand/ticker-cover.jpg" alt="TICKER cover" width="420" />
